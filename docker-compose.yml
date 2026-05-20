@@ -1,0 +1,6 @@
+services:
+  mcq:
+    build: .
+    container_name: mcq
+    ports:
+      - "8080:80"

@@ -1,0 +1,20 @@
+{
+  "name": "mcq-trainer",
+  "version": "1.0.0",
+  "description": "MCQ Trainer — multiple choice questions, import your own JSON.",
+  "private": true,
+  "scripts": {
+    "copy:www": "node scripts/copy-www.js",
+    "sync": "npm run copy:www && cap sync android",
+    "open:android": "npm run sync && cap open android",
+    "build:apk": "npm run sync && cd android && .\\gradlew.bat assembleDebug",
+    "build:apk:release": "npm run sync && cd android && .\\gradlew.bat assembleRelease"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
+  }
+}

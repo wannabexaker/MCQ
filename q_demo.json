@@ -1,0 +1,97 @@
+[
+  {
+    "number": 1,
+    "question_en": "Which planet in our solar system is known as the Red Planet?",
+    "choices_en": ["Earth", "Mars", "Jupiter", "Venus"],
+    "correctIndex": 1,
+    "demo": true
+  },
+  {
+    "number": 2,
+    "question_en": "Who wrote the play 'Hamlet'?",
+    "choices_en": ["William Shakespeare", "Charles Dickens", "Mark Twain", "Jane Austen"],
+    "correctIndex": 0,
+    "demo": true
+  },
+  {
+    "number": 3,
+    "question_en": "What is the chemical symbol for gold?",
+    "choices_en": ["Gd", "Go", "Au", "Ag"],
+    "correctIndex": 2,
+    "demo": true
+  },
+  {
+    "number": 4,
+    "question_en": "Which is the largest ocean on Earth?",
+    "choices_en": ["Atlantic", "Indian", "Arctic", "Pacific"],
+    "correctIndex": 3,
+    "demo": true
+  },
+  {
+    "number": 5,
+    "question_en": "In computing, what does 'HTTP' stand for?",
+    "choices_en": [
+      "HyperText Transfer Protocol",
+      "High Transfer Text Protocol",
+      "Hyperlink Text Transmission Process",
+      "Home Tool Transfer Protocol"
+    ],
+    "correctIndex": 0,
+    "demo": true
+  },
+  {
+    "number": 6,
+    "question_en": "Which year did the first human walk on the Moon?",
+    "choices_en": ["1965", "1969", "1972", "1958"],
+    "correctIndex": 1,
+    "demo": true
+  },
+  {
+    "number": 7,
+    "question_en": "What is the capital city of Australia?",
+    "choices_en": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+    "correctIndex": 2,
+    "demo": true
+  },
+  {
+    "number": 8,
+    "question_en": "Which gas do plants primarily absorb from the atmosphere for photosynthesis?",
+    "choices_en": ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
+    "correctIndex": 2,
+    "demo": true
+  },
+  {
+    "number": 9,
+    "question_en": "Which SQL clause is used to filter rows in a SELECT query?",
+    "choices_en": ["ORDER BY", "WHERE", "GROUP BY", "HAVING"],
+    "correctIndex": 1,
+    "demo": true,
+    "code": "SELECT name, age\nFROM users\nWHERE active = 1;"
+  },
+  {
+    "number": 10,
+    "question_en": "Which painter created the Mona Lisa?",
+    "choices_en": ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"],
+    "correctIndex": 2,
+    "demo": true
+  },
+  {
+    "number": 11,
+    "question_en": "Which language has the most native speakers worldwide?",
+    "choices_en": ["English", "Hindi", "Spanish", "Mandarin Chinese"],
+    "correctIndex": 3,
+    "demo": true
+  },
+  {
+    "number": 12,
+    "question_en": "What does CPU stand for?",
+    "choices_en": [
+      "Central Processing Unit",
+      "Computer Personal Unit",
+      "Central Program Utility",
+      "Control Processing Unit"
+    ],
+    "correctIndex": 0,
+    "demo": true
+  }
+]

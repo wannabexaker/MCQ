@@ -1,0 +1,254 @@
+[
+  {
+    "number": 1,
+    "question_en": "What does the 'C' in the CIA triad stand for?",
+    "choices_en": ["Control", "Confidentiality", "Compliance", "Continuity"],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 2,
+    "question_en": "Which attack injects malicious SQL into an application's input to manipulate the database?",
+    "choices_en": ["XSS", "CSRF", "SQL Injection", "SSRF"],
+    "correctIndex": 2,
+    "cybersecurity": true
+  },
+  {
+    "number": 3,
+    "question_en": "Which type of XSS is stored persistently on the server and served to other users?",
+    "choices_en": ["Reflected XSS", "Stored XSS", "DOM-based XSS", "Blind XSS"],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 4,
+    "question_en": "Which OWASP Top 10 (2021) category covers broken access control?",
+    "choices_en": ["A01", "A03", "A07", "A09"],
+    "correctIndex": 0,
+    "cybersecurity": true
+  },
+  {
+    "number": 5,
+    "question_en": "Which hashing algorithm is considered cryptographically broken and should NOT be used for passwords?",
+    "choices_en": ["bcrypt", "Argon2", "MD5", "scrypt"],
+    "correctIndex": 2,
+    "cybersecurity": true
+  },
+  {
+    "number": 6,
+    "question_en": "What is the primary purpose of a salt in password hashing?",
+    "choices_en": [
+      "Encrypt the hash so it cannot be reversed",
+      "Defeat precomputed rainbow tables and identical-password collisions",
+      "Speed up hash computation",
+      "Make the hash output shorter"
+    ],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 7,
+    "question_en": "Which protocol secures HTTP traffic with TLS?",
+    "choices_en": ["HTTP/2", "HTTPS", "SFTP", "FTPS"],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 8,
+    "question_en": "Which attack tricks a logged-in user's browser into submitting an unwanted authenticated request?",
+    "choices_en": ["CSRF", "XSS", "Clickjacking", "SSRF"],
+    "correctIndex": 0,
+    "cybersecurity": true
+  },
+  {
+    "number": 9,
+    "question_en": "Which type of malware encrypts user files and demands payment for decryption?",
+    "choices_en": ["Worm", "Trojan", "Ransomware", "Adware"],
+    "correctIndex": 2,
+    "cybersecurity": true
+  },
+  {
+    "number": 10,
+    "question_en": "In asymmetric cryptography, which key is used to encrypt a message that only the holder of the private key can read?",
+    "choices_en": ["The sender's private key", "The recipient's public key", "The recipient's private key", "A shared session key"],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 11,
+    "question_en": "What is the main goal of a Man-in-the-Middle (MITM) attack?",
+    "choices_en": [
+      "Crash the target server",
+      "Intercept or alter communication between two parties",
+      "Brute-force a password",
+      "Mine cryptocurrency on the victim"
+    ],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 12,
+    "question_en": "Which HTTP header instructs browsers to enforce HTTPS for future requests to a domain?",
+    "choices_en": ["Content-Security-Policy", "X-Frame-Options", "Strict-Transport-Security", "X-Content-Type-Options"],
+    "correctIndex": 2,
+    "cybersecurity": true
+  },
+  {
+    "number": 13,
+    "question_en": "Which technique helps mitigate clickjacking by preventing the page from being framed?",
+    "choices_en": [
+      "CSP frame-ancestors directive",
+      "Setting CORS to *",
+      "Disabling cookies",
+      "HTTP Basic Auth"
+    ],
+    "correctIndex": 0,
+    "cybersecurity": true
+  },
+  {
+    "number": 14,
+    "question_en": "What does MFA stand for in security?",
+    "choices_en": ["Multi-Factor Authentication", "Managed File Access", "Mandatory Firewall Access", "Multi-Function Authorization"],
+    "correctIndex": 0,
+    "cybersecurity": true
+  },
+  {
+    "number": 15,
+    "question_en": "Which port does a default OpenSSH server listen on?",
+    "choices_en": ["21", "22", "23", "3389"],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 16,
+    "question_en": "Which file on a Linux system stores hashed user passwords?",
+    "choices_en": ["/etc/passwd", "/etc/shadow", "/etc/hosts", "/etc/sudoers"],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 17,
+    "question_en": "Which tool is commonly used for network port scanning and service enumeration?",
+    "choices_en": ["Wireshark", "Nmap", "Metasploit", "John the Ripper"],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 18,
+    "question_en": "Which tool is the de-facto standard for offline password cracking?",
+    "choices_en": ["Burp Suite", "Aircrack-ng", "Hashcat", "Nessus"],
+    "correctIndex": 2,
+    "cybersecurity": true
+  },
+  {
+    "number": 19,
+    "question_en": "What is a 'zero-day' vulnerability?",
+    "choices_en": [
+      "A vulnerability with no impact",
+      "A vulnerability fixed within 24 hours",
+      "A vulnerability unknown to the vendor with no patch available",
+      "A vulnerability discovered in legacy software"
+    ],
+    "correctIndex": 2,
+    "cybersecurity": true
+  },
+  {
+    "number": 20,
+    "question_en": "Which HTTP status code is returned when authentication is required but missing/invalid?",
+    "choices_en": ["400", "401", "403", "404"],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 21,
+    "question_en": "Which TLS version is the current recommended baseline (others below it are deprecated)?",
+    "choices_en": ["SSL 3.0", "TLS 1.0", "TLS 1.2", "TLS 1.1"],
+    "correctIndex": 2,
+    "cybersecurity": true
+  },
+  {
+    "number": 22,
+    "question_en": "Which security principle states that a user should have only the access strictly needed for their job?",
+    "choices_en": [
+      "Defense in depth",
+      "Principle of least privilege",
+      "Separation of duties",
+      "Need to know"
+    ],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 23,
+    "question_en": "What is the role of a SIEM system?",
+    "choices_en": [
+      "Sign code packages",
+      "Aggregate, correlate, and alert on security events from many sources",
+      "Encrypt disks at rest",
+      "Manage password rotations"
+    ],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 24,
+    "question_en": "What is phishing?",
+    "choices_en": [
+      "Social engineering that tricks users into revealing credentials or running malware",
+      "Network scanning for open ports",
+      "Brute-forcing a password",
+      "Exploiting a buffer overflow"
+    ],
+    "correctIndex": 0,
+    "cybersecurity": true
+  },
+  {
+    "number": 25,
+    "question_en": "Which attack floods a target with traffic from many compromised hosts to deny service?",
+    "choices_en": ["SQLi", "DDoS", "Phishing", "Privilege escalation"],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 26,
+    "question_en": "Which tool intercepts and modifies HTTP(S) traffic between a browser and a web app, popular for web testing?",
+    "choices_en": ["Wireshark", "Burp Suite", "Nmap", "tcpdump"],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 27,
+    "question_en": "JWT tokens are vulnerable when the server accepts which algorithm in the header?",
+    "choices_en": ["HS256", "RS256", "none", "ES256"],
+    "correctIndex": 2,
+    "cybersecurity": true,
+    "code": "{\n  \"alg\": \"none\",\n  \"typ\": \"JWT\"\n}"
+  },
+  {
+    "number": 28,
+    "question_en": "What is the purpose of a CSP (Content Security Policy)?",
+    "choices_en": [
+      "Encrypt cookies",
+      "Restrict which sources of scripts/styles/etc. a page may load to mitigate XSS",
+      "Enforce HTTPS",
+      "Block all third-party fonts"
+    ],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 29,
+    "question_en": "Which authentication protocol issues short-lived tickets and is the backbone of Windows domain auth?",
+    "choices_en": ["NTLM", "Kerberos", "OAuth2", "SAML"],
+    "correctIndex": 1,
+    "cybersecurity": true
+  },
+  {
+    "number": 30,
+    "question_en": "Which Linux command shows currently established and listening sockets along with the owning processes?",
+    "choices_en": ["lsof -i", "netcat -l", "tcpdump -i any", "ip route"],
+    "correctIndex": 0,
+    "cybersecurity": true,
+    "code": "sudo lsof -i -P -n"
+  }
+]

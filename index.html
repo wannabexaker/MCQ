@@ -1,0 +1,450 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>MCQ Trainer</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon (browser tab icon) -->
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="application-name" content="MCQ Trainer" />
+    <meta name="description" content="Multiple-choice question trainer. Import your own q_*.json question sets and study offline." />
+
+    <!-- iOS PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MCQ Trainer" />
+    <link rel="apple-touch-icon" href="images/favicon.png" />
+
+    <!-- Windows -->
+    <meta name="msapplication-TileColor" content="#0d1117" />
+    <meta name="msapplication-TileImage" content="images/favicon.png" />
+  </head>
+
+  <body class="dark">
+    <!-- =======================================================
+       TOPBAR
+  ======================================================= -->
+    <header class="topbar">
+      <!-- MOBILE BURGER -->
+      <button class="burger" id="burgerBtn" type="button" aria-label="Open menu" title="Open menu" aria-expanded="false">☰</button>
+
+      <h1 id="appTitle">MCQ Trainer</h1>
+
+      <!-- SCORE -->
+      <div id="scoreBox" class="score-box" title="Displays your current score.">
+        Correct: <span id="score-correct">0</span> /
+        <span id="score-total">0</span>
+      </div>
+
+      <!-- DESKTOP CONTROLS -->
+      <div class="controls-shell" id="controlsShell">
+      <div class="controls" id="controlsPanel">
+        
+        <button id="resetQuiz" title="Clear all answers and reset the score." aria-label="Reset quiz">♻️</button>
+
+        <button id="filterCycle" title="Sources" aria-label="Sources">📚</button>
+
+        <button id="shuffleBtn" title="Shuffle question order. Click again to restore default order." aria-label="Shuffle questions">🎲Q</button>
+
+        <button id="shuffle-answers-btn" title="Shuffle answer choices. Click again to restore default choices." aria-label="Shuffle answers">🎲A</button>
+
+        <button id="toggleExam" title="Enable exam mode and hide answer reveal actions." aria-label="Exam mode">📝</button>
+
+        <button id="toggleAll" class="btn" title="Show or hide all correct answers." aria-label="Show all answers">👁️</button>
+
+        <button id="toggleGodlike" class="godlike-btn" title="God Mode: OFF" aria-label="God Mode: OFF">🧠</button>
+
+        <button id="toggleTheme" title="Switch to Light Mode" aria-label="Switch to Light Mode">💡</button>
+
+        <button id="toggleWidgets" title="Show or hide side widgets." aria-label="Toggle widgets">🧩</button>
+
+        <div class="lang"></div>
+      </div>
+        <button id="controlsToggle" class="controls-toggle" title="Collapse controls" aria-label="Collapse controls">◀</button>
+      </div>
+
+      <!-- FIXED SETTINGS (never moves) -->
+      <button
+        id="resetControlsPosition"
+        class="fixed-settings-btn"
+        type="button"
+        title="Reset controls position"
+        aria-label="Reset controls position"
+      >
+        ⚙️
+      </button>
+
+      <!-- GODLIKE Popup Modal -->
+      <div id="godlikeModal" class="godlike-modal" style="display: none">
+        <div class="modal-content">
+          <img src="images/game_over.jpg" alt="Game Over" background-color: black/>
+          <button id="closeGodlike">Try again?</button>
+        </div>
+      </div>
+
+      <!-- GAY THEME EXIT POPUP -->
+      <div id="gayThemeModal" class="theme-modal" style="display: none">
+        <div class="theme-modal-content" id="gayThemeStep1">
+          <h3>Are you sure you want to change theme?</h3>
+          <div class="theme-modal-actions">
+            <button id="gayThemeYes">Yes</button>
+            <button id="gayThemeNo">No</button>
+          </div>
+        </div>
+
+        <div class="theme-modal-content" id="gayThemeStep2" style="display: none">
+          <h3>Are you gay?</h3>
+          <div class="theme-modal-actions">
+            <button id="gayThemeYes2">Yes</button>
+            <button id="gayThemeNo2">No</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="gayCelebrateModal" class="theme-modal" style="display: none">
+        <div class="theme-modal-content">
+          <h3>THEN THIS IS YOUR THEME</h3>
+          <div class="theme-modal-actions">
+            <button id="gayCelebrateClose">Awesome</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="gayNoPersistModal" class="theme-modal" style="display: none">
+        <div class="theme-modal-content">
+          <h3 id="gayNoPersistText">
+            Okay, that's persistence. Maybe this theme is not your vibe, so I'll switch it for you.
+          </h3>
+          <div class="theme-modal-actions">
+            <button id="gayNoPersistClose">Okay</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="modeResetConfirmModal" class="theme-modal" style="display: none">
+        <div class="theme-modal-content">
+          <h3 id="modeResetConfirmText">
+            Are you sure? Disabling this mode will reset your progress.
+          </h3>
+          <div class="theme-modal-actions">
+            <button id="modeResetConfirmYes">Yes</button>
+            <button id="modeResetConfirmNo">No</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="settingsModal" class="theme-modal" style="display: none">
+        <div class="theme-modal-content settings-modal-content">
+          <div class="settings-header">
+            <h3>Settings</h3>
+            <button id="settingsClose" type="button" class="settings-close" aria-label="Close settings" title="Close">✕</button>
+          </div>
+
+          <div class="settings-tabs" role="tablist" aria-label="Settings tabs">
+            <button class="settings-tab" id="settingsTabGeneral" type="button" role="tab" aria-controls="settingsPanelGeneral" aria-selected="true">General</button>
+            <button class="settings-tab" id="settingsTabHud" type="button" role="tab" aria-controls="settingsPanelHud" aria-selected="false">HUD</button>
+            <button class="settings-tab" id="settingsTabTest" type="button" role="tab" aria-controls="settingsPanelTest" aria-selected="false">Test</button>
+            <button class="settings-tab" id="settingsTabDocker" type="button" role="tab" aria-controls="settingsPanelDocker" aria-selected="false">Downloads</button>
+          </div>
+
+          <div class="settings-panels">
+            <section class="settings-panel" id="settingsPanelGeneral" role="tabpanel" aria-labelledby="settingsTabGeneral">
+              <div class="settings-section">
+                <div class="settings-section-title">Q&A</div>
+                <div class="settings-actions">
+                  <label class="settings-row" for="settingsQaFontSize">
+                    <span>Font size</span>
+                    <span id="settingsQaFontSizeValue" class="settings-value">16px</span>
+                  </label>
+                  <input id="settingsQaFontSize" type="range" min="12" max="22" step="1" value="16" />
+                  <button id="settingsQaFontReset" type="button">Reset font size</button>
+                </div>
+              </div>
+
+              <div class="settings-section">
+                <div class="settings-section-title">Controls</div>
+                <div class="settings-actions">
+                  <label class="settings-row">
+                    <span>Layout</span>
+                    <span id="settingsControlsLayoutValue" class="settings-value">Horizontal</span>
+                  </label>
+                  <div class="settings-toggle-row" role="group" aria-label="Controls layout">
+                    <button id="settingsControlsHorizontal" type="button">Horizontal</button>
+                    <button id="settingsControlsVertical" type="button">Vertical</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="settings-panel" id="settingsPanelHud" role="tabpanel" aria-labelledby="settingsTabHud" hidden>
+              <div class="settings-section">
+                <div class="settings-section-title">Positions</div>
+                <div class="settings-actions">
+                  <button id="settingsResetTimer" type="button">Reset timer position</button>
+                  <button id="settingsResetWidgets" type="button">Reset widgets position</button>
+                  <button id="settingsResetControls" type="button">Reset controls position</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="settings-panel" id="settingsPanelTest" role="tabpanel" aria-labelledby="settingsTabTest" hidden>
+              <div class="settings-section">
+                <div class="settings-section-title">Test</div>
+                <div class="settings-actions">
+                  <button id="settingsCompleteTest" type="button">Complete test</button>
+                  <label class="settings-row">
+                    <span>Practice mode</span>
+                    <span id="settingsPracticeModeValue" class="settings-value">Off</span>
+                  </label>
+                  <div class="settings-toggle-row" role="group" aria-label="Practice mode">
+                    <button id="settingsPracticeOff" type="button">Off</button>
+                    <button id="settingsPracticeWrongOnce" type="button">Wrong 1+</button>
+                    <button id="settingsPracticeWrongRepeat" type="button">Wrong 2+</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="settings-section">
+                <div class="settings-section-title">History</div>
+                <div id="settingsHistoryList" class="settings-history"></div>
+              </div>
+            </section>
+
+            <section class="settings-panel" id="settingsPanelDocker" role="tabpanel" aria-labelledby="settingsTabDocker" hidden>
+              <div class="settings-section">
+                <div class="settings-section-title">Downloads</div>
+                <div class="settings-actions settings-actions-grid">
+                  <button id="settingsDockerDownloadBundle" type="button" title="Recommended: includes the app and all Docker files.">📦 App + Docker (zip)</button>
+                  <button id="settingsDockerDownloadAll" type="button" title="Docker files only (you must already have the app files).">🐳 Docker files (zip)</button>
+                  <button id="settingsOpenSetupGuide" type="button" title="Read setup instructions inside the app.">📖 Open setup guide</button>
+                  <button id="settingsLocalServerDownloadScripts" type="button" title="One-click scripts to run a local server with Python.">🧰 Local server scripts (zip)</button>
+                </div>
+              </div>
+
+              <div class="settings-section">
+                <div class="settings-section-title">Run</div>
+                <div class="settings-code">
+                  <pre><code>docker compose up --build
+# open: http://localhost:8080</code></pre>
+                </div>
+                <div class="settings-hint">
+                  Tip: Use Docker or a local server. Opening <code>index.html</code> via <code>file://</code> blocks loading <code>q_*.json</code>.
+                </div>
+              </div>
+
+              <div class="settings-section">
+                <div class="settings-section-title">Local Server (Python)</div>
+                <div class="settings-code">
+                  <pre><code>python -m http.server 8000
+# Windows alternative:
+py -3 -m http.server 8000
+# open: http://localhost:8000</code></pre>
+                </div>
+              </div>
+
+              <div class="settings-section">
+                <div class="settings-section-title">Manual (Customize)</div>
+                <div class="settings-actions">
+                  <button id="settingsDockerDownloadManual" type="button" hidden>Download manual templates</button>
+                </div>
+                <div class="settings-hint">
+                  Use manual templates if you want to change ports, use a different web server, or mount volumes for development.
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMER -->
+      <div id="timer-wrapper" class="draggable">
+        <div class="timer-title">Timer</div>
+        <div id="timer-display">00:00.000</div>
+
+        <div id="timer-controls">
+          <button id="timer-start">Start</button>
+          <button id="timer-stop">Stop</button>
+          <button id="timer-reset">Reset</button>
+        </div>
+      </div>
+
+      <!-- CAT WIDGET -->
+      <div class="cat-widget draggable">
+        <h2>Cat Fact</h2>
+        <p id="fact">Click the button!</p>
+        <button id="new-fact">New Fact</button>
+      </div>
+
+      <!-- SIDE BANNER -->
+      <div class="side-banner draggable">
+        <img src="images/sidebanner.png" alt="Side Banner" />
+      </div>
+    </header>
+
+    <!-- =======================================================
+       QUIZ CONTENT
+  ======================================================= -->
+    <main id="quiz" class="quiz-center"></main>
+
+    <!-- =======================================================
+       FOOTER
+  ======================================================= -->
+    <footer class="footer">
+      <p>
+        UI in English. Question sources are auto-loaded from files that match <code>q*.json</code>.
+      </p>
+      <div id="dataWarnings" class="data-warnings" hidden></div>
+    </footer>
+
+    <!-- MOBILE PANEL -->
+    <div class="mobile-menu" id="mobileMenu">
+      <button
+        id="m-resetQuiz"
+        title="Clear all answers and reset the score."
+        aria-label="Reset quiz"
+      >
+        ♻️ Reset
+      </button>
+      
+      <button id="m-filterCycle" title="Sources" aria-label="Sources">📚 Sources</button>
+
+      <button id="m-shuffleBtn" title="Shuffle question order." aria-label="Shuffle questions">🎲Q Shuffle Questions</button>
+
+      <button id="m-shuffle-answers-btn" title="Shuffle answer choices." aria-label="Shuffle answers">🎲A Shuffle Answers</button>
+
+      <button id="m-toggleExam" title="Enable exam mode and hide answer reveal actions." aria-label="Exam mode">📝 Exam Mode</button>
+
+      <button id="m-toggleAll" title="Show or hide all correct answers." aria-label="Show all answers">👁️ Show All</button>
+
+      <button id="m-toggleGodlike" title="God Mode: OFF" aria-label="God Mode: OFF">🧠 God Mode</button>
+
+      <button id="m-toggleTheme" title="Switch to Light Mode" aria-label="Switch to Light Mode">💡 Theme</button>
+
+      <button id="m-toggleWidgets" title="Show or hide side widgets." aria-label="Toggle widgets">🧩 Widgets</button>
+
+      <button id="m-toggleTimer" title="Show or hide timer." aria-label="Toggle timer">⏱️ Timer</button>
+    </div>
+
+    <div id="menuOverlay" class="menu-overlay" hidden></div>
+
+    <div id="sourceFilterMenu" class="source-filter-menu" hidden>
+      <div class="source-filter-header">
+        <strong>Question Sources</strong>
+      </div>
+      <div id="sourceFilterChecklist" class="source-filter-checklist"></div>
+      <div class="source-filter-actions">
+        <button id="sourceFilterSelectAll" type="button">Select All</button>
+        <button id="sourceFilterClearAll" type="button">Clear All</button>
+        <button id="sourceFilterRefresh" type="button">Refresh</button>
+        <button id="sourceDownloadTemplate" type="button" title="Download a q_*.json template (simple + advanced sections inside).">⬇️ Template</button>
+        <button id="sourceImportJson" type="button" title="Import a local q_*.json file (validated before loading).">⤴️ Import</button>
+      </div>
+
+      <div class="source-filter-header source-filter-header-secondary">
+        <strong>Imported Sources</strong>
+        <button id="importedDeleteAll" type="button" class="imported-delete-all" title="Delete all imported sources">🗑️ Delete all</button>
+      </div>
+      <div id="importedSourcesList" class="imported-sources-list"></div>
+
+      <div class="source-filter-header source-filter-header-secondary">
+        <strong>Categories (from tags)</strong>
+      </div>
+      <div id="categoryFilterChecklist" class="source-filter-checklist"></div>
+      <div class="source-filter-actions">
+        <button id="categoryFilterSelectAll" type="button">Select All</button>
+        <button id="categoryFilterClearAll" type="button">Clear All</button>
+      </div>
+    </div>
+
+    <div id="textPromptModal" class="theme-modal" style="display: none">
+      <div class="theme-modal-content">
+        <h3 id="textPromptTitle">Rename</h3>
+        <input id="textPromptInput" class="text-prompt-input" type="text" autocomplete="off" />
+        <div class="theme-modal-actions">
+          <button id="textPromptOk">OK</button>
+          <button id="textPromptCancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="importPromptModal" class="theme-modal" style="display: none">
+      <div class="theme-modal-content import-prompt-content">
+        <div class="settings-header">
+          <h3>Import Questions</h3>
+          <button id="importPromptClose" type="button" class="settings-close" aria-label="Close" title="Close">✕</button>
+        </div>
+
+        <div class="import-prompt-section">
+          <h4>Option 1 — Pick an existing JSON file</h4>
+          <p class="import-prompt-hint">
+            File must be named <code>q_something.json</code> and contain a JSON array of question objects.
+          </p>
+          <button id="importPromptPickFile" type="button" class="import-prompt-primary">⤴️ Choose .json file</button>
+        </div>
+
+        <div class="import-prompt-section">
+          <h4>Option 2 — Generate with AI from a book or any text</h4>
+          <p class="import-prompt-hint">
+            Copy the prompt below, paste it into ChatGPT / Claude / any LLM together with the source text (a book chapter, article, notes, anything). It will return a JSON array you can save as <code>q_yourname.json</code> and import here.
+          </p>
+          <textarea id="importPromptText" class="import-prompt-textarea" spellcheck="false" readonly></textarea>
+          <div class="import-prompt-actions">
+            <button id="importPromptCopy" type="button" class="import-prompt-primary">📋 Copy prompt</button>
+            <button id="importPromptDownloadTemplate" type="button">⬇️ Download template (.json)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="jsonEditorModal" class="theme-modal" style="display: none">
+      <div class="theme-modal-content json-editor-content">
+        <h3 id="jsonEditorTitle">Edit Imported Questions</h3>
+        <div id="jsonEditorHint" class="json-editor-hint"></div>
+        <textarea id="jsonEditorTextarea" class="json-editor-textarea" spellcheck="false"></textarea>
+        <div id="jsonEditorError" class="json-editor-error" hidden></div>
+        <div class="theme-modal-actions">
+          <button id="jsonEditorSave">Save</button>
+          <button id="jsonEditorCancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="docsModal" class="theme-modal" style="display: none">
+      <div class="theme-modal-content docs-modal-content">
+        <div class="settings-header">
+          <h3 id="docsModalTitle">Setup Guide</h3>
+          <button id="docsModalClose" type="button" class="settings-close" aria-label="Close" title="Close">✕</button>
+        </div>
+        <pre id="docsModalBody" class="docs-modal-body"></pre>
+      </div>
+    </div>
+
+    <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- =======================================================
+       SCRIPTS
+  ======================================================= -->
+    <script src="script.js"></script>
+    <script>
+      if ("serviceWorker" in navigator && location.protocol !== "file:") {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("sw.js")
+            .catch((err) => console.warn("[pwa] sw registration failed", err));
+        });
+      }
+    </script>
+</body>
+</html>

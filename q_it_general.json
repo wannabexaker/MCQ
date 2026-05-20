@@ -1,0 +1,243 @@
+[
+  {
+    "number": 1,
+    "question_en": "Which data structure follows Last-In-First-Out (LIFO) order?",
+    "choices_en": ["Queue", "Stack", "Linked List", "Heap"],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 2,
+    "question_en": "What does CPU stand for?",
+    "choices_en": [
+      "Central Processing Unit",
+      "Computer Personal Unit",
+      "Control Program Utility",
+      "Central Protocol Unit"
+    ],
+    "correctIndex": 0,
+    "itGeneral": true
+  },
+  {
+    "number": 3,
+    "question_en": "Which type of memory is volatile and loses its contents when power is off?",
+    "choices_en": ["SSD", "HDD", "RAM", "ROM"],
+    "correctIndex": 2,
+    "itGeneral": true
+  },
+  {
+    "number": 4,
+    "question_en": "What is the time complexity of binary search on a sorted array of size n?",
+    "choices_en": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 5,
+    "question_en": "Which Git command creates a new branch and switches to it?",
+    "choices_en": [
+      "git branch <name>",
+      "git switch -c <name>",
+      "git checkout <name>",
+      "git merge <name>"
+    ],
+    "correctIndex": 1,
+    "itGeneral": true,
+    "code": "git switch -c feature/login"
+  },
+  {
+    "number": 6,
+    "question_en": "Which SQL clause is used to filter rows in a SELECT query?",
+    "choices_en": ["ORDER BY", "WHERE", "GROUP BY", "HAVING"],
+    "correctIndex": 1,
+    "itGeneral": true,
+    "code": "SELECT name FROM users WHERE active = 1;"
+  },
+  {
+    "number": 7,
+    "question_en": "Which SQL clause filters groups produced by GROUP BY?",
+    "choices_en": ["WHERE", "HAVING", "FILTER", "QUALIFY"],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 8,
+    "question_en": "What does API stand for?",
+    "choices_en": [
+      "Application Protocol Interface",
+      "Application Programming Interface",
+      "Automated Procedure Interface",
+      "Advanced Program Integration"
+    ],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 9,
+    "question_en": "In REST, which HTTP verb is conventionally used to create a new resource?",
+    "choices_en": ["GET", "POST", "PUT", "DELETE"],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 10,
+    "question_en": "Which JavaScript keyword declares a block-scoped, reassignable variable?",
+    "choices_en": ["var", "let", "const", "static"],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 11,
+    "question_en": "Which command shows the running processes on Linux with their resource usage interactively?",
+    "choices_en": ["ps aux", "top", "df -h", "uptime"],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 12,
+    "question_en": "Which file lists the dependencies of a Node.js project?",
+    "choices_en": ["package.json", "node.config", "deps.json", "module.json"],
+    "correctIndex": 0,
+    "itGeneral": true
+  },
+  {
+    "number": 13,
+    "question_en": "Which design pattern restricts a class to a single instance?",
+    "choices_en": ["Factory", "Singleton", "Observer", "Strategy"],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 14,
+    "question_en": "What is the worst-case time complexity of QuickSort?",
+    "choices_en": ["O(n)", "O(n log n)", "O(n^2)", "O(log n)"],
+    "correctIndex": 2,
+    "itGeneral": true
+  },
+  {
+    "number": 15,
+    "question_en": "What does SaaS stand for in cloud computing?",
+    "choices_en": [
+      "Software as a Service",
+      "Storage as a Service",
+      "System as a Subscription",
+      "Service and a Server"
+    ],
+    "correctIndex": 0,
+    "itGeneral": true
+  },
+  {
+    "number": 16,
+    "question_en": "Which container technology popularized OS-level virtualization with images and layered filesystems?",
+    "choices_en": ["VMware", "Docker", "Vagrant", "QEMU"],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 17,
+    "question_en": "Which JSON value is NOT a valid type?",
+    "choices_en": ["number", "boolean", "undefined", "null"],
+    "correctIndex": 2,
+    "itGeneral": true
+  },
+  {
+    "number": 18,
+    "question_en": "Which command moves the current Git branch tip to a new base commit, replaying its work on top?",
+    "choices_en": ["git merge", "git rebase", "git cherry-pick", "git reset"],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 19,
+    "question_en": "Which database type is MongoDB?",
+    "choices_en": ["Relational", "Document", "Graph", "Key-value only"],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 20,
+    "question_en": "Which character encoding is the de-facto standard for the modern web?",
+    "choices_en": ["ASCII", "UTF-8", "UTF-16", "ISO-8859-1"],
+    "correctIndex": 1,
+    "itGeneral": true
+  },
+  {
+    "number": 21,
+    "question_en": "In Linux file permissions, what does 'chmod 755 file' grant the owner?",
+    "choices_en": ["Read only", "Read + execute", "Read + write + execute", "Write only"],
+    "correctIndex": 2,
+    "itGeneral": true,
+    "code": "chmod 755 file"
+  },
+  {
+    "number": 22,
+    "question_en": "Which Python keyword catches exceptions?",
+    "choices_en": ["catch", "except", "rescue", "trap"],
+    "correctIndex": 1,
+    "itGeneral": true,
+    "code": "try:\n    risky()\nexcept ValueError as e:\n    handle(e)"
+  },
+  {
+    "number": 23,
+    "question_en": "Which HTTP status code indicates 'Not Found'?",
+    "choices_en": ["301", "401", "403", "404"],
+    "correctIndex": 3,
+    "itGeneral": true
+  },
+  {
+    "number": 24,
+    "question_en": "Which Git command shows the history of a file with the author of each line?",
+    "choices_en": ["git log", "git diff", "git blame", "git show"],
+    "correctIndex": 2,
+    "itGeneral": true,
+    "code": "git blame src/app.js"
+  },
+  {
+    "number": 25,
+    "question_en": "Which is NOT a primitive type in JavaScript?",
+    "choices_en": ["string", "number", "object", "boolean"],
+    "correctIndex": 2,
+    "itGeneral": true
+  },
+  {
+    "number": 26,
+    "question_en": "What does ACID stand for in database transactions?",
+    "choices_en": [
+      "Atomicity, Consistency, Isolation, Durability",
+      "Asynchronous, Concurrent, Indexed, Distributed",
+      "Atomic, Cached, Immutable, Deterministic",
+      "Access, Control, Identity, Data"
+    ],
+    "correctIndex": 0,
+    "itGeneral": true
+  },
+  {
+    "number": 27,
+    "question_en": "Which Linux command counts the number of lines in a file?",
+    "choices_en": ["wc -l", "ls -l", "cat -n", "grep -c"],
+    "correctIndex": 0,
+    "itGeneral": true,
+    "code": "wc -l access.log"
+  },
+  {
+    "number": 28,
+    "question_en": "In Big-O notation, which complexity is the most efficient asymptotically?",
+    "choices_en": ["O(n)", "O(n log n)", "O(log n)", "O(1)"],
+    "correctIndex": 3,
+    "itGeneral": true
+  },
+  {
+    "number": 29,
+    "question_en": "Which protocol is used to send email between mail servers?",
+    "choices_en": ["IMAP", "POP3", "SMTP", "HTTP"],
+    "correctIndex": 2,
+    "itGeneral": true
+  },
+  {
+    "number": 30,
+    "question_en": "Which file in a typical Git repo lists patterns to be excluded from version control?",
+    "choices_en": [".gitconfig", ".gitignore", ".gitkeep", ".gitattributes"],
+    "correctIndex": 1,
+    "itGeneral": true
+  }
+]

@@ -1,0 +1,223 @@
+[
+  {
+    "number": 1,
+    "question_en": "Which OSI layer is responsible for end-to-end reliable delivery and flow control?",
+    "choices_en": ["Network (3)", "Transport (4)", "Session (5)", "Data Link (2)"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 2,
+    "question_en": "Which port does HTTPS use by default?",
+    "choices_en": ["80", "8080", "443", "8443"],
+    "correctIndex": 2,
+    "networking": true
+  },
+  {
+    "number": 3,
+    "question_en": "What is the maximum number of usable host addresses in a /24 IPv4 subnet?",
+    "choices_en": ["256", "254", "255", "253"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 4,
+    "question_en": "Which protocol resolves a domain name to an IP address?",
+    "choices_en": ["DHCP", "DNS", "ARP", "ICMP"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 5,
+    "question_en": "Which protocol resolves a known IPv4 address to a MAC address on the same LAN?",
+    "choices_en": ["RARP", "DNS", "ARP", "NDP"],
+    "correctIndex": 2,
+    "networking": true
+  },
+  {
+    "number": 6,
+    "question_en": "Which device operates primarily at OSI Layer 2 and forwards frames based on MAC addresses?",
+    "choices_en": ["Router", "Hub", "Switch", "Repeater"],
+    "correctIndex": 2,
+    "networking": true
+  },
+  {
+    "number": 7,
+    "question_en": "What is the loopback address in IPv4?",
+    "choices_en": ["0.0.0.0", "127.0.0.1", "192.168.0.1", "255.255.255.255"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 8,
+    "question_en": "Which transport-layer protocol is connectionless and does not guarantee delivery?",
+    "choices_en": ["TCP", "UDP", "SCTP", "QUIC"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 9,
+    "question_en": "TCP uses a three-way handshake. Which flags are exchanged in order?",
+    "choices_en": ["SYN, ACK, FIN", "SYN, SYN-ACK, ACK", "ACK, SYN, FIN", "PSH, ACK, SYN"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 10,
+    "question_en": "Which CIDR notation corresponds to subnet mask 255.255.255.240?",
+    "choices_en": ["/26", "/27", "/28", "/29"],
+    "correctIndex": 2,
+    "networking": true
+  },
+  {
+    "number": 11,
+    "question_en": "Which IPv4 range is reserved for private networks per RFC 1918?",
+    "choices_en": ["10.0.0.0/8", "100.64.0.0/10", "169.254.0.0/16", "224.0.0.0/4"],
+    "correctIndex": 0,
+    "networking": true
+  },
+  {
+    "number": 12,
+    "question_en": "What is the default port for SSH?",
+    "choices_en": ["21", "22", "23", "25"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 13,
+    "question_en": "Which protocol is used to assign IP addresses dynamically to hosts on a network?",
+    "choices_en": ["DNS", "DHCP", "SNMP", "NTP"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 14,
+    "question_en": "What does NAT primarily do?",
+    "choices_en": [
+      "Translates between private and public IP addresses",
+      "Encrypts traffic between hosts",
+      "Resolves names to IPs",
+      "Routes packets between VLANs"
+    ],
+    "correctIndex": 0,
+    "networking": true
+  },
+  {
+    "number": 15,
+    "question_en": "Which IEEE standard defines Wi-Fi 6?",
+    "choices_en": ["802.11n", "802.11ac", "802.11ax", "802.11be"],
+    "correctIndex": 2,
+    "networking": true
+  },
+  {
+    "number": 16,
+    "question_en": "Which IPv6 address type is the equivalent of 127.0.0.1 in IPv4?",
+    "choices_en": ["fe80::/10", "::1", "ff02::1", "::"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 17,
+    "question_en": "Which routing protocol is a link-state protocol used inside an autonomous system?",
+    "choices_en": ["RIP", "BGP", "OSPF", "EIGRP"],
+    "correctIndex": 2,
+    "networking": true
+  },
+  {
+    "number": 18,
+    "question_en": "Which protocol exchanges routes between autonomous systems on the public Internet?",
+    "choices_en": ["OSPF", "BGP", "IS-IS", "RIP"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 19,
+    "question_en": "VLAN tags as defined by IEEE 802.1Q add how many bytes to an Ethernet frame?",
+    "choices_en": ["2", "4", "6", "8"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 20,
+    "question_en": "Which command displays the current TCP/UDP listening sockets on Linux?",
+    "choices_en": ["ifconfig -a", "ss -tuln", "route -n", "arp -a"],
+    "correctIndex": 1,
+    "networking": true,
+    "code": "ss -tuln"
+  },
+  {
+    "number": 21,
+    "question_en": "Which DNS record type maps a hostname to an IPv6 address?",
+    "choices_en": ["A", "AAAA", "CNAME", "MX"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 22,
+    "question_en": "What is the typical MTU for standard Ethernet (without jumbo frames)?",
+    "choices_en": ["576", "1280", "1500", "9000"],
+    "correctIndex": 2,
+    "networking": true
+  },
+  {
+    "number": 23,
+    "question_en": "Which protocol is used by traceroute on most Linux systems by default?",
+    "choices_en": ["ICMP Echo", "UDP with increasing TTL", "TCP SYN", "ARP"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 24,
+    "question_en": "Which protocol prevents Layer 2 loops on switched networks?",
+    "choices_en": ["LACP", "STP", "HSRP", "VRRP"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 25,
+    "question_en": "What does LACP do?",
+    "choices_en": [
+      "Aggregates multiple physical links into one logical link",
+      "Mirrors traffic to an analyzer port",
+      "Encrypts inter-switch traffic",
+      "Authenticates wireless clients"
+    ],
+    "correctIndex": 0,
+    "networking": true
+  },
+  {
+    "number": 26,
+    "question_en": "Which protocol provides time synchronization across network devices?",
+    "choices_en": ["SNMP", "NTP", "SMTP", "FTP"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 27,
+    "question_en": "What is the broadcast address of the subnet 192.168.10.0/26?",
+    "choices_en": ["192.168.10.31", "192.168.10.63", "192.168.10.127", "192.168.10.255"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 28,
+    "question_en": "Which TCP state means the local end has sent FIN and is awaiting the peer's FIN?",
+    "choices_en": ["CLOSE_WAIT", "FIN_WAIT_1", "FIN_WAIT_2", "TIME_WAIT"],
+    "correctIndex": 2,
+    "networking": true
+  },
+  {
+    "number": 29,
+    "question_en": "Which technology encapsulates Layer 2 frames inside Layer 3 packets to extend LANs over WAN?",
+    "choices_en": ["MPLS", "VXLAN", "GRE", "IPSec"],
+    "correctIndex": 1,
+    "networking": true
+  },
+  {
+    "number": 30,
+    "question_en": "Which utility tests reachability and round-trip time using ICMP Echo Request/Reply?",
+    "choices_en": ["ping", "nslookup", "dig", "netstat"],
+    "correctIndex": 0,
+    "networking": true
+  }
+]

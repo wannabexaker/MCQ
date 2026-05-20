@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MCQ Trainer</string>
+    <string name="title_activity_main">MCQ Trainer</string>
+    <string name="package_name">app.mcqtrainer</string>
+    <string name="custom_url_scheme">app.mcqtrainer</string>
+</resources>

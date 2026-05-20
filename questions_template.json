@@ -1,0 +1,49 @@
+[
+  {
+    "__template": true,
+    "__section": "SIMPLE",
+    "__instructions": [
+      "Copy the SIMPLE questions below, edit them, and add more objects like them.",
+      "Required fields: number, question_en, choices_en, correctIndex, and at least one boolean tag (example: generalGK: true).",
+      "File name must be q_*.json (example: q_test.json). Root must be an array: [ {...}, {...} ]."
+    ],
+    "__quickCopyPasteExample": "{\n  \"number\": 1,\n  \"question_en\": \"What color is the sky on a clear day?\",\n  \"choices_en\": [\"Blue\", \"Green\", \"Red\", \"Yellow\"],\n  \"correctIndex\": 0,\n  \"generalGK\": true\n}"
+  },
+  {
+    "number": 1,
+    "question_en": "What color is the sky on a clear day?",
+    "choices_en": ["Blue", "Green", "Red", "Yellow"],
+    "correctIndex": 0,
+    "generalGK": true
+  },
+  {
+    "number": 2,
+    "question_en": "Which planet is known as the Red Planet?",
+    "choices_en": ["Earth", "Mars", "Jupiter", "Venus"],
+    "correctIndex": 1,
+    "generalGK": true
+  },
+  {
+    "__template": true,
+    "__section": "ADVANCED (OPTIONAL FIELDS)",
+    "__instructions": [
+      "Everything in SIMPLE is still required for each question.",
+      "Optional fields you can add: id, question_el, choices_el, image, image_answers, code.",
+      "If you use image/image_answers: put the image file in your project (example: images/my_pic.png) and reference it as a relative path."
+    ]
+  },
+  {
+    "number": 3,
+    "id": "replace-me-3",
+    "question_en": "Advanced example: Which SQL clause filters rows?",
+    "question_el": "",
+    "choices_en": ["ORDER BY", "WHERE", "GROUP BY", "SELECT"],
+    "choices_el": [],
+    "correctIndex": 1,
+    "sql": true,
+    "image": "images/video_questions/video2_1.png",
+    "image_answers": "images/video_questions/video2_1answer.png",
+    "code": "SELECT *\nFROM Users\nWHERE IsActive = 1;"
+  }
+]
+
