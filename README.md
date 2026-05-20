@@ -1,5 +1,8 @@
 # MCQ Trainer
 
+[![Build APK](https://github.com/wannabexaker/MCQ/actions/workflows/build-apk.yml/badge.svg)](https://github.com/wannabexaker/MCQ/actions/workflows/build-apk.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Multiple-choice quiz engine with user-supplied JSON banks, offline storage, and an Android APK wrapper
 
 ## Overview
@@ -86,7 +89,12 @@ Web (Docker):
 docker compose up --build
 ```
 
-Android APK build:
+Android APK — download pre-built:
+
+- Tagged releases: [Releases page](https://github.com/wannabexaker/MCQ/releases) (one `.apk` per release)
+- Latest from `main`: [Actions → Build Android APK](https://github.com/wannabexaker/MCQ/actions/workflows/build-apk.yml) → most recent run → `mcq-trainer-debug-apk` artifact (requires GitHub login, 30-day retention)
+
+Android APK — build locally:
 
 ```bash
 npm install
