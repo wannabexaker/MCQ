@@ -86,188 +86,6 @@
         ⚙️
       </button>
 
-      <!-- GODLIKE Popup Modal -->
-      <div id="godlikeModal" class="godlike-modal" style="display: none">
-        <div class="modal-content">
-          <img src="images/game_over.jpg" alt="Game Over" background-color: black/>
-          <button id="closeGodlike">Try again?</button>
-        </div>
-      </div>
-
-      <!-- GAY THEME EXIT POPUP -->
-      <div id="gayThemeModal" class="theme-modal" style="display: none">
-        <div class="theme-modal-content" id="gayThemeStep1">
-          <h3>Are you sure you want to change theme?</h3>
-          <div class="theme-modal-actions">
-            <button id="gayThemeYes">Yes</button>
-            <button id="gayThemeNo">No</button>
-          </div>
-        </div>
-
-        <div class="theme-modal-content" id="gayThemeStep2" style="display: none">
-          <h3>Are you gay?</h3>
-          <div class="theme-modal-actions">
-            <button id="gayThemeYes2">Yes</button>
-            <button id="gayThemeNo2">No</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="gayCelebrateModal" class="theme-modal" style="display: none">
-        <div class="theme-modal-content">
-          <h3>THEN THIS IS YOUR THEME</h3>
-          <div class="theme-modal-actions">
-            <button id="gayCelebrateClose">Awesome</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="gayNoPersistModal" class="theme-modal" style="display: none">
-        <div class="theme-modal-content">
-          <h3 id="gayNoPersistText">
-            Okay, that's persistence. Maybe this theme is not your vibe, so I'll switch it for you.
-          </h3>
-          <div class="theme-modal-actions">
-            <button id="gayNoPersistClose">Okay</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="modeResetConfirmModal" class="theme-modal" style="display: none">
-        <div class="theme-modal-content">
-          <h3 id="modeResetConfirmText">
-            Are you sure? Disabling this mode will reset your progress.
-          </h3>
-          <div class="theme-modal-actions">
-            <button id="modeResetConfirmYes">Yes</button>
-            <button id="modeResetConfirmNo">No</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="settingsModal" class="theme-modal" style="display: none">
-        <div class="theme-modal-content settings-modal-content">
-          <div class="settings-header">
-            <h3>Settings</h3>
-            <button id="settingsClose" type="button" class="settings-close" aria-label="Close settings" title="Close">✕</button>
-          </div>
-
-          <div class="settings-tabs" role="tablist" aria-label="Settings tabs">
-            <button class="settings-tab" id="settingsTabGeneral" type="button" role="tab" aria-controls="settingsPanelGeneral" aria-selected="true">General</button>
-            <button class="settings-tab" id="settingsTabHud" type="button" role="tab" aria-controls="settingsPanelHud" aria-selected="false">HUD</button>
-            <button class="settings-tab" id="settingsTabTest" type="button" role="tab" aria-controls="settingsPanelTest" aria-selected="false">Test</button>
-            <button class="settings-tab" id="settingsTabDocker" type="button" role="tab" aria-controls="settingsPanelDocker" aria-selected="false">Downloads</button>
-          </div>
-
-          <div class="settings-panels">
-            <section class="settings-panel" id="settingsPanelGeneral" role="tabpanel" aria-labelledby="settingsTabGeneral">
-              <div class="settings-section">
-                <div class="settings-section-title">Q&A</div>
-                <div class="settings-actions">
-                  <label class="settings-row" for="settingsQaFontSize">
-                    <span>Font size</span>
-                    <span id="settingsQaFontSizeValue" class="settings-value">16px</span>
-                  </label>
-                  <input id="settingsQaFontSize" type="range" min="12" max="22" step="1" value="16" />
-                  <button id="settingsQaFontReset" type="button">Reset font size</button>
-                </div>
-              </div>
-
-              <div class="settings-section">
-                <div class="settings-section-title">Controls</div>
-                <div class="settings-actions">
-                  <label class="settings-row">
-                    <span>Layout</span>
-                    <span id="settingsControlsLayoutValue" class="settings-value">Horizontal</span>
-                  </label>
-                  <div class="settings-toggle-row" role="group" aria-label="Controls layout">
-                    <button id="settingsControlsHorizontal" type="button">Horizontal</button>
-                    <button id="settingsControlsVertical" type="button">Vertical</button>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section class="settings-panel" id="settingsPanelHud" role="tabpanel" aria-labelledby="settingsTabHud" hidden>
-              <div class="settings-section">
-                <div class="settings-section-title">Positions</div>
-                <div class="settings-actions">
-                  <button id="settingsResetTimer" type="button">Reset timer position</button>
-                  <button id="settingsResetWidgets" type="button">Reset widgets position</button>
-                  <button id="settingsResetControls" type="button">Reset controls position</button>
-                </div>
-              </div>
-            </section>
-
-            <section class="settings-panel" id="settingsPanelTest" role="tabpanel" aria-labelledby="settingsTabTest" hidden>
-              <div class="settings-section">
-                <div class="settings-section-title">Test</div>
-                <div class="settings-actions">
-                  <button id="settingsCompleteTest" type="button">Complete test</button>
-                  <label class="settings-row">
-                    <span>Practice mode</span>
-                    <span id="settingsPracticeModeValue" class="settings-value">Off</span>
-                  </label>
-                  <div class="settings-toggle-row" role="group" aria-label="Practice mode">
-                    <button id="settingsPracticeOff" type="button">Off</button>
-                    <button id="settingsPracticeWrongOnce" type="button">Wrong 1+</button>
-                    <button id="settingsPracticeWrongRepeat" type="button">Wrong 2+</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="settings-section">
-                <div class="settings-section-title">History</div>
-                <div id="settingsHistoryList" class="settings-history"></div>
-              </div>
-            </section>
-
-            <section class="settings-panel" id="settingsPanelDocker" role="tabpanel" aria-labelledby="settingsTabDocker" hidden>
-              <div class="settings-section">
-                <div class="settings-section-title">Downloads</div>
-                <div class="settings-actions settings-actions-grid">
-                  <button id="settingsDockerDownloadBundle" type="button" title="Recommended: includes the app and all Docker files.">📦 App + Docker (zip)</button>
-                  <button id="settingsDockerDownloadAll" type="button" title="Docker files only (you must already have the app files).">🐳 Docker files (zip)</button>
-                  <button id="settingsOpenSetupGuide" type="button" title="Read setup instructions inside the app.">📖 Open setup guide</button>
-                  <button id="settingsLocalServerDownloadScripts" type="button" title="One-click scripts to run a local server with Python.">🧰 Local server scripts (zip)</button>
-                </div>
-              </div>
-
-              <div class="settings-section">
-                <div class="settings-section-title">Run</div>
-                <div class="settings-code">
-                  <pre><code>docker compose up --build
-# open: http://localhost:8080</code></pre>
-                </div>
-                <div class="settings-hint">
-                  Tip: Use Docker or a local server. Opening <code>index.html</code> via <code>file://</code> blocks loading <code>q_*.json</code>.
-                </div>
-              </div>
-
-              <div class="settings-section">
-                <div class="settings-section-title">Local Server (Python)</div>
-                <div class="settings-code">
-                  <pre><code>python -m http.server 8000
-# Windows alternative:
-py -3 -m http.server 8000
-# open: http://localhost:8000</code></pre>
-                </div>
-              </div>
-
-              <div class="settings-section">
-                <div class="settings-section-title">Manual (Customize)</div>
-                <div class="settings-actions">
-                  <button id="settingsDockerDownloadManual" type="button" hidden>Download manual templates</button>
-                </div>
-                <div class="settings-hint">
-                  Use manual templates if you want to change ports, use a different web server, or mount volumes for development.
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-
       <!-- TIMER -->
       <div id="timer-wrapper" class="draggable">
         <div class="timer-title">Timer</div>
@@ -428,6 +246,188 @@ py -3 -m http.server 8000
           <button id="docsModalClose" type="button" class="settings-close" aria-label="Close" title="Close">✕</button>
         </div>
         <pre id="docsModalBody" class="docs-modal-body"></pre>
+      </div>
+    </div>
+
+    <!-- GODLIKE Popup Modal -->
+    <div id="godlikeModal" class="godlike-modal" style="display: none">
+      <div class="modal-content">
+        <img src="images/game_over.jpg" alt="Game Over" background-color: black/>
+        <button id="closeGodlike">Try again?</button>
+      </div>
+    </div>
+
+    <!-- GAY THEME EXIT POPUP -->
+    <div id="gayThemeModal" class="theme-modal" style="display: none">
+      <div class="theme-modal-content" id="gayThemeStep1">
+        <h3>Are you sure you want to change theme?</h3>
+        <div class="theme-modal-actions">
+          <button id="gayThemeYes">Yes</button>
+          <button id="gayThemeNo">No</button>
+        </div>
+      </div>
+
+      <div class="theme-modal-content" id="gayThemeStep2" style="display: none">
+        <h3>Are you gay?</h3>
+        <div class="theme-modal-actions">
+          <button id="gayThemeYes2">Yes</button>
+          <button id="gayThemeNo2">No</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="gayCelebrateModal" class="theme-modal" style="display: none">
+      <div class="theme-modal-content">
+        <h3>THEN THIS IS YOUR THEME</h3>
+        <div class="theme-modal-actions">
+          <button id="gayCelebrateClose">Awesome</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="gayNoPersistModal" class="theme-modal" style="display: none">
+      <div class="theme-modal-content">
+        <h3 id="gayNoPersistText">
+          Okay, that's persistence. Maybe this theme is not your vibe, so I'll switch it for you.
+        </h3>
+        <div class="theme-modal-actions">
+          <button id="gayNoPersistClose">Okay</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modeResetConfirmModal" class="theme-modal" style="display: none">
+      <div class="theme-modal-content">
+        <h3 id="modeResetConfirmText">
+          Are you sure? Disabling this mode will reset your progress.
+        </h3>
+        <div class="theme-modal-actions">
+          <button id="modeResetConfirmYes">Yes</button>
+          <button id="modeResetConfirmNo">No</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="settingsModal" class="theme-modal" style="display: none">
+      <div class="theme-modal-content settings-modal-content">
+        <div class="settings-header">
+          <h3>Settings</h3>
+          <button id="settingsClose" type="button" class="settings-close" aria-label="Close settings" title="Close">✕</button>
+        </div>
+
+        <div class="settings-tabs" role="tablist" aria-label="Settings tabs">
+          <button class="settings-tab" id="settingsTabGeneral" type="button" role="tab" aria-controls="settingsPanelGeneral" aria-selected="true">General</button>
+          <button class="settings-tab" id="settingsTabHud" type="button" role="tab" aria-controls="settingsPanelHud" aria-selected="false">HUD</button>
+          <button class="settings-tab" id="settingsTabTest" type="button" role="tab" aria-controls="settingsPanelTest" aria-selected="false">Test</button>
+          <button class="settings-tab" id="settingsTabDocker" type="button" role="tab" aria-controls="settingsPanelDocker" aria-selected="false">Downloads</button>
+        </div>
+
+        <div class="settings-panels">
+          <section class="settings-panel" id="settingsPanelGeneral" role="tabpanel" aria-labelledby="settingsTabGeneral">
+            <div class="settings-section">
+              <div class="settings-section-title">Q&A</div>
+              <div class="settings-actions">
+                <label class="settings-row" for="settingsQaFontSize">
+                  <span>Font size</span>
+                  <span id="settingsQaFontSizeValue" class="settings-value">16px</span>
+                </label>
+                <input id="settingsQaFontSize" type="range" min="12" max="22" step="1" value="16" />
+                <button id="settingsQaFontReset" type="button">Reset font size</button>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">Controls</div>
+              <div class="settings-actions">
+                <label class="settings-row">
+                  <span>Layout</span>
+                  <span id="settingsControlsLayoutValue" class="settings-value">Horizontal</span>
+                </label>
+                <div class="settings-toggle-row" role="group" aria-label="Controls layout">
+                  <button id="settingsControlsHorizontal" type="button">Horizontal</button>
+                  <button id="settingsControlsVertical" type="button">Vertical</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="settings-panel" id="settingsPanelHud" role="tabpanel" aria-labelledby="settingsTabHud" hidden>
+            <div class="settings-section">
+              <div class="settings-section-title">Positions</div>
+              <div class="settings-actions">
+                <button id="settingsResetTimer" type="button">Reset timer position</button>
+                <button id="settingsResetWidgets" type="button">Reset widgets position</button>
+                <button id="settingsResetControls" type="button">Reset controls position</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="settings-panel" id="settingsPanelTest" role="tabpanel" aria-labelledby="settingsTabTest" hidden>
+            <div class="settings-section">
+              <div class="settings-section-title">Test</div>
+              <div class="settings-actions">
+                <button id="settingsCompleteTest" type="button">Complete test</button>
+                <label class="settings-row">
+                  <span>Practice mode</span>
+                  <span id="settingsPracticeModeValue" class="settings-value">Off</span>
+                </label>
+                <div class="settings-toggle-row" role="group" aria-label="Practice mode">
+                  <button id="settingsPracticeOff" type="button">Off</button>
+                  <button id="settingsPracticeWrongOnce" type="button">Wrong 1+</button>
+                  <button id="settingsPracticeWrongRepeat" type="button">Wrong 2+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">History</div>
+              <div id="settingsHistoryList" class="settings-history"></div>
+            </div>
+          </section>
+
+          <section class="settings-panel" id="settingsPanelDocker" role="tabpanel" aria-labelledby="settingsTabDocker" hidden>
+            <div class="settings-section">
+              <div class="settings-section-title">Downloads</div>
+              <div class="settings-actions settings-actions-grid">
+                <button id="settingsDockerDownloadBundle" type="button" title="Recommended: includes the app and all Docker files.">📦 App + Docker (zip)</button>
+                <button id="settingsDockerDownloadAll" type="button" title="Docker files only (you must already have the app files).">🐳 Docker files (zip)</button>
+                <button id="settingsOpenSetupGuide" type="button" title="Read setup instructions inside the app.">📖 Open setup guide</button>
+                <button id="settingsLocalServerDownloadScripts" type="button" title="One-click scripts to run a local server with Python.">🧰 Local server scripts (zip)</button>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">Run</div>
+              <div class="settings-code">
+                <pre><code>docker compose up --build
+# open: http://localhost:8080</code></pre>
+              </div>
+              <div class="settings-hint">
+                Tip: Use Docker or a local server. Opening <code>index.html</code> via <code>file://</code> blocks loading <code>q_*.json</code>.
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">Local Server (Python)</div>
+              <div class="settings-code">
+                <pre><code>python -m http.server 8000
+# Windows alternative:
+py -3 -m http.server 8000
+# open: http://localhost:8000</code></pre>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">Manual (Customize)</div>
+              <div class="settings-actions">
+                <button id="settingsDockerDownloadManual" type="button" hidden>Download manual templates</button>
+              </div>
+              <div class="settings-hint">
+                Use manual templates if you want to change ports, use a different web server, or mount volumes for development.
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
 
