@@ -1753,9 +1753,19 @@ body.mobile-menu-open {
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: 999px;
-  font-size: 0.95em;
+  /* 16px keeps iOS Safari from zooming in on focus. Below that it auto-zooms. */
+  font-size: 16px;
+  line-height: 1.3;
   outline: none;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  appearance: none;
   transition: border-color 150ms, box-shadow 150ms;
+}
+/* Hide the browser's native clear button — we have our own. */
+.welcome-search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
 }
 .welcome-search-input::placeholder {
   opacity: 0.55;
