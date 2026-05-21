@@ -197,6 +197,9 @@
       </div>
     </div>
 
+    <!-- Hidden file input for mobile compatibility -->
+    <input id="importFileInput" type="file" accept="application/json,.json" style="display:none" />
+
     <div id="importPromptModal" class="theme-modal" style="display: none">
       <div class="theme-modal-content import-prompt-content">
         <div class="settings-header">
@@ -204,25 +207,68 @@
           <button id="importPromptClose" type="button" class="settings-close" aria-label="Close" title="Close">✕</button>
         </div>
 
-        <div class="import-prompt-section">
-          <h4>Option 1 — Pick an existing JSON file</h4>
-          <p class="import-prompt-hint">
-            File must be named <code>q_something.json</code> and contain a JSON array of question objects.
-          </p>
-          <button id="importPromptPickFile" type="button" class="import-prompt-primary">⤴️ Choose .json file</button>
-        </div>
-
-        <div class="import-prompt-section">
-          <h4>Option 2 — Generate with AI from a book or any text</h4>
-          <p class="import-prompt-hint">
-            Copy the prompt below, paste it into ChatGPT / Claude / any LLM together with the source text (a book chapter, article, notes, anything). It will return a JSON array you can save as <code>q_yourname.json</code> and import here.
-          </p>
-          <textarea id="importPromptText" class="import-prompt-textarea" spellcheck="false" readonly></textarea>
-          <div class="import-prompt-actions">
-            <button id="importPromptCopy" type="button" class="import-prompt-primary">📋 Copy prompt</button>
-            <button id="importPromptDownloadTemplate" type="button">⬇️ Download template (.json)</button>
+        <!-- AI Generator (collapsible) -->
+        <div class="import-ai-block">
+          <button id="importAiToggle" type="button" class="import-ai-toggle" aria-expanded="true">
+            <span class="import-ai-toggle-icon">✦</span>
+            <span>Generate questions with AI</span>
+            <span class="import-ai-chevron">▾</span>
+          </button>
+          <div id="importAiBody" class="import-ai-body">
+            <p class="import-prompt-hint">
+              Set preferences (optional), copy the prompt, paste it into ChatGPT&nbsp;/&nbsp;Claude with your source text. The AI returns a JSON array — use one of the import methods below.
+            </p>
+            <div class="import-prompt-prefs">
+              <label class="import-pref-label">
+                <span>Language</span>
+                <select id="importPrefLang" class="import-pref-input">
+                  <option value="">Auto (AI decides)</option>
+                  <option value="English">English</option>
+                  <option value="Greek">Greek</option>
+                  <option value="German">German</option>
+                  <option value="French">French</option>
+                  <option value="Spanish">Spanish</option>
+                </select>
+              </label>
+              <label class="import-pref-label">
+                <span>Questions</span>
+                <input id="importPrefCount" type="number" class="import-pref-input" min="1" max="200" placeholder="Any" />
+              </label>
+              <label class="import-pref-label">
+                <span>Category tag</span>
+                <input id="importPrefTag" type="text" class="import-pref-input" placeholder="Auto" autocomplete="off" />
+              </label>
+            </div>
+            <textarea id="importPromptText" class="import-prompt-textarea" spellcheck="false" readonly></textarea>
+            <div class="import-prompt-actions">
+              <button id="importPromptCopy" type="button" class="import-prompt-primary">📋 Copy prompt</button>
+              <button id="importPromptDownloadTemplate" type="button">⬇️ Download template</button>
+            </div>
           </div>
         </div>
+
+        <!-- Import section -->
+        <div class="import-input-block">
+          <p class="import-block-label">Import your questions</p>
+
+          <button id="importPromptPickFile" type="button" class="import-pick-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="12" x2="12" y2="18"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Pick a .json file
+          </button>
+
+          <div class="import-or-divider"><span>or paste JSON directly</span></div>
+
+          <label class="import-pref-label import-paste-name-row">
+            <span>Source name</span>
+            <input id="importPasteName" type="text" class="import-pref-input" placeholder="e.g. biology" autocomplete="off" />
+          </label>
+          <textarea id="importPasteText" class="import-paste-textarea" spellcheck="false" placeholder='Paste the AI-generated JSON array here…'></textarea>
+          <div id="importPasteError" class="import-paste-error" hidden></div>
+          <button id="importPasteSave" type="button" class="import-prompt-primary" style="width:100%; margin-top:8px;">
+            💾 Save as source
+          </button>
+        </div>
+
       </div>
     </div>
 
@@ -296,14 +342,12 @@
       </div>
     </div>
 
-    <div id="modeResetConfirmModal" class="theme-modal" style="display: none">
-      <div class="theme-modal-content">
-        <h3 id="modeResetConfirmText">
-          Are you sure? Disabling this mode will reset your progress.
-        </h3>
-        <div class="theme-modal-actions">
-          <button id="modeResetConfirmYes">Yes</button>
-          <button id="modeResetConfirmNo">No</button>
+    <div id="modeResetConfirmModal" class="confirm-overlay" style="display: none">
+      <div class="confirm-dialog" id="modeResetConfirmDialog">
+        <p id="modeResetConfirmText" class="confirm-message">Are you sure?</p>
+        <div class="confirm-actions">
+          <button id="modeResetConfirmNo" class="confirm-btn confirm-btn-cancel">No</button>
+          <button id="modeResetConfirmYes" class="confirm-btn confirm-btn-ok">Yes</button>
         </div>
       </div>
     </div>

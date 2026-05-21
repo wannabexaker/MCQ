@@ -1814,7 +1814,9 @@ function confirmDeleteImportedSource(sourceId) {
       deleteImportedSource(sourceId);
       reloadSourcesAndFilters();
       renderImportedSourcesList();
-    }
+    },
+    null,
+    { destructive: true }
   );
 }
 
@@ -1876,14 +1878,14 @@ function openJsonEditorForImportedSource(sourceId) {
   });
 }
 
-const IMPORT_AI_PROMPT = `You are an expert quiz author. I will give you source material (a book chapter, article, notes, or any text). Generate multiple-choice questions from it.
+const IMPORT_AI_PROMPT_BASE = `You are an expert quiz author. I will give you source material (a book chapter, article, notes, or any text). Generate multiple-choice questions from it.
 
 OUTPUT REQUIREMENTS — read carefully:
 - Output ONLY a valid JSON array. No prose, no commentary, no markdown fences, no \`\`\`json wrapper.
 - The root must be an array of question objects: [ { ... }, { ... } ].
 - Each question object MUST have these fields:
   - "number": integer, sequential starting at 1 (1, 2, 3, ...)
-  - "question_en": string, the question text in clear English
+  - "question_en": string, the question text
   - "choices_en": array of 3 to 5 short, distinct strings (the options)
   - "correctIndex": integer, ZERO-BASED index of the correct option in choices_en (0 = first, 1 = second, etc.)
   - exactly ONE boolean category tag set to true. Pick a short snake_case or camelCase name that describes the topic. Examples: "history": true, "biology": true, "chapter1": true, "networking": true. Be consistent across all questions from the same source — use the SAME tag for all of them.
@@ -1915,13 +1917,30 @@ EXAMPLE of valid output (this is what your reply must look like — just the JSO
   }
 ]
 
-Now produce N questions (I will tell you N below) from the following source material. After you reply, I will save your output as a file named q_<topic>.json and import it into my MCQ Trainer app.
+Now produce questions from the following source material. After you reply, I will save your output as a file named q_<topic>.json and import it into my MCQ Trainer app.`;
 
-N = 20
-Category tag to use = chapter1
+function buildImportPrompt() {
+  const lang = document.getElementById("importPrefLang")?.value || "";
+  const count = document.getElementById("importPrefCount")?.value || "";
+  const tag = document.getElementById("importPrefTag")?.value?.trim() || "";
 
-SOURCE MATERIAL:
-<<< paste your book chapter, notes, or any text here >>>`;
+  let extra = [];
+  if (lang) extra.push(`Language for questions and answers = ${lang}`);
+  if (count) extra.push(`Number of questions to generate = ${count}`);
+  if (tag) extra.push(`Category tag to use = ${tag}`);
+
+  let prompt = IMPORT_AI_PROMPT_BASE;
+  if (extra.length) {
+    prompt += "\n\nPREFERENCES:\n" + extra.join("\n");
+  }
+  prompt += "\n\nSOURCE MATERIAL:\n<<< paste your book chapter, notes, or any text here >>>";
+  return prompt;
+}
+
+function refreshImportPromptText() {
+  const ta = document.getElementById("importPromptText");
+  if (ta) ta.value = buildImportPrompt();
+}
 
 function openImportPromptModal() {
   const modal = document.getElementById("importPromptModal");
@@ -1930,7 +1949,12 @@ function openImportPromptModal() {
     pickAndImportQuestionsJson();
     return;
   }
-  ta.value = IMPORT_AI_PROMPT;
+  refreshImportPromptText();
+  // Clear paste area
+  const pasteText = document.getElementById("importPasteText");
+  const pasteError = document.getElementById("importPasteError");
+  if (pasteText) pasteText.value = "";
+  if (pasteError) pasteError.hidden = true;
   modal.style.display = "flex";
   closeSourceFilterMenu();
 }
@@ -1945,11 +1969,45 @@ function wireImportPromptModal() {
     .getElementById("importPromptClose")
     ?.addEventListener("click", closeImportPromptModal);
 
-  document.getElementById("importPromptPickFile")?.addEventListener("click", () => {
-    closeImportPromptModal();
-    pickAndImportQuestionsJson();
+  // AI section toggle
+  const aiToggle = document.getElementById("importAiToggle");
+  const aiBody = document.getElementById("importAiBody");
+  if (aiToggle && aiBody) {
+    aiToggle.addEventListener("click", () => {
+      const expanded = aiToggle.getAttribute("aria-expanded") === "true";
+      aiToggle.setAttribute("aria-expanded", String(!expanded));
+      aiBody.hidden = expanded;
+    });
+  }
+
+  // Preference fields → live-update prompt
+  ["importPrefLang", "importPrefCount", "importPrefTag"].forEach((id) => {
+    document.getElementById(id)?.addEventListener("input", refreshImportPromptText);
+    document.getElementById(id)?.addEventListener("change", refreshImportPromptText);
   });
 
+  // Option 1 — Pick file (use persistent hidden input for mobile compatibility)
+  const persistentFileInput = document.getElementById("importFileInput");
+  if (persistentFileInput) {
+    persistentFileInput.addEventListener("change", async () => {
+      const file = persistentFileInput.files?.[0];
+      persistentFileInput.value = "";
+      if (!file) return;
+      closeImportPromptModal();
+      await handleImportFile(file);
+    });
+  }
+
+  document.getElementById("importPromptPickFile")?.addEventListener("click", () => {
+    if (persistentFileInput) {
+      persistentFileInput.click();
+    } else {
+      closeImportPromptModal();
+      pickAndImportQuestionsJson();
+    }
+  });
+
+  // Option 2 — Copy prompt
   document.getElementById("importPromptCopy")?.addEventListener("click", async () => {
     const ta = document.getElementById("importPromptText");
     const btn = document.getElementById("importPromptCopy");
@@ -1982,6 +2040,52 @@ function wireImportPromptModal() {
       downloadQuestionsTemplate();
     });
 
+  // Option 3 — Paste JSON and save
+  document.getElementById("importPasteSave")?.addEventListener("click", async () => {
+    const nameInput = document.getElementById("importPasteName");
+    const textArea = document.getElementById("importPasteText");
+    const errorEl = document.getElementById("importPasteError");
+    if (!textArea) return;
+
+    const rawText = textArea.value.trim();
+    if (!rawText) {
+      if (errorEl) { errorEl.textContent = "Paste a JSON array first."; errorEl.hidden = false; }
+      return;
+    }
+
+    // Clean markdown fences if user pasted with ```json ... ```
+    let cleanText = rawText;
+    cleanText = cleanText.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/, "");
+
+    let data;
+    try {
+      data = JSON.parse(cleanText);
+    } catch (e) {
+      if (errorEl) { errorEl.textContent = "Invalid JSON: " + e.message; errorEl.hidden = false; }
+      return;
+    }
+
+    if (!Array.isArray(data) || data.length === 0) {
+      if (errorEl) { errorEl.textContent = "JSON must be a non-empty array of question objects."; errorEl.hidden = false; }
+      return;
+    }
+
+    // Build filename
+    let name = (nameInput?.value || "").trim().replace(/[^a-zA-Z0-9_-]/g, "_").toLowerCase();
+    if (!name) name = "pasted_" + Date.now();
+    const fileName = `q_${name}.json`;
+
+    if (errorEl) errorEl.hidden = true;
+
+    const ok = await importQuestionsData(fileName, data);
+    if (ok) {
+      closeImportPromptModal();
+    } else {
+      if (errorEl) { errorEl.textContent = "Validation failed. Check the JSON structure — each object needs question_en, choices_en, and correctIndex."; errorEl.hidden = false; }
+    }
+  });
+
+  // Backdrop click to close
   document
     .getElementById("importPromptModal")
     ?.addEventListener("click", (e) => {
@@ -2007,23 +2111,13 @@ function confirmDeleteAllImportedSources() {
       saveImportedSourcesToStorage([]);
       reloadSourcesAndFilters();
       renderImportedSourcesList();
-    }
+    },
+    null,
+    { destructive: true }
   );
 }
 
-async function pickAndImportQuestionsJson() {
-  const input = document.createElement("input");
-  input.type = "file";
-  input.accept = "application/json,.json";
-
-  const file = await new Promise((resolve) => {
-    input.addEventListener("change", () => resolve(input.files?.[0] || null), {
-      once: true,
-    });
-    input.click();
-  });
-  if (!file) return;
-
+async function handleImportFile(file) {
   const fileName = String(file.name || "");
   if (!SOURCE_FILE_PATTERN.test(fileName) || EXCLUDED_SOURCE_FILES.has(fileName.toLowerCase())) {
     DATA_WARNINGS.push(
@@ -2044,6 +2138,22 @@ async function pickAndImportQuestionsJson() {
   }
 
   await importQuestionsData(fileName, data);
+}
+
+async function pickAndImportQuestionsJson() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "application/json,.json";
+
+  const file = await new Promise((resolve) => {
+    input.addEventListener("change", () => resolve(input.files?.[0] || null), {
+      once: true,
+    });
+    input.click();
+  });
+  if (!file) return;
+
+  await handleImportFile(file);
 }
 
 async function importQuestionsData(fileName, data) {
@@ -2097,10 +2207,10 @@ async function importQuestionsData(fileName, data) {
 }
 
 const BUNDLED_SETS = [
-  { file: "q_networking.json", icon: "🌐", title: "Networking", desc: "OSI layers, TCP/IP, subnetting, routing, DNS, DHCP and more." },
-  { file: "q_cybersecurity.json", icon: "🛡️", title: "Cybersecurity", desc: "OWASP, crypto, authentication, common attacks and defenses." },
-  { file: "q_it_general.json", icon: "💻", title: "IT General", desc: "Algorithms, databases, Linux, Git, web fundamentals, OOP." },
-  { file: "q_demo.json", icon: "📦", title: "Demo (general)", desc: "12 mixed general-knowledge questions — quick smoke test." },
+  { file: "q_networking.json",    icon: "🌐",  title: "Networking",     tag: "networking",    desc: "OSI layers, TCP/IP, subnetting, routing, DNS, DHCP and more." },
+  { file: "q_cybersecurity.json", icon: "🛡️", title: "Cybersecurity",  tag: "cybersecurity", desc: "OWASP, crypto, authentication, common attacks and defenses." },
+  { file: "q_it_general.json",    icon: "💻",  title: "IT General",     tag: "itGeneral",     desc: "Algorithms, databases, Linux, Git, web fundamentals, OOP." },
+  { file: "q_demo.json",          icon: "📦",  title: "Demo (general)", tag: "demo",          desc: "12 mixed general-knowledge questions — quick smoke test." },
 ];
 
 async function loadBundledQuestionSet(fileName) {
@@ -2152,10 +2262,11 @@ function renderQuiz(items) {
     if (noSourcesAtAll) {
       const setsHtml = BUNDLED_SETS.map(
         (s) => `
-        <div class="welcome-set" data-file="${escapeHTML(s.file)}">
+        <div class="welcome-set" data-file="${escapeHTML(s.file)}" data-tag="${escapeHTML((s.tag || "").toLowerCase())}" data-title="${escapeHTML((s.title || "").toLowerCase())}">
           <div class="welcome-set-head">
             <span class="welcome-set-icon">${s.icon}</span>
             <span class="welcome-set-title">${escapeHTML(s.title)}</span>
+            <span class="welcome-set-tag" title="Category tag">#${escapeHTML(s.tag || "")}</span>
           </div>
           <p class="welcome-set-desc">${escapeHTML(s.desc)}</p>
           <div class="welcome-set-actions">
@@ -2169,9 +2280,23 @@ function renderQuiz(items) {
         <h2 class="welcome-title">Welcome to MCQ Trainer</h2>
         <p class="welcome-text">Pick a pre-built question set below, or import your own <code>q_*.json</code>.</p>
 
-        <div class="welcome-sets-grid">
+        <div class="welcome-search">
+          <span class="welcome-search-icon" aria-hidden="true">🔎</span>
+          <input
+            type="search"
+            id="welcomeSearch"
+            class="welcome-search-input"
+            placeholder="Search by tag (e.g. networking, demo)…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button type="button" id="welcomeSearchClear" class="welcome-search-clear" aria-label="Clear search" hidden>✕</button>
+        </div>
+
+        <div class="welcome-sets-grid" id="welcomeSetsGrid">
           ${setsHtml}
         </div>
+        <p class="welcome-search-empty" id="welcomeSearchEmpty" hidden>No matching tags. Try clearing the search.</p>
 
         <div class="welcome-custom">
           <div class="welcome-custom-title">Use your own questions</div>
@@ -2207,6 +2332,40 @@ function renderQuiz(items) {
         if (f) downloadBundledQuestionSet(f);
       });
     });
+
+    // ── Welcome tag search ─────────────────────────────
+    const searchInput = empty.querySelector("#welcomeSearch");
+    const searchClear = empty.querySelector("#welcomeSearchClear");
+    const setsGrid    = empty.querySelector("#welcomeSetsGrid");
+    const emptyMsg    = empty.querySelector("#welcomeSearchEmpty");
+
+    function applyWelcomeFilter() {
+      const q = (searchInput?.value || "").trim().toLowerCase();
+      if (searchClear) searchClear.hidden = q.length === 0;
+      const cards = setsGrid?.querySelectorAll(".welcome-set") || [];
+      let visible = 0;
+      cards.forEach((card) => {
+        if (!q) {
+          card.hidden = false;
+          visible++;
+          return;
+        }
+        const tag   = card.getAttribute("data-tag")   || "";
+        const title = card.getAttribute("data-title") || "";
+        const match = tag.includes(q) || title.includes(q);
+        card.hidden = !match;
+        if (match) visible++;
+      });
+      if (emptyMsg) emptyMsg.hidden = visible !== 0;
+    }
+
+    searchInput?.addEventListener("input", applyWelcomeFilter);
+    searchClear?.addEventListener("click", () => {
+      if (searchInput) searchInput.value = "";
+      applyWelcomeFilter();
+      searchInput?.focus();
+    });
+
     return;
   }
 
@@ -2726,13 +2885,16 @@ function setGodModeState(enabled) {
 
 function closeModeResetConfirm() {
   if (modeResetConfirmModal) modeResetConfirmModal.style.display = "none";
+  document.getElementById("modeResetConfirmDialog")?.classList.remove("is-destructive");
+  if (modeResetConfirmYes) modeResetConfirmYes.textContent = "Yes";
+  if (modeResetConfirmNo)  modeResetConfirmNo.textContent  = "No";
   pendingModeResetAction = null;
   pendingModeResetCancel = null;
 }
 
 let pendingModeResetCancel = null;
 
-function openModeResetConfirm(message, onConfirm, onCancel) {
+function openModeResetConfirm(message, onConfirm, onCancel, opts = {}) {
   if (!modeResetConfirmModal || !modeResetConfirmText) {
     onConfirm?.();
     return;
@@ -2740,6 +2902,18 @@ function openModeResetConfirm(message, onConfirm, onCancel) {
   modeResetConfirmText.textContent = message;
   pendingModeResetAction = onConfirm;
   pendingModeResetCancel = typeof onCancel === "function" ? onCancel : null;
+
+  const dialog = document.getElementById("modeResetConfirmDialog");
+  if (opts.destructive) {
+    dialog?.classList.add("is-destructive");
+    if (modeResetConfirmYes) modeResetConfirmYes.textContent = opts.confirmLabel || "Delete";
+    if (modeResetConfirmNo)  modeResetConfirmNo.textContent  = opts.cancelLabel  || "Cancel";
+  } else {
+    dialog?.classList.remove("is-destructive");
+    if (modeResetConfirmYes) modeResetConfirmYes.textContent = opts.confirmLabel || "Yes";
+    if (modeResetConfirmNo)  modeResetConfirmNo.textContent  = opts.cancelLabel  || "No";
+  }
+
   modeResetConfirmModal.style.display = "flex";
 }
 
@@ -3452,7 +3626,7 @@ function renderHistoryList() {
         saveTestHistory(next);
         renderHistoryList();
         showToast("History entry deleted.");
-      });
+      }, null, { destructive: true });
     });
 
     row.append(score, meta, del);
