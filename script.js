@@ -2259,18 +2259,102 @@ function refreshImportPromptText() {
 function openImportPromptModal() {
   const modal = document.getElementById("importPromptModal");
   const ta = document.getElementById("importPromptText");
-  if (!modal || !ta) {
+  if (!modal) {
     pickAndImportQuestionsJson();
     return;
   }
-  refreshImportPromptText();
+  if (ta) refreshImportPromptText();
   // Clear paste area
   const pasteText = document.getElementById("importPasteText");
   const pasteError = document.getElementById("importPasteError");
   if (pasteText) pasteText.value = "";
   if (pasteError) pasteError.hidden = true;
+  renderImportLibrary();
+  setImportTab("library");
   modal.style.display = "flex";
   closeSourceFilterMenu();
+}
+
+/* ───── Import modal: tabs + library grid (bundled question banks) ───── */
+function setImportTab(name) {
+  if (!name) name = "library";
+  document.querySelectorAll("#importPromptModal .import-tab").forEach((tab) => {
+    const on = tab.getAttribute("data-tab") === name;
+    tab.classList.toggle("active", on);
+    tab.setAttribute("aria-selected", on ? "true" : "false");
+  });
+  document.querySelectorAll("#importPromptModal .import-tab-panel").forEach((p) => {
+    p.hidden = p.getAttribute("data-panel") !== name;
+  });
+}
+
+function renderImportLibrary() {
+  const grid = document.getElementById("importLibraryGrid");
+  if (!grid) return;
+  grid.innerHTML = BUNDLED_SETS.map((s) => `
+    <div class="welcome-set import-library-card"
+         data-file="${escapeHTML(s.file)}"
+         data-tag="${escapeHTML((s.tag || "").toLowerCase())}"
+         data-title="${escapeHTML((s.title || "").toLowerCase())}"
+         data-desc="${escapeHTML((s.desc || "").toLowerCase())}">
+      <div class="welcome-set-head">
+        <span class="welcome-set-icon">${s.icon}</span>
+        <span class="welcome-set-title">${escapeHTML(s.title)}</span>
+        <span class="welcome-set-tag" title="Category tag">#${escapeHTML(s.tag || "")}</span>
+      </div>
+      <p class="welcome-set-desc">${escapeHTML(s.desc || "")}</p>
+      <div class="welcome-set-actions">
+        <button type="button" class="welcome-set-load"     data-file="${escapeHTML(s.file)}">▶ Load</button>
+        <button type="button" class="welcome-set-download" data-file="${escapeHTML(s.file)}" title="Download as .json">⬇️</button>
+      </div>
+    </div>
+  `).join("");
+
+  grid.querySelectorAll(".welcome-set-load").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const f = btn.getAttribute("data-file");
+      if (!f) return;
+      closeImportPromptModal();
+      await loadBundledQuestionSet(f);
+    });
+  });
+  grid.querySelectorAll(".welcome-set-download").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const f = btn.getAttribute("data-file");
+      if (f) downloadBundledQuestionSet(f);
+    });
+  });
+
+  applyImportLibraryFilter();
+}
+
+function applyImportLibraryFilter() {
+  const inp = document.getElementById("importLibrarySearch");
+  const clearBtn = document.getElementById("importLibrarySearchClear");
+  const grid = document.getElementById("importLibraryGrid");
+  const emptyMsg = document.getElementById("importLibraryEmpty");
+  if (!inp || !grid) return;
+  const q = (inp.value || "").trim().toLowerCase();
+  if (clearBtn) clearBtn.hidden = q.length === 0;
+
+  const cards = grid.querySelectorAll(".import-library-card");
+  let visible = 0;
+  cards.forEach((card) => {
+    if (!q) {
+      // In the import modal the user is explicitly looking for sources to
+      // add, so we show every bank — including the hidden ones — by default.
+      card.hidden = false;
+      visible++;
+      return;
+    }
+    const tag   = card.getAttribute("data-tag")   || "";
+    const title = card.getAttribute("data-title") || "";
+    const desc  = card.getAttribute("data-desc")  || "";
+    const match = tag.includes(q) || title.includes(q) || desc.includes(q);
+    card.hidden = !match;
+    if (match) visible++;
+  });
+  if (emptyMsg) emptyMsg.hidden = visible !== 0;
 }
 
 function closeImportPromptModal() {
@@ -2283,16 +2367,17 @@ function wireImportPromptModal() {
     .getElementById("importPromptClose")
     ?.addEventListener("click", closeImportPromptModal);
 
-  // AI section toggle
-  const aiToggle = document.getElementById("importAiToggle");
-  const aiBody = document.getElementById("importAiBody");
-  if (aiToggle && aiBody) {
-    aiToggle.addEventListener("click", () => {
-      const expanded = aiToggle.getAttribute("aria-expanded") === "true";
-      aiToggle.setAttribute("aria-expanded", String(!expanded));
-      aiBody.hidden = expanded;
-    });
-  }
+  // Tabs (Library / Generate / Import) — only one panel visible at a time.
+  document.querySelectorAll("#importPromptModal .import-tab").forEach((tab) => {
+    tab.addEventListener("click", () => setImportTab(tab.getAttribute("data-tab")));
+  });
+
+  // Library tab: search + bundled-sets grid (covers hidden sets too).
+  document.getElementById("importLibrarySearch")?.addEventListener("input", applyImportLibraryFilter);
+  document.getElementById("importLibrarySearchClear")?.addEventListener("click", () => {
+    const inp = document.getElementById("importLibrarySearch");
+    if (inp) { inp.value = ""; applyImportLibraryFilter(); inp.focus(); }
+  });
 
   // Preference fields → live-update prompt
   ["importPrefLang", "importPrefCount", "importPrefTag"].forEach((id) => {
