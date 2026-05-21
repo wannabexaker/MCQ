@@ -1813,6 +1813,12 @@ body.mobile-menu-open {
   gap: 8px;
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
+/* The `display: flex` above out-specifies the browser-default
+   `[hidden] { display: none }`, so we must re-assert it here, or the
+   hidden Rosen cards would still appear in the grid. */
+.welcome-set[hidden] {
+  display: none !important;
+}
 .welcome-set:hover {
   border-color: var(--accent);
   transform: translateY(-2px);
