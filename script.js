@@ -2207,10 +2207,15 @@ async function importQuestionsData(fileName, data) {
 }
 
 const BUNDLED_SETS = [
-  { file: "q_networking.json",    icon: "🌐",  title: "Networking",     tag: "networking",    desc: "OSI layers, TCP/IP, subnetting, routing, DNS, DHCP and more." },
-  { file: "q_cybersecurity.json", icon: "🛡️", title: "Cybersecurity",  tag: "cybersecurity", desc: "OWASP, crypto, authentication, common attacks and defenses." },
-  { file: "q_it_general.json",    icon: "💻",  title: "IT General",     tag: "itGeneral",     desc: "Algorithms, databases, Linux, Git, web fundamentals, OOP." },
-  { file: "q_demo.json",          icon: "📦",  title: "Demo (general)", tag: "demo",          desc: "12 mixed general-knowledge questions — quick smoke test." },
+  { file: "q_networking.json",    icon: "🌐",  title: "Networking",                    tag: "networking",    desc: "OSI layers, TCP/IP, subnetting, routing, DNS, DHCP and more." },
+  { file: "q_cybersecurity.json", icon: "🛡️", title: "Cybersecurity",                 tag: "cybersecurity", desc: "OWASP, crypto, authentication, common attacks and defenses." },
+  { file: "q_it_general.json",    icon: "💻",  title: "IT General",                    tag: "itGeneral",     desc: "Algorithms, databases, Linux, Git, web fundamentals, OOP." },
+  { file: "q_demo.json",          icon: "📦",  title: "Demo (general)",                tag: "demo",          desc: "12 mixed general-knowledge questions — quick smoke test." },
+
+  // ── Hidden sets: not shown on the welcome grid by default,
+  //    only surface via the search box (match on tag or title). ──
+  { file: "q_RosenCh1-4.json",    icon: "📘",  title: "Rosen — Discrete Math (Ch 1-4)", tag: "RosenCh1-4",    desc: "Logic, sets, functions, induction — 40 Q from Rosen Ch 1-4.", hidden: true },
+  { file: "q_RosenCh614.json",    icon: "📗",  title: "Rosen — Discrete Math (Ch 6-14)", tag: "RosenCh614",    desc: "Counting, graphs, trees, advanced topics — 50 Q from Rosen Ch 6-14.", hidden: true },
 ];
 
 async function loadBundledQuestionSet(fileName) {
@@ -2262,7 +2267,7 @@ function renderQuiz(items) {
     if (noSourcesAtAll) {
       const setsHtml = BUNDLED_SETS.map(
         (s) => `
-        <div class="welcome-set" data-file="${escapeHTML(s.file)}" data-tag="${escapeHTML((s.tag || "").toLowerCase())}" data-title="${escapeHTML((s.title || "").toLowerCase())}">
+        <div class="welcome-set" data-file="${escapeHTML(s.file)}" data-tag="${escapeHTML((s.tag || "").toLowerCase())}" data-title="${escapeHTML((s.title || "").toLowerCase())}" data-hidden="${s.hidden ? "true" : "false"}"${s.hidden ? " hidden" : ""}>
           <div class="welcome-set-head">
             <span class="welcome-set-icon">${s.icon}</span>
             <span class="welcome-set-title">${escapeHTML(s.title)}</span>
@@ -2345,9 +2350,11 @@ function renderQuiz(items) {
       const cards = setsGrid?.querySelectorAll(".welcome-set") || [];
       let visible = 0;
       cards.forEach((card) => {
+        const isHidden = card.getAttribute("data-hidden") === "true";
         if (!q) {
-          card.hidden = false;
-          visible++;
+          // No search → show only public cards, keep hidden ones out of sight.
+          card.hidden = isHidden;
+          if (!isHidden) visible++;
           return;
         }
         const tag   = card.getAttribute("data-tag")   || "";
@@ -2356,7 +2363,8 @@ function renderQuiz(items) {
         card.hidden = !match;
         if (match) visible++;
       });
-      if (emptyMsg) emptyMsg.hidden = visible !== 0;
+      // "No matches" message only when actively searching and nothing visible.
+      if (emptyMsg) emptyMsg.hidden = !(q && visible === 0);
     }
 
     searchInput?.addEventListener("input", applyWelcomeFilter);
