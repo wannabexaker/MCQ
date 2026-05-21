@@ -158,6 +158,19 @@
     <div id="menuOverlay" class="menu-overlay" hidden></div>
 
     <div id="sourceFilterMenu" class="source-filter-menu" hidden>
+      <div class="sources-search">
+        <span class="sources-search-icon" aria-hidden="true">🔎</span>
+        <input
+          type="search"
+          id="sourcesSearch"
+          class="sources-search-input"
+          placeholder="Search sources, categories or tags…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="sourcesSearchClear" type="button" class="sources-search-clear" aria-label="Clear search" hidden>✕</button>
+      </div>
+
       <div class="source-filter-header">
         <strong>Question Sources</strong>
       </div>
@@ -393,6 +406,16 @@
                 </div>
               </div>
             </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">Data</div>
+              <div class="settings-actions">
+                <p class="settings-hint" style="margin: 0 0 8px;">
+                  Wipes all locally stored data: imported question sets, progress, stats, test history, activity log and mode flags. Bundled question files stay intact. The page reloads automatically.
+                </p>
+                <button id="settingsClearAllData" type="button" class="settings-destructive">🗑️ Clear all data &amp; reset app</button>
+              </div>
+            </div>
           </section>
 
           <section class="settings-panel" id="settingsPanelHud" role="tabpanel" aria-labelledby="settingsTabHud" hidden>
@@ -426,6 +449,51 @@
             <div class="settings-section">
               <div class="settings-section-title">History</div>
               <div id="settingsHistoryList" class="settings-history"></div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">Proctor Audio</div>
+              <div class="settings-actions">
+                <p class="settings-hint" style="margin: 0 0 6px;">
+                  Plays a short distinct tone for every monitored event (mode toggle, answer reveal, off-screen blur, timer expiry). Lets a supervisor hear what the student is doing without looking at the screen.
+                </p>
+                <label class="settings-row settings-row-inline" for="settingsAudioEnabled">
+                  <span>Sounds</span>
+                  <input id="settingsAudioEnabled" type="checkbox" />
+                </label>
+                <label class="settings-row" for="settingsAudioVolume">
+                  <span>Volume</span>
+                  <span id="settingsAudioVolumeValue" class="settings-value">60%</span>
+                </label>
+                <input id="settingsAudioVolume" type="range" min="0" max="100" step="5" value="60" />
+                <button id="settingsAudioTest" type="button">🔊 Test tone</button>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">
+                Activity Log
+                <span id="settingsActivityCount" class="settings-section-subtitle">0 events</span>
+              </div>
+              <div class="settings-actions">
+                <p class="settings-hint" style="margin: 0 0 6px;">
+                  Tamper-evident record of every monitored event: answers, reveals, mode toggles, resets, source changes and off-screen blurs. Export and hand to the proctor / instructor.
+                </p>
+                <div class="settings-toggle-row settings-toggle-row-wrap" role="group" aria-label="Activity log filter">
+                  <button class="activity-filter active" data-filter="all" type="button">All</button>
+                  <button class="activity-filter" data-filter="answer" type="button">Answers</button>
+                  <button class="activity-filter" data-filter="reveal" type="button">Reveals</button>
+                  <button class="activity-filter" data-filter="mode" type="button">Modes</button>
+                  <button class="activity-filter" data-filter="blur" type="button">Off-screen</button>
+                  <button class="activity-filter" data-filter="source" type="button">Sources</button>
+                </div>
+                <div id="settingsActivityList" class="activity-log-list" aria-live="polite"></div>
+                <div class="settings-actions-row">
+                  <button id="settingsActivityExportJson" type="button">⬇️ Export JSON</button>
+                  <button id="settingsActivityExportCsv"  type="button">⬇️ Export CSV</button>
+                  <button id="settingsActivityClear"     type="button" class="settings-destructive">🗑️ Clear log</button>
+                </div>
+              </div>
             </div>
           </section>
 
