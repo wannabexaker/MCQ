@@ -775,6 +775,13 @@ body.gay .choice:hover {
   background: rgba(255, 47, 146, 0.12);
 }
 
+/* Keyboard focus: visible ring only for keyboard navigation, not mouse clicks */
+.choice:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+
 .choice .letter {
   font-weight: 700;
   min-width: 22px;

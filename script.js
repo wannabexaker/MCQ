@@ -2843,6 +2843,8 @@ function renderQuiz(items) {
     }
     const choicesWrap = document.createElement("div");
     choicesWrap.className = "choices";
+    choicesWrap.setAttribute("role", "radiogroup");
+    choicesWrap.setAttribute("aria-label", `Answers for question ${displayIndex + 1}`);
 
     const numChoices = Array.isArray(choices) ? choices.length : 4;
     const letters = ["A", "B", "C", "D", "E", "F", "G", "H"].slice(0, Math.max(2, Math.min(8, numChoices)));
@@ -2851,10 +2853,29 @@ function renderQuiz(items) {
       const choice = document.createElement("div");
       choice.className = "choice";
       choice.dataset.i = i;
+      choice.setAttribute("role", "radio");
+      choice.setAttribute("aria-checked", "false");
+      choice.tabIndex = 0;
       choice.innerHTML = `<span class="tick"></span><span class="letter">${letter}</span><span class="text">${escapeHTML(
         choices[i] || ""
       )}</span>`;
       choice.addEventListener("click", () => onSelectChoice(q, choice, card));
+      choice.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelectChoice(q, choice, card);
+          return;
+        }
+        const forward = e.key === "ArrowDown" || e.key === "ArrowRight";
+        const backward = e.key === "ArrowUp" || e.key === "ArrowLeft";
+        if (forward || backward) {
+          e.preventDefault();
+          const siblings = [...choicesWrap.querySelectorAll(".choice")];
+          const next =
+            siblings[(siblings.indexOf(choice) + (forward ? 1 : -1) + siblings.length) % siblings.length];
+          next?.focus();
+        }
+      });
       choicesWrap.appendChild(choice);
     });
     card.appendChild(choicesWrap);
@@ -2864,6 +2885,7 @@ function renderQuiz(items) {
         if (idx === saved.correct) c.classList.add("correct");
         if (idx === saved.selected && saved.selected !== saved.correct)
           c.classList.add("wrong");
+        if (idx === saved.selected) c.setAttribute("aria-checked", "true");
       });
     }
     const actions = document.createElement("div");
@@ -2945,6 +2967,7 @@ function onSelectChoice(q, choiceEl, card) {
   choices.forEach((c, idx) => {
     if (idx === correctIndex) c.classList.add("correct");
     if (idx === selected && selected !== correctIndex) c.classList.add("wrong");
+    c.setAttribute("aria-checked", idx === selected ? "true" : "false");
   });
   progress.total++;
   const isCorrect = selected === correctIndex;
