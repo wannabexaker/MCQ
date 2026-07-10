@@ -38,256 +38,6 @@ const IMPORTED_SOURCES_STORAGE_KEY = "imported-question-sources-v1";
 const QUESTION_STATS_STORAGE_KEY = "question-stats-v1";
 const TEST_HISTORY_STORAGE_KEY = "test-history-v1";
 const PRACTICE_MODE_STORAGE_KEY = "practice-mode-v1";
-const ACTIVITY_LOG_STORAGE_KEY = "activity-log-v1";
-const AUDIO_PREFS_STORAGE_KEY = "audio-prefs-v1";
-const ACTIVITY_LOG_MAX = 5000;
-
-/* ═══════════════════════════════════════════════════════════════
-   ACTIVITY LOG — tamper-evident record of every monitored event.
-   Used for proctoring: an instructor can review what the student
-   did and when (answers, reveals, mode toggles, off-screen blurs).
-   Ring buffer in localStorage, capped at ACTIVITY_LOG_MAX entries.
-   ═══════════════════════════════════════════════════════════════ */
-let __activityLogCache = null;
-function _readActivityLog() {
-  if (__activityLogCache) return __activityLogCache;
-  try {
-    const raw = localStorage.getItem(ACTIVITY_LOG_STORAGE_KEY);
-    __activityLogCache = raw ? JSON.parse(raw) : [];
-    if (!Array.isArray(__activityLogCache)) __activityLogCache = [];
-  } catch {
-    __activityLogCache = [];
-  }
-  return __activityLogCache;
-}
-function _writeActivityLog() {
-  if (!__activityLogCache) return;
-  try {
-    localStorage.setItem(ACTIVITY_LOG_STORAGE_KEY, JSON.stringify(__activityLogCache));
-  } catch (e) {
-    // Storage quota exceeded → drop oldest 25% and retry once.
-    __activityLogCache.splice(0, Math.floor(__activityLogCache.length * 0.25));
-    try {
-      localStorage.setItem(ACTIVITY_LOG_STORAGE_KEY, JSON.stringify(__activityLogCache));
-    } catch {}
-  }
-}
-function logActivity(type, detail) {
-  const log = _readActivityLog();
-  const entry = {
-    t: Date.now(),
-    type,
-    detail: detail || null,
-  };
-  log.push(entry);
-  if (log.length > ACTIVITY_LOG_MAX) log.splice(0, log.length - ACTIVITY_LOG_MAX);
-  _writeActivityLog();
-  // Play a proctor tone (if enabled) and refresh viewer if open.
-  playEventSound(type, detail);
-  renderActivityLogIfOpen();
-  return entry;
-}
-function getActivityLog() { return _readActivityLog().slice(); }
-function clearActivityLog() {
-  __activityLogCache = [];
-  try { localStorage.removeItem(ACTIVITY_LOG_STORAGE_KEY); } catch {}
-  renderActivityLogIfOpen();
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   PROCTOR AUDIO — Web Audio synth, no assets. Distinct tone per
-   event so a supervisor can hear what's happening without looking
-   at the screen. Default OFF, opt-in via Settings → Test → Audio.
-   ═══════════════════════════════════════════════════════════════ */
-let __audioCtx = null;
-let __audioPrefs = null;
-function _readAudioPrefs() {
-  if (__audioPrefs) return __audioPrefs;
-  try {
-    const raw = localStorage.getItem(AUDIO_PREFS_STORAGE_KEY);
-    __audioPrefs = raw ? JSON.parse(raw) : { enabled: false, volume: 0.6 };
-  } catch {
-    __audioPrefs = { enabled: false, volume: 0.6 };
-  }
-  return __audioPrefs;
-}
-function _writeAudioPrefs() {
-  try { localStorage.setItem(AUDIO_PREFS_STORAGE_KEY, JSON.stringify(__audioPrefs)); } catch {}
-}
-function setAudioEnabled(on) {
-  _readAudioPrefs();
-  __audioPrefs.enabled = !!on;
-  _writeAudioPrefs();
-}
-function setAudioVolume(v) {
-  _readAudioPrefs();
-  __audioPrefs.volume = Math.max(0, Math.min(1, Number(v) || 0));
-  _writeAudioPrefs();
-}
-function _ensureAudioCtx() {
-  if (__audioCtx) return __audioCtx;
-  const Ctx = window.AudioContext || window.webkitAudioContext;
-  if (!Ctx) return null;
-  try { __audioCtx = new Ctx(); } catch { return null; }
-  return __audioCtx;
-}
-function _playTone(freq, durationMs, opts = {}) {
-  const prefs = _readAudioPrefs();
-  if (!prefs.enabled) return;
-  const ctx = _ensureAudioCtx();
-  if (!ctx) return;
-  try {
-    if (ctx.state === "suspended") ctx.resume().catch(() => {});
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = opts.type || "sine";
-    osc.frequency.setValueAtTime(freq, ctx.currentTime);
-    if (opts.glideTo) {
-      osc.frequency.exponentialRampToValueAtTime(
-        opts.glideTo,
-        ctx.currentTime + durationMs / 1000
-      );
-    }
-    const peak = Math.max(0.0001, prefs.volume * (opts.gain ?? 0.25));
-    gain.gain.setValueAtTime(0, ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(peak, ctx.currentTime + 0.01);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + durationMs / 1000);
-    osc.connect(gain).connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + durationMs / 1000 + 0.02);
-  } catch {}
-}
-function _playSequence(steps) {
-  let acc = 0;
-  steps.forEach((s) => {
-    setTimeout(() => _playTone(s.freq, s.dur, s.opts || {}), acc);
-    acc += s.gap ?? s.dur;
-  });
-}
-// Distinct timbres per event so a listener can tell them apart.
-const PROCTOR_TONES = {
-  "answer":          () => _playTone(660, 80,  { type: "sine",     gain: 0.18 }),
-  "reveal":          () => _playSequence([
-                        { freq: 880, dur: 120, opts: { type: "square", gain: 0.18 } },
-                        { freq: 990, dur: 160, opts: { type: "square", gain: 0.18 } },
-                      ]),
-  "mode-exam-on":    () => _playSequence([
-                        { freq: 220, dur: 140, opts: { type: "triangle" } },
-                        { freq: 165, dur: 220, opts: { type: "triangle" } },
-                      ]),
-  "mode-exam-off":   () => _playSequence([
-                        { freq: 165, dur: 140, opts: { type: "triangle" } },
-                        { freq: 220, dur: 220, opts: { type: "triangle" } },
-                      ]),
-  "mode-god-on":     () => _playSequence([
-                        { freq: 523, dur: 90,  opts: { type: "square" } },
-                        { freq: 659, dur: 90,  opts: { type: "square" } },
-                        { freq: 784, dur: 160, opts: { type: "square" } },
-                      ]),
-  "mode-god-off":    () => _playSequence([
-                        { freq: 784, dur: 90,  opts: { type: "square" } },
-                        { freq: 659, dur: 90,  opts: { type: "square" } },
-                        { freq: 523, dur: 160, opts: { type: "square" } },
-                      ]),
-  "mode-practice":   () => _playSequence([
-                        { freq: 392, dur: 110, opts: { type: "sine" } },
-                        { freq: 587, dur: 160, opts: { type: "sine" } },
-                      ]),
-  "reset":           () => _playSequence([
-                        { freq: 440, dur: 90,  opts: { type: "sawtooth" } },
-                        { freq: 330, dur: 90,  opts: { type: "sawtooth" } },
-                        { freq: 220, dur: 200, opts: { type: "sawtooth" } },
-                      ]),
-  "submit":          () => _playSequence([
-                        { freq: 523, dur: 110 },
-                        { freq: 659, dur: 110 },
-                        { freq: 784, dur: 240 },
-                      ]),
-  "source":          () => _playTone(523, 100, { type: "triangle", gain: 0.15 }),
-  // Cheat-indicator sounds: prominent, alarm-style.
-  "blur":            () => _playSequence([
-                        { freq: 196, dur: 200, opts: { type: "sawtooth", gain: 0.35 } },
-                        { freq: 196, dur: 200, opts: { type: "sawtooth", gain: 0.35 }, gap: 260 },
-                      ]),
-  "focus":           () => _playTone(330, 90, { type: "triangle", gain: 0.12 }),
-  // Timer tones.
-  "timer-tick":      () => _playTone(1200, 50, { type: "sine", gain: 0.15 }),
-  "timer-fire":      () => _playSequence([
-                        { freq: 880, dur: 150, opts: { type: "square", gain: 0.35 } },
-                        { freq: 880, dur: 150, opts: { type: "square", gain: 0.35 }, gap: 200 },
-                        { freq: 880, dur: 300, opts: { type: "square", gain: 0.35 } },
-                      ]),
-  "test":            () => _playSequence([
-                        { freq: 440, dur: 100 },
-                        { freq: 660, dur: 100 },
-                        { freq: 880, dur: 160 },
-                      ]),
-};
-function playEventSound(type, detail) {
-  // Map activity-log types to tone keys.
-  let key = type;
-  if (type === "mode") {
-    const n = detail?.name;
-    const on = detail?.state === "on";
-    if (n === "exam")     key = on ? "mode-exam-on"     : "mode-exam-off";
-    else if (n === "god") key = on ? "mode-god-on"      : "mode-god-off";
-    else if (n === "practice") key = "mode-practice";
-  }
-  const fn = PROCTOR_TONES[key];
-  if (typeof fn === "function") {
-    try { fn(); } catch {}
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   CLEAR-ALL — wipes every mcq-data localStorage key and reloads.
-   Bundled q_*.json files stay intact (they ship with the app);
-   imported sets, progress, stats, history, modes, log are gone.
-   ═══════════════════════════════════════════════════════════════ */
-const MCQ_STORAGE_KEYS = [
-  "quiz-progress",
-  IMPORTED_SOURCES_STORAGE_KEY,
-  QUESTION_STATS_STORAGE_KEY,
-  TEST_HISTORY_STORAGE_KEY,
-  PRACTICE_MODE_STORAGE_KEY,
-  ACTIVITY_LOG_STORAGE_KEY,
-  AUDIO_PREFS_STORAGE_KEY,
-  "exam-mode-v1",
-  "godlike-mode-v1",
-  "shuffle-mode-v1",
-  "shuffle-answers-v1",
-  "lang-v1",
-  "theme-v1",
-  "timer-position-v1",
-  "controls-position-v1",
-  "widgets-position-v1",
-  "qa-font-size-v1",
-  "controls-layout-v1",
-];
-function wipeAllMcqStorage() {
-  // Be defensive: remove known keys explicitly, then sweep anything that
-  // starts with our prefixes in case future versions added more.
-  MCQ_STORAGE_KEYS.forEach((k) => { try { localStorage.removeItem(k); } catch {} });
-  try {
-    for (let i = localStorage.length - 1; i >= 0; i--) {
-      const k = localStorage.key(i);
-      if (!k) continue;
-      if (
-        k.startsWith("quiz-") ||
-        k.startsWith("imported-") ||
-        k.startsWith("question-stats") ||
-        k.startsWith("test-history") ||
-        k.startsWith("practice-mode") ||
-        k.startsWith("activity-log") ||
-        k.startsWith("audio-prefs") ||
-        k.endsWith("-position-v1") ||
-        k.endsWith("-mode-v1")
-      ) {
-        try { localStorage.removeItem(k); } catch {}
-      }
-    }
-  } catch {}
-}
 const CATEGORY_LABEL_OVERRIDES = {};
 const DUPLICATE_STOP_WORDS = new Set([
   "a",
@@ -398,11 +148,7 @@ function getPracticeMode() {
 
 function setPracticeMode(mode) {
   const normalized = mode === "wrong_once" || mode === "wrong_repeat" ? mode : "off";
-  const prev = (typeof localStorage !== "undefined" && localStorage.getItem(PRACTICE_MODE_STORAGE_KEY)) || "off";
   localStorage.setItem(PRACTICE_MODE_STORAGE_KEY, normalized);
-  if (prev !== normalized) {
-    logActivity("mode", { name: "practice", state: normalized });
-  }
 }
 
 function loadImportedSourcesFromStorage() {
@@ -1277,7 +1023,6 @@ function renderSourceChecklist() {
       else ACTIVE_SOURCE_IDS.delete(source.id);
 
       applySourceFilter();
-      logActivity("source", { kind: "toggle", id: source.id, on: input.checked });
     });
     container.appendChild(item);
   });
@@ -1319,7 +1064,6 @@ function renderCategoryChecklist() {
       if (input.checked) ACTIVE_CATEGORY_KEYS.add(category.key);
       else ACTIVE_CATEGORY_KEYS.delete(category.key);
       applySourceFilter();
-      logActivity("source", { kind: "category-toggle", key: category.key, on: input.checked });
     });
     container.appendChild(item);
   });
@@ -1341,64 +1085,6 @@ function setSourceFilterMenuOpen(open) {
   if (!menu) return;
   menu.hidden = !open;
   if (overlay) overlay.hidden = !(open || document.body.classList.contains("mobile-menu-open"));
-  if (open) {
-    // Re-apply current search filter on each open so the user's last query
-    // still narrows newly rendered lists (e.g. after Refresh).
-    applySourcesPanelSearch();
-  }
-}
-
-// Live filter for the Sources panel — hides any source / imported / category
-// row whose title doesn't match the typed query (case-insensitive substring).
-function applySourcesPanelSearch() {
-  const input = document.getElementById("sourcesSearch");
-  const clearBtn = document.getElementById("sourcesSearchClear");
-  if (!input) return;
-  const q = (input.value || "").trim().toLowerCase();
-  if (clearBtn) clearBtn.hidden = q.length === 0;
-
-  const sections = [
-    {
-      list: document.getElementById("sourceFilterChecklist"),
-      itemSelector: ".source-filter-item",
-      textSelector: ".source-filter-item-title",
-    },
-    {
-      list: document.getElementById("categoryFilterChecklist"),
-      itemSelector: ".source-filter-item",
-      textSelector: ".source-filter-item-title",
-    },
-    {
-      list: document.getElementById("importedSourcesList"),
-      itemSelector: ".imported-source-row",
-      textSelector: ".imported-source-title",
-    },
-  ];
-
-  sections.forEach((s) => {
-    if (!s.list) return;
-    const items = s.list.querySelectorAll(s.itemSelector);
-    items.forEach((item) => {
-      if (!q) {
-        item.hidden = false;
-        return;
-      }
-      const txt = (item.querySelector(s.textSelector)?.textContent || "").toLowerCase();
-      item.hidden = !txt.includes(q);
-    });
-  });
-}
-
-function wireSourcesPanelSearch() {
-  const input = document.getElementById("sourcesSearch");
-  const clearBtn = document.getElementById("sourcesSearchClear");
-  if (!input) return;
-  input.addEventListener("input", applySourcesPanelSearch);
-  clearBtn?.addEventListener("click", () => {
-    input.value = "";
-    applySourcesPanelSearch();
-    input.focus();
-  });
 }
 
 async function reloadSourcesAndFilters() {
@@ -2259,102 +1945,18 @@ function refreshImportPromptText() {
 function openImportPromptModal() {
   const modal = document.getElementById("importPromptModal");
   const ta = document.getElementById("importPromptText");
-  if (!modal) {
+  if (!modal || !ta) {
     pickAndImportQuestionsJson();
     return;
   }
-  if (ta) refreshImportPromptText();
+  refreshImportPromptText();
   // Clear paste area
   const pasteText = document.getElementById("importPasteText");
   const pasteError = document.getElementById("importPasteError");
   if (pasteText) pasteText.value = "";
   if (pasteError) pasteError.hidden = true;
-  renderImportLibrary();
-  setImportTab("library");
   modal.style.display = "flex";
   closeSourceFilterMenu();
-}
-
-/* ───── Import modal: tabs + library grid (bundled question banks) ───── */
-function setImportTab(name) {
-  if (!name) name = "library";
-  document.querySelectorAll("#importPromptModal .import-tab").forEach((tab) => {
-    const on = tab.getAttribute("data-tab") === name;
-    tab.classList.toggle("active", on);
-    tab.setAttribute("aria-selected", on ? "true" : "false");
-  });
-  document.querySelectorAll("#importPromptModal .import-tab-panel").forEach((p) => {
-    p.hidden = p.getAttribute("data-panel") !== name;
-  });
-}
-
-function renderImportLibrary() {
-  const grid = document.getElementById("importLibraryGrid");
-  if (!grid) return;
-  grid.innerHTML = BUNDLED_SETS.map((s) => `
-    <div class="welcome-set import-library-card"
-         data-file="${escapeHTML(s.file)}"
-         data-tag="${escapeHTML((s.tag || "").toLowerCase())}"
-         data-title="${escapeHTML((s.title || "").toLowerCase())}"
-         data-desc="${escapeHTML((s.desc || "").toLowerCase())}">
-      <div class="welcome-set-head">
-        <span class="welcome-set-icon">${s.icon}</span>
-        <span class="welcome-set-title">${escapeHTML(s.title)}</span>
-        <span class="welcome-set-tag" title="Category tag">#${escapeHTML(s.tag || "")}</span>
-      </div>
-      <p class="welcome-set-desc">${escapeHTML(s.desc || "")}</p>
-      <div class="welcome-set-actions">
-        <button type="button" class="welcome-set-load"     data-file="${escapeHTML(s.file)}">▶ Load</button>
-        <button type="button" class="welcome-set-download" data-file="${escapeHTML(s.file)}" title="Download as .json">⬇️</button>
-      </div>
-    </div>
-  `).join("");
-
-  grid.querySelectorAll(".welcome-set-load").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const f = btn.getAttribute("data-file");
-      if (!f) return;
-      closeImportPromptModal();
-      await loadBundledQuestionSet(f);
-    });
-  });
-  grid.querySelectorAll(".welcome-set-download").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const f = btn.getAttribute("data-file");
-      if (f) downloadBundledQuestionSet(f);
-    });
-  });
-
-  applyImportLibraryFilter();
-}
-
-function applyImportLibraryFilter() {
-  const inp = document.getElementById("importLibrarySearch");
-  const clearBtn = document.getElementById("importLibrarySearchClear");
-  const grid = document.getElementById("importLibraryGrid");
-  const emptyMsg = document.getElementById("importLibraryEmpty");
-  if (!inp || !grid) return;
-  const q = (inp.value || "").trim().toLowerCase();
-  if (clearBtn) clearBtn.hidden = q.length === 0;
-
-  const cards = grid.querySelectorAll(".import-library-card");
-  let visible = 0;
-  cards.forEach((card) => {
-    if (!q) {
-      // In the import modal the user is explicitly looking for sources to
-      // add, so we show every bank — including the hidden ones — by default.
-      card.hidden = false;
-      visible++;
-      return;
-    }
-    const tag   = card.getAttribute("data-tag")   || "";
-    const title = card.getAttribute("data-title") || "";
-    const desc  = card.getAttribute("data-desc")  || "";
-    const match = tag.includes(q) || title.includes(q) || desc.includes(q);
-    card.hidden = !match;
-    if (match) visible++;
-  });
-  if (emptyMsg) emptyMsg.hidden = visible !== 0;
 }
 
 function closeImportPromptModal() {
@@ -2367,17 +1969,16 @@ function wireImportPromptModal() {
     .getElementById("importPromptClose")
     ?.addEventListener("click", closeImportPromptModal);
 
-  // Tabs (Library / Generate / Import) — only one panel visible at a time.
-  document.querySelectorAll("#importPromptModal .import-tab").forEach((tab) => {
-    tab.addEventListener("click", () => setImportTab(tab.getAttribute("data-tab")));
-  });
-
-  // Library tab: search + bundled-sets grid (covers hidden sets too).
-  document.getElementById("importLibrarySearch")?.addEventListener("input", applyImportLibraryFilter);
-  document.getElementById("importLibrarySearchClear")?.addEventListener("click", () => {
-    const inp = document.getElementById("importLibrarySearch");
-    if (inp) { inp.value = ""; applyImportLibraryFilter(); inp.focus(); }
-  });
+  // AI section toggle
+  const aiToggle = document.getElementById("importAiToggle");
+  const aiBody = document.getElementById("importAiBody");
+  if (aiToggle && aiBody) {
+    aiToggle.addEventListener("click", () => {
+      const expanded = aiToggle.getAttribute("aria-expanded") === "true";
+      aiToggle.setAttribute("aria-expanded", String(!expanded));
+      aiBody.hidden = expanded;
+    });
+  }
 
   // Preference fields → live-update prompt
   ["importPrefLang", "importPrefCount", "importPrefTag"].forEach((id) => {
@@ -2606,15 +2207,10 @@ async function importQuestionsData(fileName, data) {
 }
 
 const BUNDLED_SETS = [
-  { file: "q_networking.json",    icon: "🌐",  title: "Networking",                    tag: "networking",    desc: "OSI layers, TCP/IP, subnetting, routing, DNS, DHCP and more." },
-  { file: "q_cybersecurity.json", icon: "🛡️", title: "Cybersecurity",                 tag: "cybersecurity", desc: "OWASP, crypto, authentication, common attacks and defenses." },
-  { file: "q_it_general.json",    icon: "💻",  title: "IT General",                    tag: "itGeneral",     desc: "Algorithms, databases, Linux, Git, web fundamentals, OOP." },
-  { file: "q_demo.json",          icon: "📦",  title: "Demo (general)",                tag: "demo",          desc: "12 mixed general-knowledge questions — quick smoke test." },
-
-  // ── Hidden sets: not shown on the welcome grid by default,
-  //    only surface via the search box (match on tag or title). ──
-  { file: "q_RosenCh1-4.json",    icon: "📘",  title: "Rosen — Discrete Math (Ch 1-4)", tag: "RosenCh1-4",    desc: "Logic, sets, functions, induction — 40 Q from Rosen Ch 1-4.", hidden: true },
-  { file: "q_RosenCh614.json",    icon: "📗",  title: "Rosen — Discrete Math (Ch 6-14)", tag: "RosenCh614",    desc: "Counting, graphs, trees, advanced topics — 50 Q from Rosen Ch 6-14.", hidden: true },
+  { file: "q_networking.json", icon: "🌐", title: "Networking", desc: "OSI layers, TCP/IP, subnetting, routing, DNS, DHCP and more." },
+  { file: "q_cybersecurity.json", icon: "🛡️", title: "Cybersecurity", desc: "OWASP, crypto, authentication, common attacks and defenses." },
+  { file: "q_it_general.json", icon: "💻", title: "IT General", desc: "Algorithms, databases, Linux, Git, web fundamentals, OOP." },
+  { file: "q_demo.json", icon: "📦", title: "Demo (general)", desc: "12 mixed general-knowledge questions — quick smoke test." },
 ];
 
 async function loadBundledQuestionSet(fileName) {
@@ -2666,11 +2262,10 @@ function renderQuiz(items) {
     if (noSourcesAtAll) {
       const setsHtml = BUNDLED_SETS.map(
         (s) => `
-        <div class="welcome-set" data-file="${escapeHTML(s.file)}" data-tag="${escapeHTML((s.tag || "").toLowerCase())}" data-title="${escapeHTML((s.title || "").toLowerCase())}" data-hidden="${s.hidden ? "true" : "false"}"${s.hidden ? " hidden" : ""}>
+        <div class="welcome-set" data-file="${escapeHTML(s.file)}">
           <div class="welcome-set-head">
             <span class="welcome-set-icon">${s.icon}</span>
             <span class="welcome-set-title">${escapeHTML(s.title)}</span>
-            <span class="welcome-set-tag" title="Category tag">#${escapeHTML(s.tag || "")}</span>
           </div>
           <p class="welcome-set-desc">${escapeHTML(s.desc)}</p>
           <div class="welcome-set-actions">
@@ -2684,23 +2279,9 @@ function renderQuiz(items) {
         <h2 class="welcome-title">Welcome to MCQ Trainer</h2>
         <p class="welcome-text">Pick a pre-built question set below, or import your own <code>q_*.json</code>.</p>
 
-        <div class="welcome-search">
-          <span class="welcome-search-icon" aria-hidden="true">🔎</span>
-          <input
-            type="search"
-            id="welcomeSearch"
-            class="welcome-search-input"
-            placeholder="Search by tag (e.g. networking, demo)…"
-            autocomplete="off"
-            spellcheck="false"
-          />
-          <button type="button" id="welcomeSearchClear" class="welcome-search-clear" aria-label="Clear search" hidden>✕</button>
-        </div>
-
-        <div class="welcome-sets-grid" id="welcomeSetsGrid">
+        <div class="welcome-sets-grid">
           ${setsHtml}
         </div>
-        <p class="welcome-search-empty" id="welcomeSearchEmpty" hidden>No matching tags. Try clearing the search.</p>
 
         <div class="welcome-custom">
           <div class="welcome-custom-title">Use your own questions</div>
@@ -2736,43 +2317,6 @@ function renderQuiz(items) {
         if (f) downloadBundledQuestionSet(f);
       });
     });
-
-    // ── Welcome tag search ─────────────────────────────
-    const searchInput = empty.querySelector("#welcomeSearch");
-    const searchClear = empty.querySelector("#welcomeSearchClear");
-    const setsGrid    = empty.querySelector("#welcomeSetsGrid");
-    const emptyMsg    = empty.querySelector("#welcomeSearchEmpty");
-
-    function applyWelcomeFilter() {
-      const q = (searchInput?.value || "").trim().toLowerCase();
-      if (searchClear) searchClear.hidden = q.length === 0;
-      const cards = setsGrid?.querySelectorAll(".welcome-set") || [];
-      let visible = 0;
-      cards.forEach((card) => {
-        const isHidden = card.getAttribute("data-hidden") === "true";
-        if (!q) {
-          // No search → show only public cards, keep hidden ones out of sight.
-          card.hidden = isHidden;
-          if (!isHidden) visible++;
-          return;
-        }
-        const tag   = card.getAttribute("data-tag")   || "";
-        const title = card.getAttribute("data-title") || "";
-        const match = tag.includes(q) || title.includes(q);
-        card.hidden = !match;
-        if (match) visible++;
-      });
-      // "No matches" message only when actively searching and nothing visible.
-      if (emptyMsg) emptyMsg.hidden = !(q && visible === 0);
-    }
-
-    searchInput?.addEventListener("input", applyWelcomeFilter);
-    searchClear?.addEventListener("click", () => {
-      if (searchInput) searchInput.value = "";
-      applyWelcomeFilter();
-      searchInput?.focus();
-    });
-
     return;
   }
 
@@ -2869,7 +2413,6 @@ function renderQuiz(items) {
         card
           .querySelectorAll(".choice")
           .forEach((el) => el.classList.remove("correct"));
-        logActivity("reveal", { qid: getQuestionId(q), n: q.number, action: "hide" });
       } else {
         card
           .querySelectorAll(".choice")
@@ -2880,7 +2423,6 @@ function renderQuiz(items) {
           }`;
         ansBox.classList.add("show");
         btn.textContent = "Hide answer";
-        logActivity("reveal", { qid: getQuestionId(q), n: q.number, action: "show" });
       }
     });
 
@@ -2934,15 +2476,6 @@ function onSelectChoice(q, choiceEl, card) {
   progress.answered[qid] = { selected, correct: correctIndex, isCorrect };
   saveProgress();
   updateScoreUI();
-  logActivity("answer", {
-    qid,
-    n: q.number,
-    sel: selected,
-    cor: correctIndex,
-    ok: isCorrect,
-    exam: examMode,
-    god: godlikeMode,
-  });
   if (godlikeMode && !isCorrect) {
     const modal = document.getElementById("godlikeModal");
     modal.style.display = "flex";
@@ -2995,15 +2528,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   applySourceFilter();
   updateScoreUI();
 
-  // Proctor: record app launch + every off-screen blur and return-to-screen.
-  // Blur is the canonical cheat indicator — the student left the quiz tab.
-  logActivity("app", { event: "launch", url: location.href });
-  window.addEventListener("blur",  () => logActivity("blur",  { event: "blur"  }));
-  window.addEventListener("focus", () => logActivity("focus", { event: "focus" }));
-  document.addEventListener("visibilitychange", () => {
-    logActivity(document.hidden ? "blur" : "focus", { event: "visibilitychange", hidden: document.hidden });
-  });
-
   document.getElementById("filterCycle")?.addEventListener("click", (e) => {
     e.stopPropagation();
     const menu = document.getElementById("sourceFilterMenu");
@@ -3040,7 +2564,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   wireImportPromptModal();
-  wireSourcesPanelSearch();
 
   renderImportedSourcesList();
 
@@ -3292,14 +2815,11 @@ gayNoPersistClose?.addEventListener("click", () => {
 });
 
 function resetQuizProgress() {
-  const prev = { total: progress.total, correct: progress.correct };
   localStorage.removeItem("quiz-progress");
   progress = { answered: {}, correct: 0, total: 0 };
-  logActivity("reset", { kind: "progress", prev });
 }
 
 function setExamModeState(enabled) {
-  const prev = examMode;
   examMode = enabled;
   const examBtn = document.getElementById("toggleExam");
   const examBtnMobile = document.getElementById("m-toggleExam");
@@ -3308,17 +2828,10 @@ function setExamModeState(enabled) {
   document.body.classList.toggle("exam-on", examMode);
   const revealBtn = document.getElementById("revealAll");
   revealBtn?.classList.toggle("disabled", examMode);
-  if (prev !== enabled) {
-    logActivity("mode", { name: "exam", state: enabled ? "on" : "off" });
-  }
 }
 
 function setGodModeState(enabled) {
-  const prev = godlikeMode;
   godlikeMode = enabled;
-  if (prev !== enabled) {
-    logActivity("mode", { name: "god", state: enabled ? "on" : "off" });
-  }
 }
 
 function closeModeResetConfirm() {
@@ -3450,21 +2963,9 @@ function resetTimer() {
   display.textContent = "00:00.000";
 }
 
-btnStart.addEventListener("click", () => {
-  startTimer();
-  logActivity("timer", { event: "start" });
-  PROCTOR_TONES["timer-tick"]?.();
-});
-btnStop.addEventListener("click", () => {
-  stopTimer();
-  logActivity("timer", { event: "stop", elapsedMs: elapsed });
-  PROCTOR_TONES["timer-fire"]?.();
-});
-btnReset.addEventListener("click", () => {
-  resetTimer();
-  logActivity("timer", { event: "reset" });
-  PROCTOR_TONES["reset"]?.();
-});
+btnStart.addEventListener("click", startTimer);
+btnStop.addEventListener("click", stopTimer);
+btnReset.addEventListener("click", resetTimer);
 
 document.getElementById("shuffleBtn").addEventListener("click", () => {
   shuffleMode = !shuffleMode;
@@ -3892,17 +3393,6 @@ const settingsDockerDownloadManual = document.getElementById("settingsDockerDown
 const settingsDockerDownloadBundle = document.getElementById("settingsDockerDownloadBundle");
 const settingsLocalServerDownloadScripts = document.getElementById("settingsLocalServerDownloadScripts");
 const settingsOpenSetupGuide = document.getElementById("settingsOpenSetupGuide");
-const settingsClearAllData = document.getElementById("settingsClearAllData");
-const settingsAudioEnabled = document.getElementById("settingsAudioEnabled");
-const settingsAudioVolume = document.getElementById("settingsAudioVolume");
-const settingsAudioVolumeValue = document.getElementById("settingsAudioVolumeValue");
-const settingsAudioTest = document.getElementById("settingsAudioTest");
-const settingsActivityList = document.getElementById("settingsActivityList");
-const settingsActivityCount = document.getElementById("settingsActivityCount");
-const settingsActivityExportJson = document.getElementById("settingsActivityExportJson");
-const settingsActivityExportCsv  = document.getElementById("settingsActivityExportCsv");
-const settingsActivityClear     = document.getElementById("settingsActivityClear");
-let __activityLogFilter = "all";
 
 const docsModal = document.getElementById("docsModal");
 const docsModalTitle = document.getElementById("docsModalTitle");
@@ -4134,159 +3624,6 @@ function openSettingsModal() {
   renderHistoryList();
   applyPracticeButtonsUI(getPracticeMode());
   setSettingsTab(getStoredSettingsTab());
-  applyAudioPrefsUI();
-  renderActivityLog();
-}
-
-function isSettingsModalOpen() {
-  return settingsModal && settingsModal.style.display === "flex";
-}
-
-/* ────────── Activity Log viewer ────────── */
-function renderActivityLogIfOpen() {
-  if (isSettingsModalOpen()) renderActivityLog();
-}
-function _formatLogTime(t) {
-  const d = new Date(t);
-  const pad = (n) => String(n).padStart(2, "0");
-  return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-}
-function _formatLogDetail(entry) {
-  const d = entry.detail || {};
-  switch (entry.type) {
-    case "answer":
-      return `Q${d.n ?? "?"} sel=${d.sel} cor=${d.cor} ${d.ok ? "✓" : "✗"}${d.exam ? " · exam" : ""}${d.god ? " · god" : ""}`;
-    case "reveal":
-      return `Q${d.n ?? "?"} ${d.action || "?"}`;
-    case "mode":
-      return `${d.name}: ${d.state}`;
-    case "reset":
-      return `${d.kind}${d.prev ? ` (was ${d.prev.correct}/${d.prev.total})` : ""}`;
-    case "source":
-      return d.kind === "category-toggle"
-        ? `category ${d.key} ${d.on ? "on" : "off"}`
-        : `source ${d.id} ${d.on ? "on" : "off"}`;
-    case "blur":
-      return d.event || "off-screen";
-    case "focus":
-      return d.event || "back on screen";
-    case "app":
-      return d.event || "";
-    case "submit":
-      return `submit ${d.score ?? "?"}/${d.total ?? "?"}`;
-    case "timer":
-      return d.event + (d.elapsedMs ? ` (${Math.round(d.elapsedMs / 1000)}s)` : "");
-    default:
-      try { return JSON.stringify(d); } catch { return String(d); }
-  }
-}
-function renderActivityLog() {
-  if (!settingsActivityList) return;
-  const log = getActivityLog();
-  if (settingsActivityCount) settingsActivityCount.textContent = `${log.length} event${log.length === 1 ? "" : "s"}`;
-  const filtered = __activityLogFilter === "all"
-    ? log
-    : log.filter((e) => {
-        if (__activityLogFilter === "blur") return e.type === "blur" || e.type === "focus";
-        return e.type === __activityLogFilter;
-      });
-  if (!filtered.length) {
-    settingsActivityList.innerHTML = `<div class="activity-log-empty">No events yet${__activityLogFilter === "all" ? "" : ` for filter "${__activityLogFilter}"`}.</div>`;
-    return;
-  }
-  // Newest at top.
-  const html = filtered.slice().reverse().map((e) => {
-    const cls = `activity-log-row type-${e.type}`;
-    return `<div class="${cls}"><span class="activity-log-time">${_formatLogTime(e.t)}</span><span class="activity-log-type">${escapeHTML(e.type)}</span><span class="activity-log-detail">${escapeHTML(_formatLogDetail(e))}</span></div>`;
-  }).join("");
-  settingsActivityList.innerHTML = html;
-}
-function wireActivityLogUI() {
-  document.querySelectorAll(".activity-filter").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".activity-filter").forEach((b) => b.classList.toggle("active", b === btn));
-      __activityLogFilter = btn.getAttribute("data-filter") || "all";
-      renderActivityLog();
-    });
-  });
-  settingsActivityExportJson?.addEventListener("click", () => {
-    const blob = new Blob([JSON.stringify(getActivityLog(), null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `mcq-activity-${Date.now()}.json`;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  });
-  settingsActivityExportCsv?.addEventListener("click", () => {
-    const rows = [["time_iso", "type", "detail"]];
-    getActivityLog().forEach((e) => {
-      const detailStr = JSON.stringify(e.detail || {});
-      rows.push([new Date(e.t).toISOString(), e.type, detailStr.replace(/"/g, '""')]);
-    });
-    const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `mcq-activity-${Date.now()}.csv`;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  });
-  settingsActivityClear?.addEventListener("click", () => {
-    openModeResetConfirm(
-      "Clear the entire activity log? This cannot be undone.",
-      () => {
-        clearActivityLog();
-        showToast?.("Activity log cleared.");
-      },
-      null,
-      { destructive: true, confirmLabel: "Clear log" }
-    );
-  });
-}
-
-/* ────────── Proctor Audio settings ────────── */
-function applyAudioPrefsUI() {
-  const prefs = _readAudioPrefs();
-  if (settingsAudioEnabled) settingsAudioEnabled.checked = !!prefs.enabled;
-  if (settingsAudioVolume)  settingsAudioVolume.value = String(Math.round((prefs.volume ?? 0.6) * 100));
-  if (settingsAudioVolumeValue) settingsAudioVolumeValue.textContent = `${Math.round((prefs.volume ?? 0.6) * 100)}%`;
-}
-function wireAudioSettings() {
-  settingsAudioEnabled?.addEventListener("change", () => {
-    setAudioEnabled(settingsAudioEnabled.checked);
-    if (settingsAudioEnabled.checked) {
-      // First user-gesture: warm the AudioContext so subsequent tones fire.
-      _ensureAudioCtx()?.resume?.().catch(() => {});
-      PROCTOR_TONES["test"]?.();
-    }
-  });
-  settingsAudioVolume?.addEventListener("input", () => {
-    const pct = Number(settingsAudioVolume.value);
-    setAudioVolume(pct / 100);
-    if (settingsAudioVolumeValue) settingsAudioVolumeValue.textContent = `${pct}%`;
-  });
-  settingsAudioTest?.addEventListener("click", () => {
-    _ensureAudioCtx()?.resume?.().catch(() => {});
-    PROCTOR_TONES["test"]?.();
-  });
-}
-
-/* ────────── Clear all data ────────── */
-function wireClearAllData() {
-  settingsClearAllData?.addEventListener("click", () => {
-    openModeResetConfirm(
-      "Wipe all locally stored MCQ data (imported sets, progress, stats, history, activity log, modes)? The page will reload.",
-      () => {
-        wipeAllMcqStorage();
-        try { showToast?.("All data cleared. Reloading…"); } catch {}
-        setTimeout(() => location.reload(), 250);
-      },
-      null,
-      { destructive: true, confirmLabel: "Wipe & reload" }
-    );
-  });
 }
 
 function closeSettingsModal() {
@@ -4314,14 +3651,9 @@ settingsResetTimer?.addEventListener("click", () => {
 
 initQaFontSizeSetting();
 initControlsLayoutSetting();
-wireClearAllData();
-wireAudioSettings();
-wireActivityLogUI();
-applyAudioPrefsUI();
 
 settingsCompleteTest?.addEventListener("click", () => {
   completeTestToHistory();
-  logActivity("submit", { score: progress.correct, total: progress.total });
   showToast("Saved to history.");
 });
 
