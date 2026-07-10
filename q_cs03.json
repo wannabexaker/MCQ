@@ -1,0 +1,289 @@
+[
+  {
+    "number": 1,
+    "question_en": "What causes a NullReferenceException?",
+    "question_el": "Τι προκαλεί ένα NullReferenceException;",
+    "choices_en": [
+      "Dividing by zero",
+      "Casting an int to a string",
+      "Accessing a member on a reference that is null",
+      "An infinite loop"
+    ],
+    "choices_el": [
+      "Η διαίρεση με το μηδέν",
+      "Η μετατροπή ενός int σε string",
+      "Η πρόσβαση σε μέλος μιας αναφοράς που είναι null",
+      "Ένα ατέρμον loop"
+    ],
+    "correctIndex": 2,
+    "CS03": true
+  },
+  {
+    "number": 2,
+    "question_en": "How do you declare a nullable value type for int?",
+    "question_el": "Πώς δηλώνεις ένα nullable value type για int;",
+    "choices_en": [
+      "int?",
+      "nullable int",
+      "int*",
+      "@int"
+    ],
+    "choices_el": [
+      "int?",
+      "nullable int",
+      "int*",
+      "@int"
+    ],
+    "correctIndex": 0,
+    "CS03": true
+  },
+  {
+    "number": 3,
+    "question_en": "What does the ?? (null-coalescing) operator do?",
+    "question_el": "Τι κάνει ο τελεστής ?? (null-coalescing);",
+    "choices_en": [
+      "Checks equality of two values",
+      "Throws if the value is null",
+      "Always returns null",
+      "Returns the left operand if it is not null, otherwise the right operand"
+    ],
+    "choices_el": [
+      "Ελέγχει την ισότητα δύο τιμών",
+      "Πετάει σφάλμα αν η τιμή είναι null",
+      "Επιστρέφει πάντα null",
+      "Επιστρέφει τον αριστερό operand αν δεν είναι null, αλλιώς τον δεξί"
+    ],
+    "correctIndex": 3,
+    "CS03": true
+  },
+  {
+    "number": 4,
+    "question_en": "What does the ??= operator do?",
+    "question_el": "Τι κάνει ο τελεστής ??=;",
+    "choices_en": [
+      "Always assigns the right value",
+      "Assigns the right value only if the left operand is currently null",
+      "Compares two values",
+      "Negates a boolean"
+    ],
+    "choices_el": [
+      "Αναθέτει πάντα τη δεξιά τιμή",
+      "Αναθέτει τη δεξιά τιμή μόνο αν ο αριστερός operand είναι τώρα null",
+      "Συγκρίνει δύο τιμές",
+      "Αντιστρέφει ένα boolean"
+    ],
+    "correctIndex": 1,
+    "CS03": true
+  },
+  {
+    "number": 5,
+    "question_en": "What does the ?. (null-conditional) operator do?",
+    "question_el": "Τι κάνει ο τελεστής ?. (null-conditional);",
+    "choices_en": [
+      "Throws if the object is null",
+      "Returns null instead of accessing the member when the object is null",
+      "Converts null to zero",
+      "Is the same as ??"
+    ],
+    "choices_el": [
+      "Πετάει σφάλμα αν το object είναι null",
+      "Επιστρέφει null αντί να προσπελάσει το μέλος όταν το object είναι null",
+      "Μετατρέπει το null σε μηδέν",
+      "Είναι το ίδιο με το ??"
+    ],
+    "correctIndex": 1,
+    "CS03": true
+  },
+  {
+    "number": 6,
+    "question_en": "What is the value of len after this code?",
+    "question_el": "Ποια είναι η τιμή του len μετά από αυτόν τον κώδικα;",
+    "code": "string s = null;\nint? len = s?.Length;",
+    "choices_en": [
+      "0",
+      "Throws NullReferenceException",
+      "-1",
+      "null"
+    ],
+    "choices_el": [
+      "0",
+      "Πετάει NullReferenceException",
+      "-1",
+      "null"
+    ],
+    "correctIndex": 3,
+    "CS03": true
+  },
+  {
+    "number": 7,
+    "question_en": "For an int? named x, what does x.HasValue return?",
+    "question_el": "Για ένα int? με όνομα x, τι επιστρέφει το x.HasValue;",
+    "choices_en": [
+      "true if x contains a value (is not null)",
+      "true only if x is 0",
+      "always true",
+      "the numeric value of x"
+    ],
+    "choices_el": [
+      "true αν το x περιέχει τιμή (δεν είναι null)",
+      "true μόνο αν το x είναι 0",
+      "πάντα true",
+      "την αριθμητική τιμή του x"
+    ],
+    "correctIndex": 0,
+    "CS03": true
+  },
+  {
+    "number": 8,
+    "question_en": "What does GetValueOrDefault() return on a null int?",
+    "question_el": "Τι επιστρέφει το GetValueOrDefault() σε ένα null int?;",
+    "choices_en": [
+      "null",
+      "It throws",
+      "0",
+      "-1"
+    ],
+    "choices_el": [
+      "null",
+      "Πετάει σφάλμα",
+      "0",
+      "-1"
+    ],
+    "correctIndex": 2,
+    "CS03": true
+  },
+  {
+    "number": 9,
+    "question_en": "What is the difference between string.IsNullOrEmpty and string.IsNullOrWhiteSpace?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ string.IsNullOrEmpty και string.IsNullOrWhiteSpace;",
+    "choices_en": [
+      "There is no difference",
+      "IsNullOrEmpty also checks whitespace",
+      "IsNullOrWhiteSpace only checks for null",
+      "IsNullOrWhiteSpace also returns true for strings containing only whitespace"
+    ],
+    "choices_el": [
+      "Δεν υπάρχει διαφορά",
+      "Το IsNullOrEmpty ελέγχει επίσης whitespace",
+      "Το IsNullOrWhiteSpace ελέγχει μόνο για null",
+      "Το IsNullOrWhiteSpace επιστρέφει επίσης true για strings που περιέχουν μόνο whitespace"
+    ],
+    "correctIndex": 3,
+    "CS03": true
+  },
+  {
+    "number": 10,
+    "question_en": "How do C# 8 nullable reference types help?",
+    "question_el": "Πώς βοηθούν τα nullable reference types της C# 8;",
+    "choices_en": [
+      "By making all references nullable",
+      "By letting the compiler warn about potential null dereferences",
+      "By removing null from the language",
+      "By making value types nullable"
+    ],
+    "choices_el": [
+      "Κάνοντας όλες τις αναφορές nullable",
+      "Επιτρέποντας στον compiler να προειδοποιεί για πιθανά null dereferences",
+      "Αφαιρώντας το null από τη γλώσσα",
+      "Κάνοντας τα value types nullable"
+    ],
+    "correctIndex": 1,
+    "CS03": true
+  },
+  {
+    "number": 11,
+    "question_en": "What does the null-forgiving operator (!) tell the compiler?",
+    "question_el": "Τι λέει στον compiler ο null-forgiving τελεστής (!);",
+    "choices_en": [
+      "That you know the value is not null, suppressing the warning",
+      "To throw if the value is null",
+      "To convert the value to null",
+      "To make the type nullable"
+    ],
+    "choices_el": [
+      "Ότι ξέρεις πως η τιμή δεν είναι null, καταστέλλοντας το warning",
+      "Να πετάξει σφάλμα αν η τιμή είναι null",
+      "Να μετατρέψει την τιμή σε null",
+      "Να κάνει τον τύπο nullable"
+    ],
+    "correctIndex": 0,
+    "CS03": true
+  },
+  {
+    "number": 12,
+    "question_en": "What is the ?.[] operator used for?",
+    "question_el": "Για τι χρησιμοποιείται ο τελεστής ?.[];",
+    "choices_en": [
+      "Declaring an array",
+      "Null coalescing",
+      "Null-conditional indexer access on a possibly-null collection",
+      "Casting a value"
+    ],
+    "choices_el": [
+      "Δήλωση ενός array",
+      "Null coalescing",
+      "Null-conditional πρόσβαση με indexer σε μια πιθανώς-null συλλογή",
+      "Cast μιας τιμής"
+    ],
+    "correctIndex": 2,
+    "CS03": true
+  },
+  {
+    "number": 13,
+    "question_en": "What does default(T) return for a reference type T?",
+    "question_el": "Τι επιστρέφει το default(T) για έναν reference type T;",
+    "choices_en": [
+      "An empty object",
+      "null",
+      "A compile error",
+      "0"
+    ],
+    "choices_el": [
+      "Ένα άδειο object",
+      "null",
+      "Ένα compile error",
+      "0"
+    ],
+    "correctIndex": 1,
+    "CS03": true
+  },
+  {
+    "number": 14,
+    "question_en": "Which is the modern pattern to check that a value is not null?",
+    "question_el": "Ποιο είναι το σύγχρονο pattern για να ελέγξεις ότι μια τιμή δεν είναι null;",
+    "choices_en": [
+      "x is null",
+      "x == not null",
+      "x !null",
+      "x is not null"
+    ],
+    "choices_el": [
+      "x is null",
+      "x == not null",
+      "x !null",
+      "x is not null"
+    ],
+    "correctIndex": 3,
+    "CS03": true
+  },
+  {
+    "number": 15,
+    "question_en": "If input is null, what does name become?",
+    "question_el": "Αν το input είναι null, τι γίνεται το name;",
+    "code": "string name = input ?? \"Guest\";",
+    "choices_en": [
+      "\"Guest\"",
+      "null",
+      "\"\"",
+      "It throws"
+    ],
+    "choices_el": [
+      "\"Guest\"",
+      "null",
+      "\"\"",
+      "Πετάει σφάλμα"
+    ],
+    "correctIndex": 0,
+    "CS03": true
+  }
+]

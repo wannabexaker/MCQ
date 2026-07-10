@@ -1,0 +1,287 @@
+[
+  {
+    "number": 1,
+    "question_en": "What is the main difference between a class and a struct in C#?",
+    "question_el": "Ποια είναι η βασική διαφορά μεταξύ class και struct στη C#;",
+    "choices_en": [
+      "A class is a value type; a struct is a reference type",
+      "They are identical",
+      "A class is a reference type; a struct is a value type",
+      "A struct can inherit from another struct"
+    ],
+    "choices_el": [
+      "Η class είναι value type· το struct είναι reference type",
+      "Είναι πανομοιότυπα",
+      "Η class είναι reference type· το struct είναι value type",
+      "Ένα struct μπορεί να κληρονομήσει από άλλο struct"
+    ],
+    "correctIndex": 2,
+    "CS02": true
+  },
+  {
+    "number": 2,
+    "question_en": "What is a key difference between an abstract class and an interface?",
+    "question_el": "Ποια είναι μια βασική διαφορά μεταξύ abstract class και interface;",
+    "choices_en": [
+      "An abstract class can provide implementation and state; a (classic) interface only defines a contract",
+      "An interface can hold full implementation and instance fields like a class",
+      "A class can inherit from multiple abstract classes",
+      "They are identical"
+    ],
+    "choices_el": [
+      "Μια abstract class μπορεί να παρέχει υλοποίηση και κατάσταση· ένα (κλασικό) interface ορίζει μόνο ένα συμβόλαιο",
+      "Ένα interface μπορεί να έχει πλήρη υλοποίηση και instance fields όπως μια class",
+      "Μια class μπορεί να κληρονομήσει από πολλές abstract classes",
+      "Είναι πανομοιότυπα"
+    ],
+    "correctIndex": 0,
+    "CS02": true
+  },
+  {
+    "number": 3,
+    "question_en": "To allow a method to be overridden in a derived class, the base method must be marked:",
+    "question_el": "Για να μπορεί μια μέθοδος να γίνει override σε παράγωγη κλάση, η μέθοδος της base πρέπει να είναι:",
+    "choices_en": [
+      "sealed",
+      "static",
+      "private",
+      "virtual"
+    ],
+    "choices_el": [
+      "sealed",
+      "static",
+      "private",
+      "virtual"
+    ],
+    "correctIndex": 3,
+    "CS02": true
+  },
+  {
+    "number": 4,
+    "question_en": "What does using the 'new' keyword on a method (method hiding) do?",
+    "question_el": "Τι κάνει η χρήση της λέξης-κλειδί 'new' σε μια μέθοδο (method hiding);",
+    "choices_en": [
+      "Overrides the base method polymorphically",
+      "Hides the base method rather than overriding it",
+      "Creates a new object each call",
+      "Is required for every method"
+    ],
+    "choices_el": [
+      "Κάνει override τη μέθοδο της base πολυμορφικά",
+      "Κρύβει (hide) τη μέθοδο της base αντί να την κάνει override",
+      "Δημιουργεί ένα νέο object σε κάθε κλήση",
+      "Απαιτείται για κάθε μέθοδο"
+    ],
+    "correctIndex": 1,
+    "CS02": true
+  },
+  {
+    "number": 5,
+    "question_en": "What does a sealed class prevent?",
+    "question_el": "Τι αποτρέπει μια sealed class;",
+    "choices_en": [
+      "It cannot be instantiated",
+      "It cannot be inherited from",
+      "It must be abstract",
+      "It can have no methods"
+    ],
+    "choices_el": [
+      "Δεν μπορεί να δημιουργηθεί instance της",
+      "Δεν μπορεί να γίνει κληρονομιά από αυτήν",
+      "Πρέπει να είναι abstract",
+      "Δεν μπορεί να έχει μεθόδους"
+    ],
+    "correctIndex": 1,
+    "CS02": true
+  },
+  {
+    "number": 6,
+    "question_en": "What is the base keyword used for?",
+    "question_el": "Για τι χρησιμοποιείται η λέξη-κλειδί base;",
+    "choices_en": [
+      "To create a new instance",
+      "To seal a class",
+      "To declare an interface",
+      "To access members of the base class"
+    ],
+    "choices_el": [
+      "Για δημιουργία νέου instance",
+      "Για να κάνει seal μια class",
+      "Για να δηλώσει ένα interface",
+      "Για πρόσβαση σε μέλη της base class"
+    ],
+    "correctIndex": 3,
+    "CS02": true
+  },
+  {
+    "number": 7,
+    "question_en": "From how many classes can a C# class directly inherit?",
+    "question_el": "Από πόσες κλάσεις μπορεί μια C# class να κληρονομήσει άμεσα;",
+    "choices_en": [
+      "One",
+      "Unlimited",
+      "Two",
+      "Zero"
+    ],
+    "choices_el": [
+      "Μία",
+      "Απεριόριστες",
+      "Δύο",
+      "Καμία"
+    ],
+    "correctIndex": 0,
+    "CS02": true
+  },
+  {
+    "number": 8,
+    "question_en": "How many interfaces can a single class implement?",
+    "question_el": "Πόσα interfaces μπορεί να υλοποιήσει μια class;",
+    "choices_en": [
+      "Only one",
+      "None",
+      "Multiple",
+      "Exactly two"
+    ],
+    "choices_el": [
+      "Μόνο ένα",
+      "Κανένα",
+      "Πολλά",
+      "Ακριβώς δύο"
+    ],
+    "correctIndex": 2,
+    "CS02": true
+  },
+  {
+    "number": 9,
+    "question_en": "Which access modifier makes a member accessible only within the same class?",
+    "question_el": "Ποιος access modifier κάνει ένα μέλος προσβάσιμο μόνο μέσα στην ίδια class;",
+    "choices_en": [
+      "public",
+      "protected",
+      "internal",
+      "private"
+    ],
+    "choices_el": [
+      "public",
+      "protected",
+      "internal",
+      "private"
+    ],
+    "correctIndex": 3,
+    "CS02": true
+  },
+  {
+    "number": 10,
+    "question_en": "What does the protected modifier allow?",
+    "question_el": "Τι επιτρέπει ο modifier protected;",
+    "choices_en": [
+      "Access from anywhere",
+      "Access only within the class and its derived classes",
+      "Access only within the same assembly",
+      "No access at all"
+    ],
+    "choices_el": [
+      "Πρόσβαση από οπουδήποτε",
+      "Πρόσβαση μόνο μέσα στην class και στις παράγωγές της",
+      "Πρόσβαση μόνο μέσα στο ίδιο assembly",
+      "Καμία πρόσβαση"
+    ],
+    "correctIndex": 1,
+    "CS02": true
+  },
+  {
+    "number": 11,
+    "question_en": "In constructor chaining, what does ': base()' call?",
+    "question_el": "Στο constructor chaining, τι καλεί το ': base()';",
+    "choices_en": [
+      "A constructor of the base class",
+      "Another constructor in the same class",
+      "A static method",
+      "The destructor"
+    ],
+    "choices_el": [
+      "Έναν constructor της base class",
+      "Έναν άλλο constructor της ίδιας class",
+      "Μια static μέθοδο",
+      "Τον destructor"
+    ],
+    "correctIndex": 0,
+    "CS02": true
+  },
+  {
+    "number": 12,
+    "question_en": "What does ': this()' in a constructor call?",
+    "question_el": "Τι καλεί το ': this()' μέσα σε έναν constructor;",
+    "choices_en": [
+      "The base class constructor",
+      "A virtual method",
+      "Another constructor in the same class",
+      "The garbage collector"
+    ],
+    "choices_el": [
+      "Τον constructor της base class",
+      "Μια virtual μέθοδο",
+      "Έναν άλλο constructor της ίδιας class",
+      "Τον garbage collector"
+    ],
+    "correctIndex": 2,
+    "CS02": true
+  },
+  {
+    "number": 13,
+    "question_en": "Every class in C# implicitly inherits from:",
+    "question_el": "Κάθε class στη C# κληρονομεί έμμεσα από:",
+    "choices_en": [
+      "System.String",
+      "System.Object",
+      "System.Array",
+      "Nothing"
+    ],
+    "choices_el": [
+      "System.String",
+      "System.Object",
+      "System.Array",
+      "Τίποτα"
+    ],
+    "correctIndex": 1,
+    "CS02": true
+  },
+  {
+    "number": 14,
+    "question_en": "What does polymorphism via virtual/override enable?",
+    "question_el": "Τι επιτρέπει ο πολυμορφισμός μέσω virtual/override;",
+    "choices_en": [
+      "Multiple inheritance of classes",
+      "Compile-time-only behavior",
+      "Fields to be hidden automatically",
+      "A base-type reference to call the derived type's overridden method at runtime"
+    ],
+    "choices_el": [
+      "Πολλαπλή κληρονομικότητα κλάσεων",
+      "Συμπεριφορά μόνο σε compile time",
+      "Την αυτόματη απόκρυψη fields",
+      "Μια αναφορά τύπου base να καλεί την overridden μέθοδο του παράγωγου τύπου στο runtime"
+    ],
+    "correctIndex": 3,
+    "CS02": true
+  },
+  {
+    "number": 15,
+    "question_en": "What is the difference between a property and a field?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ property και field;",
+    "choices_en": [
+      "A property exposes get/set accessors that can contain logic; a field is a direct data member",
+      "A property is just a public field",
+      "A field has get/set accessors; a property does not",
+      "They are identical"
+    ],
+    "choices_el": [
+      "Μια property εκθέτει get/set accessors που μπορούν να έχουν λογική· ένα field είναι άμεσο μέλος δεδομένων",
+      "Μια property είναι απλώς ένα public field",
+      "Ένα field έχει get/set accessors· μια property όχι",
+      "Είναι πανομοιότυπα"
+    ],
+    "correctIndex": 0,
+    "CS02": true
+  }
+]

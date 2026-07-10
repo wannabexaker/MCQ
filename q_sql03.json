@@ -1,0 +1,290 @@
+[
+  {
+    "number": 1,
+    "question_en": "What is the difference between COUNT(*) and COUNT(column)?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ COUNT(*) και COUNT(column);",
+    "choices_en": [
+      "There is no difference",
+      "COUNT(*) ignores NULLs; COUNT(column) counts every row",
+      "COUNT(*) counts all rows; COUNT(column) counts only non-NULL values in that column",
+      "COUNT(column) always counts distinct values"
+    ],
+    "choices_el": [
+      "Δεν υπάρχει διαφορά",
+      "Το COUNT(*) αγνοεί τα NULL· το COUNT(column) μετρά κάθε γραμμή",
+      "Το COUNT(*) μετρά όλες τις γραμμές· το COUNT(column) μετρά μόνο τις non-NULL τιμές αυτής της στήλης",
+      "Το COUNT(column) μετρά πάντα μοναδικές τιμές"
+    ],
+    "correctIndex": 2,
+    "SQL03": true
+  },
+  {
+    "number": 2,
+    "question_en": "What does COUNT(DISTINCT column) return?",
+    "question_el": "Τι επιστρέφει το COUNT(DISTINCT column);",
+    "choices_en": [
+      "The number of distinct non-NULL values in the column",
+      "The total number of rows",
+      "The number of NULL values",
+      "The sum of the column values"
+    ],
+    "choices_el": [
+      "Τον αριθμό των μοναδικών non-NULL τιμών της στήλης",
+      "Τον συνολικό αριθμό γραμμών",
+      "Τον αριθμό των NULL τιμών",
+      "Το άθροισμα των τιμών της στήλης"
+    ],
+    "correctIndex": 0,
+    "SQL03": true
+  },
+  {
+    "number": 3,
+    "question_en": "How does SUM() handle NULL values in a column?",
+    "question_el": "Πώς χειρίζεται το SUM() τις NULL τιμές σε μια στήλη;",
+    "choices_en": [
+      "It treats NULL as 0 and includes it",
+      "It returns NULL if any value is NULL",
+      "It throws an error",
+      "It ignores NULLs and sums the remaining values"
+    ],
+    "choices_el": [
+      "Θεωρεί το NULL ως 0 και το συμπεριλαμβάνει",
+      "Επιστρέφει NULL αν οποιαδήποτε τιμή είναι NULL",
+      "Πετάει σφάλμα",
+      "Αγνοεί τα NULL και αθροίζει τις υπόλοιπες τιμές"
+    ],
+    "correctIndex": 3,
+    "SQL03": true
+  },
+  {
+    "number": 4,
+    "question_en": "For 4 rows where one value is NULL, AVG(column) computes the average over:",
+    "question_el": "Για 4 γραμμές όπου μία τιμή είναι NULL, το AVG(column) υπολογίζει τον μέσο όρο πάνω σε:",
+    "choices_en": [
+      "All 4 rows, treating NULL as 0",
+      "Only the 3 non-NULL values",
+      "It returns NULL",
+      "Only the first row"
+    ],
+    "choices_el": [
+      "Και τις 4 γραμμές, θεωρώντας το NULL ως 0",
+      "Μόνο τις 3 non-NULL τιμές",
+      "Επιστρέφει NULL",
+      "Μόνο την πρώτη γραμμή"
+    ],
+    "correctIndex": 1,
+    "SQL03": true
+  },
+  {
+    "number": 5,
+    "question_en": "What is the logical processing order of a SELECT query?",
+    "question_el": "Ποια είναι η λογική σειρά επεξεργασίας ενός SELECT query;",
+    "choices_en": [
+      "SELECT → WHERE → GROUP BY → HAVING → ORDER BY",
+      "FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY",
+      "WHERE → FROM → SELECT → GROUP BY → ORDER BY",
+      "GROUP BY → WHERE → HAVING → SELECT → ORDER BY"
+    ],
+    "choices_el": [
+      "SELECT → WHERE → GROUP BY → HAVING → ORDER BY",
+      "FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY",
+      "WHERE → FROM → SELECT → GROUP BY → ORDER BY",
+      "GROUP BY → WHERE → HAVING → SELECT → ORDER BY"
+    ],
+    "correctIndex": 1,
+    "SQL03": true
+  },
+  {
+    "number": 6,
+    "question_en": "Why does 'SELECT department, name FROM employees GROUP BY department' fail?",
+    "question_el": "Γιατί αποτυγχάνει το 'SELECT department, name FROM employees GROUP BY department';",
+    "choices_en": [
+      "department must be aggregated",
+      "GROUP BY cannot use a single column",
+      "name must be listed first",
+      "name is neither in the GROUP BY nor wrapped in an aggregate function"
+    ],
+    "choices_el": [
+      "Το department πρέπει να είναι σε aggregate",
+      "Το GROUP BY δεν μπορεί να χρησιμοποιήσει μία μόνο στήλη",
+      "Το name πρέπει να αναφέρεται πρώτο",
+      "Το name δεν είναι ούτε στο GROUP BY ούτε μέσα σε aggregate function"
+    ],
+    "correctIndex": 3,
+    "SQL03": true
+  },
+  {
+    "number": 7,
+    "question_en": "What is the difference between WHERE and HAVING?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ WHERE και HAVING;",
+    "choices_en": [
+      "WHERE filters rows before grouping; HAVING filters groups after aggregation",
+      "HAVING filters rows before grouping; WHERE filters groups",
+      "They are identical",
+      "HAVING can only be used without GROUP BY"
+    ],
+    "choices_el": [
+      "Το WHERE φιλτράρει γραμμές πριν την ομαδοποίηση· το HAVING φιλτράρει ομάδες μετά το aggregation",
+      "Το HAVING φιλτράρει γραμμές πριν την ομαδοποίηση· το WHERE φιλτράρει ομάδες",
+      "Είναι πανομοιότυπα",
+      "Το HAVING χρησιμοποιείται μόνο χωρίς GROUP BY"
+    ],
+    "correctIndex": 0,
+    "SQL03": true
+  },
+  {
+    "number": 8,
+    "question_en": "What does the following query return?",
+    "question_el": "Τι επιστρέφει το παρακάτω query;",
+    "code": "SELECT customer_id, SUM(amount) AS total\nFROM orders\nGROUP BY customer_id\nHAVING SUM(amount) > 1000;",
+    "choices_en": [
+      "All customers with their order totals",
+      "The 1000 largest orders",
+      "Customers whose total order amount exceeds 1000",
+      "Individual orders greater than 1000"
+    ],
+    "choices_el": [
+      "Όλους τους πελάτες με τα σύνολα παραγγελιών τους",
+      "Τις 1000 μεγαλύτερες παραγγελίες",
+      "Πελάτες των οποίων το συνολικό ποσό παραγγελιών ξεπερνά το 1000",
+      "Μεμονωμένες παραγγελίες μεγαλύτερες από 1000"
+    ],
+    "correctIndex": 2,
+    "SQL03": true
+  },
+  {
+    "number": 9,
+    "question_en": "Can you GROUP BY multiple columns?",
+    "question_el": "Μπορείς να κάνεις GROUP BY πολλές στήλες;",
+    "choices_en": [
+      "No, only one column is allowed",
+      "Only if the columns are numeric",
+      "Only when combined with HAVING",
+      "Yes, it groups by each unique combination of those columns"
+    ],
+    "choices_el": [
+      "Όχι, επιτρέπεται μόνο μία στήλη",
+      "Μόνο αν οι στήλες είναι αριθμητικές",
+      "Μόνο σε συνδυασμό με HAVING",
+      "Ναι, ομαδοποιεί ανά μοναδικό συνδυασμό αυτών των στηλών"
+    ],
+    "correctIndex": 3,
+    "SQL03": true
+  },
+  {
+    "number": 10,
+    "question_en": "Can an aggregate function be used in the ORDER BY clause?",
+    "question_el": "Μπορεί μια aggregate function να χρησιμοποιηθεί στη ρήτρα ORDER BY;",
+    "choices_en": [
+      "No, never",
+      "Yes, e.g. ORDER BY COUNT(*) DESC",
+      "Only inside a subquery",
+      "Only together with WHERE"
+    ],
+    "choices_el": [
+      "Όχι, ποτέ",
+      "Ναι, π.χ. ORDER BY COUNT(*) DESC",
+      "Μόνο μέσα σε subquery",
+      "Μόνο μαζί με WHERE"
+    ],
+    "correctIndex": 1,
+    "SQL03": true
+  },
+  {
+    "number": 11,
+    "question_en": "Where must a condition that references an aggregate (e.g. SUM(x) > 100) be placed?",
+    "question_el": "Πού πρέπει να μπει μια συνθήκη που αναφέρεται σε aggregate (π.χ. SUM(x) > 100);",
+    "choices_en": [
+      "HAVING",
+      "WHERE",
+      "ON",
+      "FROM"
+    ],
+    "choices_el": [
+      "HAVING",
+      "WHERE",
+      "ON",
+      "FROM"
+    ],
+    "correctIndex": 0,
+    "SQL03": true
+  },
+  {
+    "number": 12,
+    "question_en": "What does the following query count?",
+    "question_el": "Τι μετρά το παρακάτω query;",
+    "code": "SELECT COUNT(*) FROM employees WHERE bonus IS NULL;",
+    "choices_en": [
+      "Employees with a non-NULL bonus",
+      "All employees regardless of bonus",
+      "Employees whose bonus is NULL",
+      "Distinct bonus values"
+    ],
+    "choices_el": [
+      "Υπαλλήλους με non-NULL bonus",
+      "Όλους τους υπαλλήλους ανεξαρτήτως bonus",
+      "Υπαλλήλους των οποίων το bonus είναι NULL",
+      "Μοναδικές τιμές bonus"
+    ],
+    "correctIndex": 2,
+    "SQL03": true
+  },
+  {
+    "number": 13,
+    "question_en": "Which clause filters individual rows BEFORE aggregation happens?",
+    "question_el": "Ποια ρήτρα φιλτράρει μεμονωμένες γραμμές ΠΡΙΝ γίνει το aggregation;",
+    "choices_en": [
+      "HAVING",
+      "WHERE",
+      "ORDER BY",
+      "GROUP BY"
+    ],
+    "choices_el": [
+      "HAVING",
+      "WHERE",
+      "ORDER BY",
+      "GROUP BY"
+    ],
+    "correctIndex": 1,
+    "SQL03": true
+  },
+  {
+    "number": 14,
+    "question_en": "How do MIN() and MAX() treat NULL values?",
+    "question_el": "Πώς αντιμετωπίζουν τα MIN() και MAX() τις NULL τιμές;",
+    "choices_en": [
+      "They include NULL as the smallest value",
+      "They always return NULL",
+      "They throw an error",
+      "They ignore NULLs"
+    ],
+    "choices_el": [
+      "Συμπεριλαμβάνουν το NULL ως τη μικρότερη τιμή",
+      "Επιστρέφουν πάντα NULL",
+      "Πετάνε σφάλμα",
+      "Αγνοούν τα NULL"
+    ],
+    "correctIndex": 3,
+    "SQL03": true
+  },
+  {
+    "number": 15,
+    "question_en": "In the query below, which clause is processed LAST?",
+    "question_el": "Στο παρακάτω query, ποια ρήτρα επεξεργάζεται ΤΕΛΕΥΤΑΙΑ;",
+    "code": "SELECT dept, COUNT(*)\nFROM emp\nWHERE active = 1\nGROUP BY dept\nHAVING COUNT(*) >= 3\nORDER BY COUNT(*) DESC;",
+    "choices_en": [
+      "ORDER BY",
+      "GROUP BY",
+      "WHERE",
+      "HAVING"
+    ],
+    "choices_el": [
+      "ORDER BY",
+      "GROUP BY",
+      "WHERE",
+      "HAVING"
+    ],
+    "correctIndex": 0,
+    "SQL03": true
+  }
+]

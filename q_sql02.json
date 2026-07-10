@@ -1,0 +1,289 @@
+[
+  {
+    "number": 1,
+    "question_en": "What does a FULL OUTER JOIN return?",
+    "question_el": "Τι επιστρέφει ένα FULL OUTER JOIN;",
+    "choices_en": [
+      "Only rows that match in both tables",
+      "Only the unmatched rows from both tables",
+      "All rows from both tables, with NULLs where there is no match",
+      "The Cartesian product of both tables"
+    ],
+    "choices_el": [
+      "Μόνο γραμμές που ταιριάζουν και στους δύο πίνακες",
+      "Μόνο τις γραμμές χωρίς αντιστοιχία και από τους δύο πίνακες",
+      "Όλες τις γραμμές και από τους δύο πίνακες, με NULL όπου δεν υπάρχει αντιστοιχία",
+      "Το Καρτεσιανό γινόμενο και των δύο πινάκων"
+    ],
+    "correctIndex": 2,
+    "SQL02": true
+  },
+  {
+    "number": 2,
+    "question_en": "What does a CROSS JOIN produce?",
+    "question_el": "Τι παράγει ένα CROSS JOIN;",
+    "choices_en": [
+      "The Cartesian product of the two tables",
+      "Only rows where the join condition matches",
+      "All left rows plus matching right rows",
+      "Only distinct rows"
+    ],
+    "choices_el": [
+      "Το Καρτεσιανό γινόμενο των δύο πινάκων",
+      "Μόνο γραμμές όπου ταιριάζει η συνθήκη join",
+      "Όλες τις αριστερές γραμμές συν τις αντίστοιχες δεξιές",
+      "Μόνο μοναδικές γραμμές"
+    ],
+    "correctIndex": 0,
+    "SQL02": true
+  },
+  {
+    "number": 3,
+    "question_en": "What is a SELF JOIN?",
+    "question_el": "Τι είναι ένα SELF JOIN;",
+    "choices_en": [
+      "A join between two different databases",
+      "A join without an ON clause",
+      "A join that automatically removes duplicates",
+      "A table joined to itself using table aliases"
+    ],
+    "choices_el": [
+      "Ένα join μεταξύ δύο διαφορετικών βάσεων δεδομένων",
+      "Ένα join χωρίς ρήτρα ON",
+      "Ένα join που αφαιρεί αυτόματα διπλότυπα",
+      "Ένας πίνακας που ενώνεται με τον εαυτό του χρησιμοποιώντας aliases"
+    ],
+    "correctIndex": 3,
+    "SQL02": true
+  },
+  {
+    "number": 4,
+    "question_en": "In a LEFT JOIN, what is the effect of placing a condition on the right table in the WHERE clause instead of the ON clause?",
+    "question_el": "Σε ένα LEFT JOIN, ποιο είναι το αποτέλεσμα αν βάλεις μια συνθήκη για τον δεξί πίνακα στη ρήτρα WHERE αντί στη ρήτρα ON;",
+    "choices_en": [
+      "No difference, both behave identically",
+      "It effectively turns the LEFT JOIN into an INNER JOIN by discarding NULL-extended rows",
+      "It causes a syntax error",
+      "It converts the query into a RIGHT JOIN"
+    ],
+    "choices_el": [
+      "Καμία διαφορά, συμπεριφέρονται πανομοιότυπα",
+      "Ουσιαστικά μετατρέπει το LEFT JOIN σε INNER JOIN, απορρίπτοντας τις γραμμές με NULL",
+      "Προκαλεί syntax error",
+      "Μετατρέπει το query σε RIGHT JOIN"
+    ],
+    "correctIndex": 1,
+    "SQL02": true
+  },
+  {
+    "number": 5,
+    "question_en": "What defines a correlated subquery?",
+    "question_el": "Τι ορίζει ένα correlated subquery;",
+    "choices_en": [
+      "It can be executed independently of the outer query",
+      "It references columns from the outer query and runs once per outer row",
+      "It always appears in the FROM clause",
+      "It must return multiple columns"
+    ],
+    "choices_el": [
+      "Μπορεί να εκτελεστεί ανεξάρτητα από το εξωτερικό query",
+      "Αναφέρεται σε στήλες του εξωτερικού query και εκτελείται μία φορά ανά εξωτερική γραμμή",
+      "Εμφανίζεται πάντα στη ρήτρα FROM",
+      "Πρέπει να επιστρέφει πολλές στήλες"
+    ],
+    "correctIndex": 1,
+    "SQL02": true
+  },
+  {
+    "number": 6,
+    "question_en": "A non-correlated (independent) subquery is evaluated:",
+    "question_el": "Ένα non-correlated (ανεξάρτητο) subquery αξιολογείται:",
+    "choices_en": [
+      "Once for every row of the outer query",
+      "Only when EXISTS is used",
+      "Never — it is just documentation",
+      "Once, independently of the outer query"
+    ],
+    "choices_el": [
+      "Μία φορά για κάθε γραμμή του εξωτερικού query",
+      "Μόνο όταν χρησιμοποιείται EXISTS",
+      "Ποτέ — είναι απλώς τεκμηρίωση",
+      "Μία φορά, ανεξάρτητα από το εξωτερικό query"
+    ],
+    "correctIndex": 3,
+    "SQL02": true
+  },
+  {
+    "number": 7,
+    "question_en": "What does the EXISTS operator return?",
+    "question_el": "Τι επιστρέφει ο τελεστής EXISTS;",
+    "choices_en": [
+      "TRUE as soon as the subquery returns at least one row",
+      "The number of matching rows",
+      "The actual rows from the subquery",
+      "The first column value of the subquery"
+    ],
+    "choices_el": [
+      "TRUE μόλις το subquery επιστρέψει τουλάχιστον μία γραμμή",
+      "Τον αριθμό των γραμμών που ταιριάζουν",
+      "Τις πραγματικές γραμμές του subquery",
+      "Την τιμή της πρώτης στήλης του subquery"
+    ],
+    "correctIndex": 0,
+    "SQL02": true
+  },
+  {
+    "number": 8,
+    "question_en": "Given that orders.customer_id contains at least one NULL, what does this query return?",
+    "question_el": "Δεδομένου ότι το orders.customer_id περιέχει τουλάχιστον ένα NULL, τι επιστρέφει αυτό το query;",
+    "code": "SELECT * FROM customers\nWHERE id NOT IN (SELECT customer_id FROM orders);",
+    "choices_en": [
+      "Customers who have placed no orders",
+      "A syntax error",
+      "An empty result set",
+      "All customers"
+    ],
+    "choices_el": [
+      "Πελάτες που δεν έχουν κάνει καμία παραγγελία",
+      "Ένα syntax error",
+      "Ένα κενό σύνολο αποτελεσμάτων",
+      "Όλους τους πελάτες"
+    ],
+    "correctIndex": 2,
+    "SQL02": true
+  },
+  {
+    "number": 9,
+    "question_en": "A derived table (a subquery in the FROM clause) must always have:",
+    "question_el": "Ένα derived table (subquery στη ρήτρα FROM) πρέπει πάντα να έχει:",
+    "choices_en": [
+      "An ORDER BY clause",
+      "A GROUP BY clause",
+      "A primary key",
+      "A table alias"
+    ],
+    "choices_el": [
+      "Μια ρήτρα ORDER BY",
+      "Μια ρήτρα GROUP BY",
+      "Ένα primary key",
+      "Ένα table alias"
+    ],
+    "correctIndex": 3,
+    "SQL02": true
+  },
+  {
+    "number": 10,
+    "question_en": "A scalar subquery used in the SELECT list must return:",
+    "question_el": "Ένα scalar subquery που χρησιμοποιείται στη λίστα SELECT πρέπει να επιστρέφει:",
+    "choices_en": [
+      "Multiple rows",
+      "Exactly one row and one column",
+      "At least two columns",
+      "No rows"
+    ],
+    "choices_el": [
+      "Πολλές γραμμές",
+      "Ακριβώς μία γραμμή και μία στήλη",
+      "Τουλάχιστον δύο στήλες",
+      "Καμία γραμμή"
+    ],
+    "correctIndex": 1,
+    "SQL02": true
+  },
+  {
+    "number": 11,
+    "question_en": "What does the following anti-join query return?",
+    "question_el": "Τι επιστρέφει το παρακάτω anti-join query;",
+    "code": "SELECT c.name\nFROM customers c\nLEFT JOIN orders o ON c.id = o.customer_id\nWHERE o.id IS NULL;",
+    "choices_en": [
+      "Customers who have never placed an order",
+      "Customers who have placed at least one order",
+      "All customers with their orders",
+      "Orders that have no customer"
+    ],
+    "choices_el": [
+      "Πελάτες που δεν έχουν κάνει ποτέ παραγγελία",
+      "Πελάτες που έχουν κάνει τουλάχιστον μία παραγγελία",
+      "Όλους τους πελάτες με τις παραγγελίες τους",
+      "Παραγγελίες που δεν έχουν πελάτη"
+    ],
+    "correctIndex": 0,
+    "SQL02": true
+  },
+  {
+    "number": 12,
+    "question_en": "Which JOIN keeps all rows from the right table even when there is no match on the left?",
+    "question_el": "Ποιο JOIN κρατά όλες τις γραμμές του δεξιού πίνακα ακόμα κι όταν δεν υπάρχει αντιστοιχία στα αριστερά;",
+    "choices_en": [
+      "LEFT JOIN",
+      "INNER JOIN",
+      "RIGHT JOIN",
+      "CROSS JOIN"
+    ],
+    "choices_el": [
+      "LEFT JOIN",
+      "INNER JOIN",
+      "RIGHT JOIN",
+      "CROSS JOIN"
+    ],
+    "correctIndex": 2,
+    "SQL02": true
+  },
+  {
+    "number": 13,
+    "question_en": "When the subquery may contain NULLs, which construct is safer for finding rows with no match?",
+    "question_el": "Όταν το subquery μπορεί να περιέχει NULL, ποια κατασκευή είναι ασφαλέστερη για εύρεση γραμμών χωρίς αντιστοιχία;",
+    "choices_en": [
+      "NOT IN",
+      "NOT EXISTS",
+      "IN",
+      "= ANY"
+    ],
+    "choices_el": [
+      "NOT IN",
+      "NOT EXISTS",
+      "IN",
+      "= ANY"
+    ],
+    "correctIndex": 1,
+    "SQL02": true
+  },
+  {
+    "number": 14,
+    "question_en": "Comparing EXISTS and IN, which typically short-circuits as soon as the first matching row is found?",
+    "question_el": "Συγκρίνοντας EXISTS και IN, ποιο συνήθως σταματά (short-circuit) μόλις βρεθεί η πρώτη γραμμή που ταιριάζει;",
+    "choices_en": [
+      "IN",
+      "Both scan every row fully",
+      "Neither",
+      "EXISTS"
+    ],
+    "choices_el": [
+      "IN",
+      "Και τα δύο σαρώνουν πλήρως κάθε γραμμή",
+      "Κανένα",
+      "EXISTS"
+    ],
+    "correctIndex": 3,
+    "SQL02": true
+  },
+  {
+    "number": 15,
+    "question_en": "In which clauses can a subquery appear?",
+    "question_el": "Σε ποιες ρήτρες μπορεί να εμφανιστεί ένα subquery;",
+    "choices_en": [
+      "In SELECT, FROM, and WHERE",
+      "Only in WHERE",
+      "Only in FROM",
+      "Only in ORDER BY"
+    ],
+    "choices_el": [
+      "Σε SELECT, FROM και WHERE",
+      "Μόνο σε WHERE",
+      "Μόνο σε FROM",
+      "Μόνο σε ORDER BY"
+    ],
+    "correctIndex": 0,
+    "SQL02": true
+  }
+]

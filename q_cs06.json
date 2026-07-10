@@ -1,0 +1,287 @@
+[
+  {
+    "number": 1,
+    "question_en": "Strings in C# are:",
+    "question_el": "Τα strings στη C# είναι:",
+    "choices_en": [
+      "Mutable — modified in place",
+      "Always null by default",
+      "Immutable — every modification creates a new string",
+      "Value types stored on the stack"
+    ],
+    "choices_el": [
+      "Mutable — τροποποιούνται επιτόπου",
+      "Πάντα null εξ ορισμού",
+      "Immutable — κάθε τροποποίηση δημιουργεί ένα νέο string",
+      "Value types αποθηκευμένα στο stack"
+    ],
+    "correctIndex": 2,
+    "CS06": true
+  },
+  {
+    "number": 2,
+    "question_en": "For many repeated concatenations inside a loop, the best choice is:",
+    "question_el": "Για πολλές επαναλαμβανόμενες συνενώσεις μέσα σε loop, η καλύτερη επιλογή είναι:",
+    "choices_en": [
+      "StringBuilder",
+      "Using + inside the loop",
+      "string.Concat on each iteration",
+      "Recreating the string every iteration"
+    ],
+    "choices_el": [
+      "StringBuilder",
+      "Χρήση + μέσα στο loop",
+      "string.Concat σε κάθε επανάληψη",
+      "Αναδημιουργία του string σε κάθε επανάληψη"
+    ],
+    "correctIndex": 0,
+    "CS06": true
+  },
+  {
+    "number": 3,
+    "question_en": "How does StringBuilder.AppendLine differ from Append?",
+    "question_el": "Πώς διαφέρει το StringBuilder.AppendLine από το Append;",
+    "choices_en": [
+      "It removes the last line",
+      "It clears the buffer",
+      "It converts the text to upper case",
+      "It appends the text followed by a line terminator"
+    ],
+    "choices_el": [
+      "Αφαιρεί την τελευταία γραμμή",
+      "Καθαρίζει το buffer",
+      "Μετατρέπει το κείμενο σε κεφαλαία",
+      "Προσθέτει το κείμενο ακολουθούμενο από έναν χαρακτήρα τερματισμού γραμμής"
+    ],
+    "correctIndex": 3,
+    "CS06": true
+  },
+  {
+    "number": 4,
+    "question_en": "How do you get the final string out of a StringBuilder?",
+    "question_el": "Πώς παίρνεις το τελικό string από ένα StringBuilder;",
+    "choices_en": [
+      "Build()",
+      "ToString()",
+      "GetString()",
+      "Value"
+    ],
+    "choices_el": [
+      "Build()",
+      "ToString()",
+      "GetString()",
+      "Value"
+    ],
+    "correctIndex": 1,
+    "CS06": true
+  },
+  {
+    "number": 5,
+    "question_en": "What does \"a,b,c\".Split(',') return?",
+    "question_el": "Τι επιστρέφει το \"a,b,c\".Split(',');",
+    "choices_en": [
+      "\"abc\"",
+      "An array [\"a\", \"b\", \"c\"]",
+      "The number 3",
+      "A single string \"a,b,c\""
+    ],
+    "choices_el": [
+      "\"abc\"",
+      "Ένα array [\"a\", \"b\", \"c\"]",
+      "Τον αριθμό 3",
+      "Ένα μεμονωμένο string \"a,b,c\""
+    ],
+    "correctIndex": 1,
+    "CS06": true
+  },
+  {
+    "number": 6,
+    "question_en": "What does string.Join(\"-\", new[] { \"a\", \"b\", \"c\" }) return?",
+    "question_el": "Τι επιστρέφει το string.Join(\"-\", new[] { \"a\", \"b\", \"c\" });",
+    "choices_en": [
+      "\"abc\"",
+      "[\"a\",\"b\",\"c\"]",
+      "\"a,b,c\"",
+      "\"a-b-c\""
+    ],
+    "choices_el": [
+      "\"abc\"",
+      "[\"a\",\"b\",\"c\"]",
+      "\"a,b,c\"",
+      "\"a-b-c\""
+    ],
+    "correctIndex": 3,
+    "CS06": true
+  },
+  {
+    "number": 7,
+    "question_en": "What does \"  hi  \".Trim() return?",
+    "question_el": "Τι επιστρέφει το \"  hi  \".Trim();",
+    "choices_en": [
+      "\"hi\"",
+      "\"hi  \"",
+      "\"  hi\"",
+      "\"  hi  \""
+    ],
+    "choices_el": [
+      "\"hi\"",
+      "\"hi  \"",
+      "\"  hi\"",
+      "\"  hi  \""
+    ],
+    "correctIndex": 0,
+    "CS06": true
+  },
+  {
+    "number": 8,
+    "question_en": "Which method checks whether a string begins with a given substring?",
+    "question_el": "Ποια μέθοδος ελέγχει αν ένα string αρχίζει με ένα δοσμένο substring;",
+    "choices_en": [
+      "EndsWith",
+      "Contains",
+      "StartsWith",
+      "IndexOf"
+    ],
+    "choices_el": [
+      "EndsWith",
+      "Contains",
+      "StartsWith",
+      "IndexOf"
+    ],
+    "correctIndex": 2,
+    "CS06": true
+  },
+  {
+    "number": 9,
+    "question_en": "What does IndexOf return when the substring is not found?",
+    "question_el": "Τι επιστρέφει το IndexOf όταν το substring δεν βρεθεί;",
+    "choices_en": [
+      "0",
+      "null",
+      "It throws",
+      "-1"
+    ],
+    "choices_el": [
+      "0",
+      "null",
+      "Πετάει σφάλμα",
+      "-1"
+    ],
+    "correctIndex": 3,
+    "CS06": true
+  },
+  {
+    "number": 10,
+    "question_en": "What is the relationship between string.Format and $\"\" interpolation?",
+    "question_el": "Ποια είναι η σχέση μεταξύ string.Format και $\"\" interpolation;",
+    "choices_en": [
+      "They produce different results",
+      "$\"\" interpolation is a more readable alternative that produces the same formatted string",
+      "string.Format is invalid in C#",
+      "Interpolation cannot include variables"
+    ],
+    "choices_el": [
+      "Παράγουν διαφορετικά αποτελέσματα",
+      "Το $\"\" interpolation είναι μια πιο ευανάγνωστη εναλλακτική που παράγει το ίδιο μορφοποιημένο string",
+      "Το string.Format δεν είναι έγκυρο στη C#",
+      "Το interpolation δεν μπορεί να περιέχει μεταβλητές"
+    ],
+    "correctIndex": 1,
+    "CS06": true
+  },
+  {
+    "number": 11,
+    "question_en": "What does a verbatim string @\"C:\\temp\" mean?",
+    "question_el": "Τι σημαίνει ένα verbatim string @\"C:\\temp\";",
+    "choices_en": [
+      "Backslashes are treated literally (no escape processing)",
+      "Escape sequences like \\t are processed",
+      "The string is null",
+      "It is a byte array"
+    ],
+    "choices_el": [
+      "Τα backslashes θεωρούνται κυριολεκτικά (χωρίς επεξεργασία escape)",
+      "Οι escape ακολουθίες όπως \\t επεξεργάζονται",
+      "Το string είναι null",
+      "Είναι ένα byte array"
+    ],
+    "correctIndex": 0,
+    "CS06": true
+  },
+  {
+    "number": 12,
+    "question_en": "How do you compare two strings ignoring case?",
+    "question_el": "Πώς συγκρίνεις δύο strings αγνοώντας τα κεφαλαία/πεζά;",
+    "choices_en": [
+      "a == b",
+      "a.CompareTo(b)",
+      "string.Equals(a, b, StringComparison.OrdinalIgnoreCase)",
+      "a.Contains(b)"
+    ],
+    "choices_el": [
+      "a == b",
+      "a.CompareTo(b)",
+      "string.Equals(a, b, StringComparison.OrdinalIgnoreCase)",
+      "a.Contains(b)"
+    ],
+    "correctIndex": 2,
+    "CS06": true
+  },
+  {
+    "number": 13,
+    "question_en": "What is the difference between string.Empty and \"\"?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ string.Empty και \"\";",
+    "choices_en": [
+      "They represent different values",
+      "They are equivalent — both an empty string",
+      "string.Empty is null",
+      "\"\" is null"
+    ],
+    "choices_el": [
+      "Αντιπροσωπεύουν διαφορετικές τιμές",
+      "Είναι ισοδύναμα — και τα δύο ένα άδειο string",
+      "Το string.Empty είναι null",
+      "Το \"\" είναι null"
+    ],
+    "correctIndex": 1,
+    "CS06": true
+  },
+  {
+    "number": 14,
+    "question_en": "What does \"Hello\".Substring(1, 3) return?",
+    "question_el": "Τι επιστρέφει το \"Hello\".Substring(1, 3);",
+    "choices_en": [
+      "\"Hel\"",
+      "\"llo\"",
+      "\"Hell\"",
+      "\"ell\""
+    ],
+    "choices_el": [
+      "\"Hel\"",
+      "\"llo\"",
+      "\"Hell\"",
+      "\"ell\""
+    ],
+    "correctIndex": 3,
+    "CS06": true
+  },
+  {
+    "number": 15,
+    "question_en": "What does StringBuilder.Clear() do?",
+    "question_el": "Τι κάνει το StringBuilder.Clear();",
+    "choices_en": [
+      "Removes all characters from the builder",
+      "Returns the built string",
+      "Appends a newline",
+      "Reverses the text"
+    ],
+    "choices_el": [
+      "Αφαιρεί όλους τους χαρακτήρες από τον builder",
+      "Επιστρέφει το χτισμένο string",
+      "Προσθέτει μια νέα γραμμή",
+      "Αντιστρέφει το κείμενο"
+    ],
+    "correctIndex": 0,
+    "CS06": true
+  }
+]

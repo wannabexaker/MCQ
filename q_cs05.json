@@ -1,0 +1,288 @@
+[
+  {
+    "number": 1,
+    "question_en": "What does the lambda 'x => x.Age > 18' represent?",
+    "question_el": "Τι αντιπροσωπεύει η lambda 'x => x.Age > 18';",
+    "choices_en": [
+      "A method that returns void",
+      "A class definition",
+      "A predicate that returns true when Age is greater than 18",
+      "A loop"
+    ],
+    "choices_el": [
+      "Μια μέθοδο που επιστρέφει void",
+      "Έναν ορισμό κλάσης",
+      "Ένα predicate που επιστρέφει true όταν το Age είναι μεγαλύτερο από 18",
+      "Ένα loop"
+    ],
+    "correctIndex": 2,
+    "CS05": true
+  },
+  {
+    "number": 2,
+    "question_en": "Which LINQ method filters a sequence by a condition?",
+    "question_el": "Ποια μέθοδος LINQ φιλτράρει μια ακολουθία βάσει συνθήκης;",
+    "choices_en": [
+      "Where",
+      "Select",
+      "OrderBy",
+      "Take"
+    ],
+    "choices_el": [
+      "Where",
+      "Select",
+      "OrderBy",
+      "Take"
+    ],
+    "correctIndex": 0,
+    "CS05": true
+  },
+  {
+    "number": 3,
+    "question_en": "Which LINQ method projects/transforms each element?",
+    "question_el": "Ποια μέθοδος LINQ κάνει projection/μετασχηματίζει κάθε στοιχείο;",
+    "choices_en": [
+      "Where",
+      "Any",
+      "Count",
+      "Select"
+    ],
+    "choices_el": [
+      "Where",
+      "Any",
+      "Count",
+      "Select"
+    ],
+    "correctIndex": 3,
+    "CS05": true
+  },
+  {
+    "number": 4,
+    "question_en": "What does FirstOrDefault() return on an empty sequence?",
+    "question_el": "Τι επιστρέφει το FirstOrDefault() σε μια άδεια ακολουθία;",
+    "choices_en": [
+      "It throws an exception",
+      "The default value (e.g. null or 0)",
+      "The last element",
+      "An empty list"
+    ],
+    "choices_el": [
+      "Πετάει exception",
+      "Την προκαθορισμένη τιμή (π.χ. null ή 0)",
+      "Το τελευταίο στοιχείο",
+      "Μια άδεια λίστα"
+    ],
+    "correctIndex": 1,
+    "CS05": true
+  },
+  {
+    "number": 5,
+    "question_en": "What is the difference between First() and FirstOrDefault()?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ First() και FirstOrDefault();",
+    "choices_en": [
+      "First returns the default on empty; FirstOrDefault throws",
+      "First throws on empty; FirstOrDefault returns the default value",
+      "They are identical",
+      "FirstOrDefault returns the last element"
+    ],
+    "choices_el": [
+      "Το First επιστρέφει την default τιμή σε άδεια· το FirstOrDefault πετάει exception",
+      "Το First πετάει exception σε άδεια· το FirstOrDefault επιστρέφει την default τιμή",
+      "Είναι πανομοιότυπα",
+      "Το FirstOrDefault επιστρέφει το τελευταίο στοιχείο"
+    ],
+    "correctIndex": 1,
+    "CS05": true
+  },
+  {
+    "number": 6,
+    "question_en": "When does SingleOrDefault() throw an exception?",
+    "question_el": "Πότε πετάει exception το SingleOrDefault();",
+    "choices_en": [
+      "When the sequence is empty",
+      "When the first element is null",
+      "It never throws",
+      "When the sequence contains more than one element"
+    ],
+    "choices_el": [
+      "Όταν η ακολουθία είναι άδεια",
+      "Όταν το πρώτο στοιχείο είναι null",
+      "Δεν πετάει ποτέ",
+      "Όταν η ακολουθία περιέχει περισσότερα από ένα στοιχεία"
+    ],
+    "correctIndex": 3,
+    "CS05": true
+  },
+  {
+    "number": 7,
+    "question_en": "What does Any() return?",
+    "question_el": "Τι επιστρέφει το Any();",
+    "choices_en": [
+      "true if the sequence has at least one (matching) element",
+      "The count of elements",
+      "The first element",
+      "A new list"
+    ],
+    "choices_el": [
+      "true αν η ακολουθία έχει τουλάχιστον ένα στοιχείο (που ταιριάζει)",
+      "Το πλήθος των στοιχείων",
+      "Το πρώτο στοιχείο",
+      "Μια νέα λίστα"
+    ],
+    "correctIndex": 0,
+    "CS05": true
+  },
+  {
+    "number": 8,
+    "question_en": "What does LINQ deferred execution mean?",
+    "question_el": "Τι σημαίνει το deferred execution στο LINQ;",
+    "choices_en": [
+      "The query runs immediately when it is defined",
+      "The query never runs",
+      "The query is not executed until the results are enumerated (e.g. foreach or ToList)",
+      "Results are cached forever"
+    ],
+    "choices_el": [
+      "Το query τρέχει άμεσα όταν ορίζεται",
+      "Το query δεν τρέχει ποτέ",
+      "Το query δεν εκτελείται μέχρι να απαριθμηθούν τα αποτελέσματα (π.χ. foreach ή ToList)",
+      "Τα αποτελέσματα αποθηκεύονται για πάντα στην cache"
+    ],
+    "correctIndex": 2,
+    "CS05": true
+  },
+  {
+    "number": 9,
+    "question_en": "Which method forces immediate execution into a concrete list?",
+    "question_el": "Ποια μέθοδος επιβάλλει άμεση εκτέλεση σε μια συγκεκριμένη λίστα;",
+    "choices_en": [
+      "Where",
+      "Select",
+      "OrderBy",
+      "ToList()"
+    ],
+    "choices_el": [
+      "Where",
+      "Select",
+      "OrderBy",
+      "ToList()"
+    ],
+    "correctIndex": 3,
+    "CS05": true
+  },
+  {
+    "number": 10,
+    "question_en": "What does GroupBy return?",
+    "question_el": "Τι επιστρέφει το GroupBy;",
+    "choices_en": [
+      "A sequence of single values",
+      "A sequence of groups (IGrouping), each with a Key and its elements",
+      "Only the keys",
+      "A single number"
+    ],
+    "choices_el": [
+      "Μια ακολουθία μεμονωμένων τιμών",
+      "Μια ακολουθία ομάδων (IGrouping), κάθε μία με ένα Key και τα στοιχεία της",
+      "Μόνο τα keys",
+      "Έναν μεμονωμένο αριθμό"
+    ],
+    "correctIndex": 1,
+    "CS05": true
+  },
+  {
+    "number": 11,
+    "question_en": "To sort by one key and then by a secondary key, you use:",
+    "question_el": "Για ταξινόμηση βάσει ενός key και μετά ενός δεύτερου key, χρησιμοποιείς:",
+    "choices_en": [
+      "OrderBy then ThenBy",
+      "OrderBy then OrderBy",
+      "Where then Select",
+      "GroupBy then Take"
+    ],
+    "choices_el": [
+      "OrderBy και μετά ThenBy",
+      "OrderBy και μετά OrderBy",
+      "Where και μετά Select",
+      "GroupBy και μετά Take"
+    ],
+    "correctIndex": 0,
+    "CS05": true
+  },
+  {
+    "number": 12,
+    "question_en": "Which pair of methods implements paging (skip then take)?",
+    "question_el": "Ποιο ζεύγος μεθόδων υλοποιεί paging (skip και μετά take);",
+    "choices_en": [
+      "Take then Skip",
+      "Where then Any",
+      "Skip(n) then Take(m)",
+      "First then Last"
+    ],
+    "choices_el": [
+      "Take και μετά Skip",
+      "Where και μετά Any",
+      "Skip(n) και μετά Take(m)",
+      "First και μετά Last"
+    ],
+    "correctIndex": 2,
+    "CS05": true
+  },
+  {
+    "number": 13,
+    "question_en": "When does All() return true?",
+    "question_el": "Πότε επιστρέφει true το All();",
+    "choices_en": [
+      "When at least one element matches",
+      "When every element satisfies the condition",
+      "Only when the sequence is empty",
+      "When no elements match"
+    ],
+    "choices_el": [
+      "Όταν τουλάχιστον ένα στοιχείο ταιριάζει",
+      "Όταν κάθε στοιχείο ικανοποιεί τη συνθήκη",
+      "Μόνο όταν η ακολουθία είναι άδεια",
+      "Όταν κανένα στοιχείο δεν ταιριάζει"
+    ],
+    "correctIndex": 1,
+    "CS05": true
+  },
+  {
+    "number": 14,
+    "question_en": "What does the expression below evaluate to?",
+    "question_el": "Σε τι αποτιμάται η παρακάτω έκφραση;",
+    "code": "new[] { 1, 2, 3, 4 }.Where(x => x % 2 == 0).Sum();",
+    "choices_en": [
+      "10",
+      "4",
+      "2",
+      "6"
+    ],
+    "choices_el": [
+      "10",
+      "4",
+      "2",
+      "6"
+    ],
+    "correctIndex": 3,
+    "CS05": true
+  },
+  {
+    "number": 15,
+    "question_en": "What is the relationship between LINQ method syntax and query syntax?",
+    "question_el": "Ποια είναι η σχέση μεταξύ method syntax και query syntax στο LINQ;",
+    "choices_en": [
+      "They are two equivalent ways to express the same query",
+      "They produce different results",
+      "Query syntax is always faster",
+      "Method syntax cannot use lambdas"
+    ],
+    "choices_el": [
+      "Είναι δύο ισοδύναμοι τρόποι να εκφράσεις το ίδιο query",
+      "Παράγουν διαφορετικά αποτελέσματα",
+      "Το query syntax είναι πάντα πιο γρήγορο",
+      "Το method syntax δεν μπορεί να χρησιμοποιήσει lambdas"
+    ],
+    "correctIndex": 0,
+    "CS05": true
+  }
+]

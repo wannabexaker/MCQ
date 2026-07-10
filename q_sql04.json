@@ -1,0 +1,287 @@
+[
+  {
+    "number": 1,
+    "question_en": "What does LEN('hello') return in SQL Server?",
+    "question_el": "Τι επιστρέφει το LEN('hello') στον SQL Server;",
+    "choices_en": [
+      "4",
+      "6",
+      "5",
+      "0"
+    ],
+    "choices_el": [
+      "4",
+      "6",
+      "5",
+      "0"
+    ],
+    "correctIndex": 2,
+    "SQL04": true
+  },
+  {
+    "number": 2,
+    "question_en": "What does SUBSTRING('database', 1, 4) return?",
+    "question_el": "Τι επιστρέφει το SUBSTRING('database', 1, 4);",
+    "choices_en": [
+      "'data'",
+      "'abas'",
+      "'base'",
+      "'atab'"
+    ],
+    "choices_el": [
+      "'data'",
+      "'abas'",
+      "'base'",
+      "'atab'"
+    ],
+    "correctIndex": 0,
+    "SQL04": true
+  },
+  {
+    "number": 3,
+    "question_en": "What does CHARINDEX('@', 'a@b.com') return?",
+    "question_el": "Τι επιστρέφει το CHARINDEX('@', 'a@b.com');",
+    "choices_en": [
+      "0",
+      "1",
+      "3",
+      "2"
+    ],
+    "choices_el": [
+      "0",
+      "1",
+      "3",
+      "2"
+    ],
+    "correctIndex": 3,
+    "SQL04": true
+  },
+  {
+    "number": 4,
+    "question_en": "Which function replaces all occurrences of a substring with another?",
+    "question_el": "Ποια function αντικαθιστά όλες τις εμφανίσεις ενός substring με ένα άλλο;",
+    "choices_en": [
+      "SUBSTRING",
+      "REPLACE",
+      "CHARINDEX",
+      "STUFF"
+    ],
+    "choices_el": [
+      "SUBSTRING",
+      "REPLACE",
+      "CHARINDEX",
+      "STUFF"
+    ],
+    "correctIndex": 1,
+    "SQL04": true
+  },
+  {
+    "number": 5,
+    "question_en": "What does LEFT('SQLServer', 3) return?",
+    "question_el": "Τι επιστρέφει το LEFT('SQLServer', 3);",
+    "choices_en": [
+      "'ver'",
+      "'SQL'",
+      "'SQLS'",
+      "'erv'"
+    ],
+    "choices_el": [
+      "'ver'",
+      "'SQL'",
+      "'SQLS'",
+      "'erv'"
+    ],
+    "correctIndex": 1,
+    "SQL04": true
+  },
+  {
+    "number": 6,
+    "question_en": "Which LIKE pattern matches any string that starts with 'A'?",
+    "question_el": "Ποιο LIKE pattern ταιριάζει με οποιοδήποτε string που ξεκινά με 'A';",
+    "choices_en": [
+      "'A_'",
+      "'%A'",
+      "'_A'",
+      "'A%'"
+    ],
+    "choices_el": [
+      "'A_'",
+      "'%A'",
+      "'_A'",
+      "'A%'"
+    ],
+    "correctIndex": 3,
+    "SQL04": true
+  },
+  {
+    "number": 7,
+    "question_en": "In a LIKE pattern, what does the underscore (_) match?",
+    "question_el": "Σε ένα LIKE pattern, με τι ταιριάζει η κάτω παύλα (_);",
+    "choices_en": [
+      "Exactly one character",
+      "Any sequence of characters",
+      "Zero characters",
+      "A digit only"
+    ],
+    "choices_el": [
+      "Ακριβώς έναν χαρακτήρα",
+      "Οποιαδήποτε ακολουθία χαρακτήρων",
+      "Μηδέν χαρακτήρες",
+      "Μόνο ένα ψηφίο"
+    ],
+    "correctIndex": 0,
+    "SQL04": true
+  },
+  {
+    "number": 8,
+    "question_en": "What does DATEDIFF(day, '2024-01-01', '2024-01-10') return?",
+    "question_el": "Τι επιστρέφει το DATEDIFF(day, '2024-01-01', '2024-01-10');",
+    "choices_en": [
+      "10",
+      "1",
+      "9",
+      "11"
+    ],
+    "choices_el": [
+      "10",
+      "1",
+      "9",
+      "11"
+    ],
+    "correctIndex": 2,
+    "SQL04": true
+  },
+  {
+    "number": 9,
+    "question_en": "What does DATEADD(month, 2, '2024-01-15') return?",
+    "question_el": "Τι επιστρέφει το DATEADD(month, 2, '2024-01-15');",
+    "choices_en": [
+      "'2024-01-17'",
+      "'2024-02-15'",
+      "'2026-01-15'",
+      "'2024-03-15'"
+    ],
+    "choices_el": [
+      "'2024-01-17'",
+      "'2024-02-15'",
+      "'2026-01-15'",
+      "'2024-03-15'"
+    ],
+    "correctIndex": 3,
+    "SQL04": true
+  },
+  {
+    "number": 10,
+    "question_en": "Which function returns the current date and time in the server's local time zone?",
+    "question_el": "Ποια function επιστρέφει την τρέχουσα ημερομηνία και ώρα στην τοπική ζώνη ώρας του server;",
+    "choices_en": [
+      "GETUTCDATE()",
+      "GETDATE()",
+      "SYSUTCDATETIME()",
+      "CURRENT_UTC()"
+    ],
+    "choices_el": [
+      "GETUTCDATE()",
+      "GETDATE()",
+      "SYSUTCDATETIME()",
+      "CURRENT_UTC()"
+    ],
+    "correctIndex": 1,
+    "SQL04": true
+  },
+  {
+    "number": 11,
+    "question_en": "What is the key difference between ISNULL and COALESCE?",
+    "question_el": "Ποια είναι η βασική διαφορά μεταξύ ISNULL και COALESCE;",
+    "choices_en": [
+      "ISNULL takes exactly 2 arguments; COALESCE takes many and returns the first non-NULL",
+      "There is no difference at all",
+      "COALESCE takes only 2 arguments; ISNULL takes many",
+      "ISNULL is not valid in SQL Server"
+    ],
+    "choices_el": [
+      "Το ISNULL δέχεται ακριβώς 2 ορίσματα· το COALESCE δέχεται πολλά και επιστρέφει το πρώτο non-NULL",
+      "Δεν υπάρχει καμία διαφορά",
+      "Το COALESCE δέχεται μόνο 2 ορίσματα· το ISNULL δέχεται πολλά",
+      "Το ISNULL δεν είναι έγκυρο στον SQL Server"
+    ],
+    "correctIndex": 0,
+    "SQL04": true
+  },
+  {
+    "number": 12,
+    "question_en": "What does TRY_CAST('abc' AS INT) return?",
+    "question_el": "Τι επιστρέφει το TRY_CAST('abc' AS INT);",
+    "choices_en": [
+      "0",
+      "An error that stops the query",
+      "NULL",
+      "'abc'"
+    ],
+    "choices_el": [
+      "0",
+      "Ένα σφάλμα που σταματά το query",
+      "NULL",
+      "'abc'"
+    ],
+    "correctIndex": 2,
+    "SQL04": true
+  },
+  {
+    "number": 13,
+    "question_en": "Which function converts a value and lets you specify a style code (e.g. for date formatting)?",
+    "question_el": "Ποια function μετατρέπει μια τιμή και σου επιτρέπει να ορίσεις style code (π.χ. για μορφοποίηση ημερομηνίας);",
+    "choices_en": [
+      "CAST",
+      "CONVERT",
+      "REPLACE",
+      "LEN"
+    ],
+    "choices_el": [
+      "CAST",
+      "CONVERT",
+      "REPLACE",
+      "LEN"
+    ],
+    "correctIndex": 1,
+    "SQL04": true
+  },
+  {
+    "number": 14,
+    "question_en": "What does UPPER('SqL') return?",
+    "question_el": "Τι επιστρέφει το UPPER('SqL');",
+    "choices_en": [
+      "'sql'",
+      "'SqL'",
+      "'Sql'",
+      "'SQL'"
+    ],
+    "choices_el": [
+      "'sql'",
+      "'SqL'",
+      "'Sql'",
+      "'SQL'"
+    ],
+    "correctIndex": 3,
+    "SQL04": true
+  },
+  {
+    "number": 15,
+    "question_en": "What does LTRIM('   hi') return?",
+    "question_el": "Τι επιστρέφει το LTRIM('   hi');",
+    "choices_en": [
+      "'hi'",
+      "'hi   '",
+      "'   hi'",
+      "'   hi   '"
+    ],
+    "choices_el": [
+      "'hi'",
+      "'hi   '",
+      "'   hi'",
+      "'   hi   '"
+    ],
+    "correctIndex": 0,
+    "SQL04": true
+  }
+]

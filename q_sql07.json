@@ -1,0 +1,289 @@
+[
+  {
+    "number": 1,
+    "question_en": "What is the correct syntax to begin a CTE (Common Table Expression)?",
+    "question_el": "Ποια είναι η σωστή σύνταξη για να ξεκινήσεις ένα CTE (Common Table Expression);",
+    "choices_en": [
+      "CREATE CTE name AS (...)",
+      "DECLARE name AS (...)",
+      "WITH name AS (...)",
+      "DEFINE name AS (...)"
+    ],
+    "choices_el": [
+      "CREATE CTE name AS (...)",
+      "DECLARE name AS (...)",
+      "WITH name AS (...)",
+      "DEFINE name AS (...)"
+    ],
+    "correctIndex": 2,
+    "SQL07": true
+  },
+  {
+    "number": 2,
+    "question_en": "What is a recursive CTE typically used for?",
+    "question_el": "Για τι χρησιμοποιείται συνήθως ένα recursive CTE;",
+    "choices_en": [
+      "Traversing hierarchical data such as an org chart or a tree",
+      "Sorting data alphabetically",
+      "Deleting duplicate rows",
+      "Creating an index"
+    ],
+    "choices_el": [
+      "Διάσχιση ιεραρχικών δεδομένων όπως ένα οργανόγραμμα ή ένα δέντρο",
+      "Ταξινόμηση δεδομένων αλφαβητικά",
+      "Διαγραφή διπλότυπων γραμμών",
+      "Δημιουργία ενός index"
+    ],
+    "correctIndex": 0,
+    "SQL07": true
+  },
+  {
+    "number": 3,
+    "question_en": "How do ROW_NUMBER() and RANK() differ on tied values?",
+    "question_el": "Πώς διαφέρουν το ROW_NUMBER() και το RANK() σε ισόπαλες τιμές;",
+    "choices_en": [
+      "They behave identically",
+      "RANK never skips numbers",
+      "ROW_NUMBER assigns duplicate numbers to ties",
+      "ROW_NUMBER gives unique sequential numbers; RANK gives the same rank to ties and then skips numbers"
+    ],
+    "choices_el": [
+      "Συμπεριφέρονται πανομοιότυπα",
+      "Το RANK δεν παραλείπει ποτέ αριθμούς",
+      "Το ROW_NUMBER αναθέτει διπλότυπους αριθμούς στις ισοπαλίες",
+      "Το ROW_NUMBER δίνει μοναδικούς διαδοχικούς αριθμούς· το RANK δίνει το ίδιο rank στις ισοπαλίες και μετά παραλείπει αριθμούς"
+    ],
+    "correctIndex": 3,
+    "SQL07": true
+  },
+  {
+    "number": 4,
+    "question_en": "How does RANK() differ from DENSE_RANK()?",
+    "question_el": "Πώς διαφέρει το RANK() από το DENSE_RANK();",
+    "choices_en": [
+      "DENSE_RANK skips numbers after ties; RANK does not",
+      "RANK skips numbers after ties; DENSE_RANK does not",
+      "They are identical",
+      "Neither handles ties"
+    ],
+    "choices_el": [
+      "Το DENSE_RANK παραλείπει αριθμούς μετά τις ισοπαλίες· το RANK όχι",
+      "Το RANK παραλείπει αριθμούς μετά τις ισοπαλίες· το DENSE_RANK όχι",
+      "Είναι πανομοιότυπα",
+      "Κανένα δεν χειρίζεται ισοπαλίες"
+    ],
+    "correctIndex": 1,
+    "SQL07": true
+  },
+  {
+    "number": 5,
+    "question_en": "How does PARTITION BY differ from GROUP BY?",
+    "question_el": "Πώς διαφέρει το PARTITION BY από το GROUP BY;",
+    "choices_en": [
+      "It collapses each group into a single row",
+      "It computes the aggregate but keeps every individual row",
+      "It cannot be used with aggregate functions",
+      "It requires a HAVING clause"
+    ],
+    "choices_el": [
+      "Συμπτύσσει κάθε ομάδα σε μία γραμμή",
+      "Υπολογίζει το aggregate αλλά διατηρεί κάθε μεμονωμένη γραμμή",
+      "Δεν μπορεί να χρησιμοποιηθεί με aggregate functions",
+      "Απαιτεί ρήτρα HAVING"
+    ],
+    "correctIndex": 1,
+    "SQL07": true
+  },
+  {
+    "number": 6,
+    "question_en": "What does the LAG() window function do?",
+    "question_el": "Τι κάνει η window function LAG();",
+    "choices_en": [
+      "Accesses a value from a following row",
+      "Returns the maximum value",
+      "Deletes a row",
+      "Accesses a value from a preceding row in the window"
+    ],
+    "choices_el": [
+      "Προσπελαύνει τιμή από επόμενη γραμμή",
+      "Επιστρέφει τη μέγιστη τιμή",
+      "Διαγράφει μια γραμμή",
+      "Προσπελαύνει τιμή από προηγούμενη γραμμή στο window"
+    ],
+    "correctIndex": 3,
+    "SQL07": true
+  },
+  {
+    "number": 7,
+    "question_en": "What value does LEAD() access?",
+    "question_el": "Ποια τιμή προσπελαύνει το LEAD();",
+    "choices_en": [
+      "The next row's value in the window",
+      "The previous row's value",
+      "The first row only",
+      "A random row"
+    ],
+    "choices_el": [
+      "Την τιμή της επόμενης γραμμής στο window",
+      "Την τιμή της προηγούμενης γραμμής",
+      "Μόνο την πρώτη γραμμή",
+      "Μια τυχαία γραμμή"
+    ],
+    "correctIndex": 0,
+    "SQL07": true
+  },
+  {
+    "number": 8,
+    "question_en": "What does the expression below compute?",
+    "question_el": "Τι υπολογίζει η παρακάτω έκφραση;",
+    "code": "SUM(amount) OVER (ORDER BY order_date)",
+    "choices_en": [
+      "A grand total repeated on every row",
+      "A count of the rows",
+      "A running (cumulative) total",
+      "A simple average"
+    ],
+    "choices_el": [
+      "Ένα γενικό σύνολο που επαναλαμβάνεται σε κάθε γραμμή",
+      "Μια καταμέτρηση των γραμμών",
+      "Ένα τρέχον (σωρευτικό) σύνολο",
+      "Έναν απλό μέσο όρο"
+    ],
+    "correctIndex": 2,
+    "SQL07": true
+  },
+  {
+    "number": 9,
+    "question_en": "What does NTILE(4) do?",
+    "question_el": "Τι κάνει το NTILE(4);",
+    "choices_en": [
+      "Returns exactly 4 rows",
+      "Waits 4 seconds",
+      "Creates 4 columns",
+      "Divides the ordered result set into 4 approximately equal buckets"
+    ],
+    "choices_el": [
+      "Επιστρέφει ακριβώς 4 γραμμές",
+      "Περιμένει 4 δευτερόλεπτα",
+      "Δημιουργεί 4 στήλες",
+      "Χωρίζει το ταξινομημένο σύνολο σε 4 περίπου ίσα buckets"
+    ],
+    "correctIndex": 3,
+    "SQL07": true
+  },
+  {
+    "number": 10,
+    "question_en": "What is one advantage of a CTE over a repeated subquery?",
+    "question_el": "Ποιο είναι ένα πλεονέκτημα ενός CTE έναντι ενός επαναλαμβανόμενου subquery;",
+    "choices_en": [
+      "It always runs faster",
+      "It improves readability and can be referenced multiple times or be recursive",
+      "It requires no SELECT",
+      "It permanently stores the data"
+    ],
+    "choices_el": [
+      "Τρέχει πάντα πιο γρήγορα",
+      "Βελτιώνει την αναγνωσιμότητα και μπορεί να αναφερθεί πολλές φορές ή να είναι recursive",
+      "Δεν απαιτεί SELECT",
+      "Αποθηκεύει μόνιμα τα δεδομένα"
+    ],
+    "correctIndex": 1,
+    "SQL07": true
+  },
+  {
+    "number": 11,
+    "question_en": "Why is EXISTS often more NULL-safe than IN?",
+    "question_el": "Γιατί το EXISTS είναι συχνά πιο NULL-safe από το IN;",
+    "choices_en": [
+      "Because NOT IN can return no rows when the subquery contains NULLs, while NOT EXISTS does not",
+      "Because IN ignores all rows",
+      "Because EXISTS cannot use subqueries",
+      "Because IN is deprecated"
+    ],
+    "choices_el": [
+      "Επειδή το NOT IN μπορεί να μην επιστρέψει καμία γραμμή όταν το subquery περιέχει NULL, ενώ το NOT EXISTS όχι",
+      "Επειδή το IN αγνοεί όλες τις γραμμές",
+      "Επειδή το EXISTS δεν μπορεί να χρησιμοποιήσει subqueries",
+      "Επειδή το IN είναι deprecated"
+    ],
+    "correctIndex": 0,
+    "SQL07": true
+  },
+  {
+    "number": 12,
+    "question_en": "What does FIRST_VALUE() return within a window frame?",
+    "question_el": "Τι επιστρέφει το FIRST_VALUE() μέσα σε ένα window frame;",
+    "choices_en": [
+      "The last value",
+      "The average of the frame",
+      "The first value in the ordered window frame",
+      "Always NULL"
+    ],
+    "choices_el": [
+      "Την τελευταία τιμή",
+      "Τον μέσο όρο του frame",
+      "Την πρώτη τιμή στο ταξινομημένο window frame",
+      "Πάντα NULL"
+    ],
+    "correctIndex": 2,
+    "SQL07": true
+  },
+  {
+    "number": 13,
+    "question_en": "What is the scope of a CTE?",
+    "question_el": "Ποιο είναι το scope ενός CTE;",
+    "choices_en": [
+      "The entire database permanently",
+      "Only the single statement immediately following the WITH clause",
+      "All future sessions",
+      "Only inside stored procedures"
+    ],
+    "choices_el": [
+      "Ολόκληρη η βάση, μόνιμα",
+      "Μόνο η μία εντολή που ακολουθεί αμέσως τη ρήτρα WITH",
+      "Όλες οι μελλοντικές συνεδρίες",
+      "Μόνο μέσα σε stored procedures"
+    ],
+    "correctIndex": 1,
+    "SQL07": true
+  },
+  {
+    "number": 14,
+    "question_en": "In the query below, what does the value 'rn' represent?",
+    "question_el": "Στο παρακάτω query, τι αντιπροσωπεύει η τιμή 'rn';",
+    "code": "SELECT name,\n  ROW_NUMBER() OVER (PARTITION BY dept ORDER BY salary DESC) AS rn\nFROM employees;",
+    "choices_en": [
+      "A global row number across all departments",
+      "The total number of employees",
+      "The department id",
+      "The salary rank of each employee within their own department"
+    ],
+    "choices_el": [
+      "Ένας καθολικός αριθμός γραμμής σε όλα τα τμήματα",
+      "Ο συνολικός αριθμός υπαλλήλων",
+      "Το id του τμήματος",
+      "Η κατάταξη μισθού κάθε υπαλλήλου μέσα στο δικό του τμήμα"
+    ],
+    "correctIndex": 3,
+    "SQL07": true
+  },
+  {
+    "number": 15,
+    "question_en": "When is NOT EXISTS generally preferred over NOT IN?",
+    "question_el": "Πότε προτιμάται γενικά το NOT EXISTS έναντι του NOT IN;",
+    "choices_en": [
+      "When the subquery result can contain NULLs",
+      "When the table is empty",
+      "When you need a Cartesian product",
+      "When you want to insert rows"
+    ],
+    "choices_el": [
+      "Όταν το αποτέλεσμα του subquery μπορεί να περιέχει NULL",
+      "Όταν ο πίνακας είναι άδειος",
+      "Όταν χρειάζεσαι Καρτεσιανό γινόμενο",
+      "Όταν θέλεις να εισάγεις γραμμές"
+    ],
+    "correctIndex": 0,
+    "SQL07": true
+  }
+]

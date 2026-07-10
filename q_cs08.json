@@ -1,0 +1,287 @@
+[
+  {
+    "number": 1,
+    "question_en": "In a try/catch/finally, when does the finally block run?",
+    "question_el": "Σε ένα try/catch/finally, πότε τρέχει το finally block;",
+    "choices_en": [
+      "Only if an exception occurs",
+      "Only if no exception occurs",
+      "Always, whether or not an exception occurred",
+      "It replaces the catch block"
+    ],
+    "choices_el": [
+      "Μόνο αν συμβεί exception",
+      "Μόνο αν δεν συμβεί exception",
+      "Πάντα, είτε συνέβη exception είτε όχι",
+      "Αντικαθιστά το catch block"
+    ],
+    "correctIndex": 2,
+    "CS08": true
+  },
+  {
+    "number": 2,
+    "question_en": "When catching multiple exception types, how should they be ordered?",
+    "question_el": "Όταν πιάνεις πολλούς τύπους exception, με ποια σειρά πρέπει να μπουν;",
+    "choices_en": [
+      "Catch specific exceptions before the general Exception",
+      "Catch the general Exception first",
+      "Order does not matter",
+      "Never catch specific exceptions"
+    ],
+    "choices_el": [
+      "Πιάσε τα specific exceptions πριν το γενικό Exception",
+      "Πιάσε πρώτα το γενικό Exception",
+      "Η σειρά δεν έχει σημασία",
+      "Ποτέ μην πιάνεις specific exceptions"
+    ],
+    "correctIndex": 0,
+    "CS08": true
+  },
+  {
+    "number": 3,
+    "question_en": "What is the difference between 'throw;' and 'throw ex;'?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ 'throw;' και 'throw ex;';",
+    "choices_en": [
+      "throw; resets the stack trace; throw ex; preserves it",
+      "They are identical",
+      "Neither actually rethrows",
+      "throw; preserves the original stack trace; throw ex; resets it"
+    ],
+    "choices_el": [
+      "Το throw; μηδενίζει το stack trace· το throw ex; το διατηρεί",
+      "Είναι πανομοιότυπα",
+      "Κανένα δεν κάνει πραγματικά rethrow",
+      "Το throw; διατηρεί το αρχικό stack trace· το throw ex; το μηδενίζει"
+    ],
+    "correctIndex": 3,
+    "CS08": true
+  },
+  {
+    "number": 4,
+    "question_en": "A custom exception class should inherit from:",
+    "question_el": "Μια custom exception class πρέπει να κληρονομεί από:",
+    "choices_en": [
+      "object",
+      "Exception (or a subclass of it)",
+      "Task",
+      "IDisposable"
+    ],
+    "choices_el": [
+      "object",
+      "Exception (ή μια υποκλάση της)",
+      "Task",
+      "IDisposable"
+    ],
+    "correctIndex": 1,
+    "CS08": true
+  },
+  {
+    "number": 5,
+    "question_en": "How does Exception.ToString() compare to Exception.Message?",
+    "question_el": "Πώς συγκρίνεται το Exception.ToString() με το Exception.Message;",
+    "choices_en": [
+      "It returns only the message",
+      "It includes the exception type, message, and stack trace",
+      "It returns null",
+      "It is identical to Message"
+    ],
+    "choices_el": [
+      "Επιστρέφει μόνο το μήνυμα",
+      "Περιλαμβάνει τον τύπο του exception, το μήνυμα και το stack trace",
+      "Επιστρέφει null",
+      "Είναι πανομοιότυπο με το Message"
+    ],
+    "correctIndex": 1,
+    "CS08": true
+  },
+  {
+    "number": 6,
+    "question_en": "An async method that produces no value should ideally return:",
+    "question_el": "Μια async μέθοδος που δεν παράγει τιμή ιδανικά πρέπει να επιστρέφει:",
+    "choices_en": [
+      "void always",
+      "int",
+      "bool",
+      "Task (rather than void)"
+    ],
+    "choices_el": [
+      "void πάντα",
+      "int",
+      "bool",
+      "Task (αντί για void)"
+    ],
+    "correctIndex": 3,
+    "CS08": true
+  },
+  {
+    "number": 7,
+    "question_en": "Calling .Result or .Wait() on a Task can cause:",
+    "question_el": "Η κλήση .Result ή .Wait() σε ένα Task μπορεί να προκαλέσει:",
+    "choices_en": [
+      "A deadlock in certain synchronization contexts",
+      "Faster execution",
+      "A compile-time error",
+      "Automatic cancellation"
+    ],
+    "choices_el": [
+      "Deadlock σε ορισμένα synchronization contexts",
+      "Ταχύτερη εκτέλεση",
+      "Ένα compile-time error",
+      "Αυτόματη ακύρωση"
+    ],
+    "correctIndex": 0,
+    "CS08": true
+  },
+  {
+    "number": 8,
+    "question_en": "What does the await keyword do?",
+    "question_el": "Τι κάνει η λέξη-κλειδί await;",
+    "choices_en": [
+      "Blocks the thread until the task completes",
+      "Cancels the task",
+      "Asynchronously waits for the task, freeing the thread until it completes",
+      "Runs the task twice"
+    ],
+    "choices_el": [
+      "Μπλοκάρει το thread μέχρι να ολοκληρωθεί το task",
+      "Ακυρώνει το task",
+      "Περιμένει ασύγχρονα το task, ελευθερώνοντας το thread μέχρι να ολοκληρωθεί",
+      "Τρέχει το task δύο φορές"
+    ],
+    "correctIndex": 2,
+    "CS08": true
+  },
+  {
+    "number": 9,
+    "question_en": "What is ConfigureAwait(false) used for?",
+    "question_el": "Για τι χρησιμοποιείται το ConfigureAwait(false);",
+    "choices_en": [
+      "To force the continuation back onto the UI thread",
+      "To cancel the await",
+      "To make the method synchronous",
+      "To avoid capturing the original synchronization context, useful in library code"
+    ],
+    "choices_el": [
+      "Για να επιβάλει την continuation πίσω στο UI thread",
+      "Για να ακυρώσει το await",
+      "Για να κάνει τη μέθοδο σύγχρονη",
+      "Για να αποφύγει τη σύλληψη του αρχικού synchronization context, χρήσιμο σε κώδικα library"
+    ],
+    "correctIndex": 3,
+    "CS08": true
+  },
+  {
+    "number": 10,
+    "question_en": "What does the 'async all the way' guidance mean?",
+    "question_el": "Τι σημαίνει η οδηγία 'async all the way';",
+    "choices_en": [
+      "Mix blocking and async code freely",
+      "Avoid blocking on async code; use await throughout the call chain",
+      "Never use await",
+      "Always use .Result"
+    ],
+    "choices_el": [
+      "Ανάμιξε ελεύθερα blocking και async κώδικα",
+      "Απόφυγε το blocking σε async κώδικα· χρησιμοποίησε await σε όλη την αλυσίδα κλήσεων",
+      "Μη χρησιμοποιείς ποτέ await",
+      "Χρησιμοποίησε πάντα .Result"
+    ],
+    "correctIndex": 1,
+    "CS08": true
+  },
+  {
+    "number": 11,
+    "question_en": "What is a CancellationToken used for?",
+    "question_el": "Για τι χρησιμοποιείται ένα CancellationToken;",
+    "choices_en": [
+      "To cooperatively signal that an operation should be cancelled",
+      "To encrypt a task",
+      "To speed up a task",
+      "To catch exceptions"
+    ],
+    "choices_el": [
+      "Για να σηματοδοτήσει συνεργατικά ότι μια λειτουργία πρέπει να ακυρωθεί",
+      "Για την κρυπτογράφηση ενός task",
+      "Για την επιτάχυνση ενός task",
+      "Για να πιάσει exceptions"
+    ],
+    "correctIndex": 0,
+    "CS08": true
+  },
+  {
+    "number": 12,
+    "question_en": "When multiple tasks in Task.WhenAll fail, their exceptions are:",
+    "question_el": "Όταν πολλά tasks σε ένα Task.WhenAll αποτυγχάνουν, τα exceptions τους:",
+    "choices_en": [
+      "Silently ignored",
+      "Only the last one is kept",
+      "Aggregated (accessible via AggregateException / the awaited exception)",
+      "Converted to warnings"
+    ],
+    "choices_el": [
+      "Αγνοούνται σιωπηλά",
+      "Κρατείται μόνο το τελευταίο",
+      "Συγκεντρώνονται (προσβάσιμα μέσω AggregateException / του awaited exception)",
+      "Μετατρέπονται σε warnings"
+    ],
+    "correctIndex": 2,
+    "CS08": true
+  },
+  {
+    "number": 13,
+    "question_en": "What is the finally block typically used for?",
+    "question_el": "Για τι χρησιμοποιείται τυπικά το finally block;",
+    "choices_en": [
+      "Rethrowing exceptions",
+      "Releasing resources / cleanup regardless of success or failure",
+      "Logging only errors",
+      "Skipping cleanup"
+    ],
+    "choices_el": [
+      "Επαναπέταγμα exceptions",
+      "Απελευθέρωση πόρων / cleanup ανεξάρτητα από επιτυχία ή αποτυχία",
+      "Καταγραφή μόνο σφαλμάτων",
+      "Παράλειψη του cleanup"
+    ],
+    "correctIndex": 1,
+    "CS08": true
+  },
+  {
+    "number": 14,
+    "question_en": "What is the correct order of blocks in a try statement?",
+    "question_el": "Ποια είναι η σωστή σειρά των blocks σε ένα try statement;",
+    "choices_en": [
+      "catch, try, finally",
+      "finally, try, catch",
+      "try, finally, catch",
+      "try, catch, finally"
+    ],
+    "choices_el": [
+      "catch, try, finally",
+      "finally, try, catch",
+      "try, finally, catch",
+      "try, catch, finally"
+    ],
+    "correctIndex": 3,
+    "CS08": true
+  },
+  {
+    "number": 15,
+    "question_en": "What does 'await Task.WhenAll(t1, t2)' do?",
+    "question_el": "Τι κάνει το 'await Task.WhenAll(t1, t2)';",
+    "choices_en": [
+      "Asynchronously waits until all the provided tasks complete",
+      "Waits for the first task to finish",
+      "Cancels both tasks",
+      "Runs the tasks strictly sequentially"
+    ],
+    "choices_el": [
+      "Περιμένει ασύγχρονα μέχρι να ολοκληρωθούν όλα τα δοσμένα tasks",
+      "Περιμένει να τελειώσει το πρώτο task",
+      "Ακυρώνει και τα δύο tasks",
+      "Τρέχει τα tasks αυστηρά διαδοχικά"
+    ],
+    "correctIndex": 0,
+    "CS08": true
+  }
+]

@@ -1,0 +1,288 @@
+[
+  {
+    "number": 1,
+    "question_en": "Which of the following is a value type in C#?",
+    "question_el": "Ποιο από τα παρακάτω είναι value type στη C#;",
+    "choices_en": [
+      "string",
+      "object",
+      "int",
+      "a class instance"
+    ],
+    "choices_el": [
+      "string",
+      "object",
+      "int",
+      "ένα instance κλάσης"
+    ],
+    "correctIndex": 2,
+    "CS01": true
+  },
+  {
+    "number": 2,
+    "question_en": "Where are local value-type variables typically stored?",
+    "question_el": "Πού αποθηκεύονται συνήθως οι τοπικές μεταβλητές value type;",
+    "choices_en": [
+      "The stack",
+      "The heap",
+      "The database",
+      "Disk"
+    ],
+    "choices_el": [
+      "Στο stack",
+      "Στο heap",
+      "Στη βάση δεδομένων",
+      "Στον δίσκο"
+    ],
+    "correctIndex": 0,
+    "CS01": true
+  },
+  {
+    "number": 3,
+    "question_en": "What does the var keyword do?",
+    "question_el": "Τι κάνει η λέξη-κλειδί var;",
+    "choices_en": [
+      "Declares a dynamically typed variable resolved at runtime",
+      "Creates a global variable",
+      "Declares a constant",
+      "Lets the compiler infer the static type at compile time"
+    ],
+    "choices_el": [
+      "Δηλώνει μια dynamically typed μεταβλητή που επιλύεται στο runtime",
+      "Δημιουργεί μια global μεταβλητή",
+      "Δηλώνει μια σταθερά",
+      "Αφήνει τον compiler να συμπεράνει τον static τύπο στο compile time"
+    ],
+    "correctIndex": 3,
+    "CS01": true
+  },
+  {
+    "number": 4,
+    "question_en": "What is the difference between const and readonly?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ const και readonly;",
+    "choices_en": [
+      "There is no difference",
+      "const is a compile-time constant; readonly can be assigned at runtime in the constructor",
+      "readonly is compile-time; const is runtime",
+      "const can change; readonly cannot"
+    ],
+    "choices_el": [
+      "Δεν υπάρχει διαφορά",
+      "Το const είναι compile-time σταθερά· το readonly μπορεί να ανατεθεί στο runtime μέσα στον constructor",
+      "Το readonly είναι compile-time· το const είναι runtime",
+      "Το const μπορεί να αλλάξει· το readonly όχι"
+    ],
+    "correctIndex": 1,
+    "CS01": true
+  },
+  {
+    "number": 5,
+    "question_en": "What is the default value of an int field?",
+    "question_el": "Ποια είναι η προκαθορισμένη τιμή ενός int field;",
+    "choices_en": [
+      "null",
+      "0",
+      "1",
+      "-1"
+    ],
+    "choices_el": [
+      "null",
+      "0",
+      "1",
+      "-1"
+    ],
+    "correctIndex": 1,
+    "CS01": true
+  },
+  {
+    "number": 6,
+    "question_en": "What does the ternary expression 'condition ? a : b' evaluate to?",
+    "question_el": "Σε τι αποτιμάται η ternary έκφραση 'condition ? a : b';",
+    "choices_en": [
+      "b if condition is true, otherwise a",
+      "Always a",
+      "Always a boolean",
+      "a if condition is true, otherwise b"
+    ],
+    "choices_el": [
+      "b αν η condition είναι true, αλλιώς a",
+      "Πάντα a",
+      "Πάντα ένα boolean",
+      "a αν η condition είναι true, αλλιώς b"
+    ],
+    "correctIndex": 3,
+    "CS01": true
+  },
+  {
+    "number": 7,
+    "question_en": "What is the difference between ref and out parameters?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ ref και out παραμέτρων;",
+    "choices_en": [
+      "ref must be initialized before the call; out must be assigned inside the method",
+      "out must be initialized before the call; ref need not be",
+      "They are identical",
+      "Neither can modify the argument"
+    ],
+    "choices_el": [
+      "Το ref πρέπει να αρχικοποιηθεί πριν την κλήση· το out πρέπει να ανατεθεί μέσα στη μέθοδο",
+      "Το out πρέπει να αρχικοποιηθεί πριν την κλήση· το ref όχι απαραίτητα",
+      "Είναι πανομοιότυπα",
+      "Κανένα δεν μπορεί να τροποποιήσει το όρισμα"
+    ],
+    "correctIndex": 0,
+    "CS01": true
+  },
+  {
+    "number": 8,
+    "question_en": "What does the params keyword allow a method to do?",
+    "question_el": "Τι επιτρέπει η λέξη-κλειδί params σε μια μέθοδο;",
+    "choices_en": [
+      "Return multiple values",
+      "Run asynchronously",
+      "Accept a variable number of arguments as an array",
+      "Ignore its parameters"
+    ],
+    "choices_el": [
+      "Να επιστρέφει πολλές τιμές",
+      "Να τρέχει ασύγχρονα",
+      "Να δέχεται μεταβλητό αριθμό ορισμάτων ως array",
+      "Να αγνοεί τις παραμέτρους της"
+    ],
+    "correctIndex": 2,
+    "CS01": true
+  },
+  {
+    "number": 9,
+    "question_en": "What is method overloading?",
+    "question_el": "Τι είναι το method overloading;",
+    "choices_en": [
+      "Overriding a base class method",
+      "Calling a method recursively",
+      "Hiding a field",
+      "Defining multiple methods with the same name but different parameter lists"
+    ],
+    "choices_el": [
+      "Το override μιας μεθόδου της base class",
+      "Η αναδρομική κλήση μιας μεθόδου",
+      "Η απόκρυψη ενός field",
+      "Ο ορισμός πολλών μεθόδων με το ίδιο όνομα αλλά διαφορετικές λίστες παραμέτρων"
+    ],
+    "correctIndex": 3,
+    "CS01": true
+  },
+  {
+    "number": 10,
+    "question_en": "A static method:",
+    "question_el": "Μια static μέθοδος:",
+    "choices_en": [
+      "Requires an object to be called",
+      "Belongs to the type itself, not to an instance",
+      "Cannot take parameters",
+      "Is always private"
+    ],
+    "choices_el": [
+      "Απαιτεί ένα object για να κληθεί",
+      "Ανήκει στον ίδιο τον τύπο, όχι σε instance",
+      "Δεν μπορεί να δεχτεί παραμέτρους",
+      "Είναι πάντα private"
+    ],
+    "correctIndex": 1,
+    "CS01": true
+  },
+  {
+    "number": 11,
+    "question_en": "What is the difference between for and foreach?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ for και foreach;",
+    "choices_en": [
+      "for uses an explicit counter; foreach iterates each element of a collection without an index",
+      "foreach exposes an index; for does not",
+      "They are identical",
+      "foreach cannot iterate arrays"
+    ],
+    "choices_el": [
+      "Το for χρησιμοποιεί ρητό counter· το foreach διατρέχει κάθε στοιχείο μιας συλλογής χωρίς index",
+      "Το foreach εκθέτει index· το for όχι",
+      "Είναι πανομοιότυπα",
+      "Το foreach δεν μπορεί να διατρέξει arrays"
+    ],
+    "correctIndex": 0,
+    "CS01": true
+  },
+  {
+    "number": 12,
+    "question_en": "What is the difference between while and do-while?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ while και do-while;",
+    "choices_en": [
+      "while always runs the body at least once",
+      "They are identical",
+      "do-while always executes the body at least once",
+      "do-while cannot use a condition"
+    ],
+    "choices_el": [
+      "Το while εκτελεί πάντα το σώμα τουλάχιστον μία φορά",
+      "Είναι πανομοιότυπα",
+      "Το do-while εκτελεί πάντα το σώμα τουλάχιστον μία φορά",
+      "Το do-while δεν μπορεί να χρησιμοποιήσει συνθήκη"
+    ],
+    "correctIndex": 2,
+    "CS01": true
+  },
+  {
+    "number": 13,
+    "question_en": "Which syntax defines an expression-bodied method?",
+    "question_el": "Ποια σύνταξη ορίζει μια expression-bodied μέθοδο;",
+    "choices_en": [
+      "Using :: before the body",
+      "Using => for a single-expression body",
+      "Using -> for the body",
+      "Using yield"
+    ],
+    "choices_el": [
+      "Με χρήση :: πριν το σώμα",
+      "Με χρήση => για σώμα μίας έκφρασης",
+      "Με χρήση -> για το σώμα",
+      "Με χρήση yield"
+    ],
+    "correctIndex": 1,
+    "CS01": true
+  },
+  {
+    "number": 14,
+    "question_en": "In a switch statement, what does break do?",
+    "question_el": "Σε μια switch, τι κάνει το break;",
+    "choices_en": [
+      "Falls through to the next case",
+      "Repeats the current case",
+      "Returns from the enclosing method",
+      "Exits the switch after a matched case"
+    ],
+    "choices_el": [
+      "Πέφτει (fall through) στο επόμενο case",
+      "Επαναλαμβάνει το τρέχον case",
+      "Επιστρέφει από την περιβάλλουσα μέθοδο",
+      "Βγαίνει από το switch μετά από ένα case που ταίριαξε"
+    ],
+    "correctIndex": 3,
+    "CS01": true
+  },
+  {
+    "number": 15,
+    "question_en": "What is the value of s after this code runs?",
+    "question_el": "Ποια είναι η τιμή του s μετά την εκτέλεση αυτού του κώδικα;",
+    "code": "int x = 5;\nstring s = (x > 3) ? \"big\" : \"small\";",
+    "choices_en": [
+      "\"big\"",
+      "\"small\"",
+      "\"5\"",
+      "null"
+    ],
+    "choices_el": [
+      "\"big\"",
+      "\"small\"",
+      "\"5\"",
+      "null"
+    ],
+    "correctIndex": 0,
+    "CS01": true
+  }
+]

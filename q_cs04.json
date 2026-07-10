@@ -1,0 +1,288 @@
+[
+  {
+    "number": 1,
+    "question_en": "What is the difference between an array and a List<T>?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ ενός array και ενός List<T>;",
+    "choices_en": [
+      "An array is dynamically sized; a List is fixed",
+      "They are identical",
+      "An array has a fixed size; a List<T> can grow and shrink dynamically",
+      "A List cannot be indexed"
+    ],
+    "choices_el": [
+      "Ένα array έχει δυναμικό μέγεθος· μια List είναι σταθερή",
+      "Είναι πανομοιότυπα",
+      "Ένα array έχει σταθερό μέγεθος· μια List<T> μπορεί να μεγαλώνει και να μικραίνει δυναμικά",
+      "Μια List δεν μπορεί να προσπελαστεί με index"
+    ],
+    "correctIndex": 2,
+    "CS04": true
+  },
+  {
+    "number": 2,
+    "question_en": "Which method adds an item to the end of a List<T>?",
+    "question_el": "Ποια μέθοδος προσθέτει ένα στοιχείο στο τέλος μιας List<T>;",
+    "choices_en": [
+      "Add()",
+      "Push()",
+      "Enqueue()",
+      "Insert()"
+    ],
+    "choices_el": [
+      "Add()",
+      "Push()",
+      "Enqueue()",
+      "Insert()"
+    ],
+    "correctIndex": 0,
+    "CS04": true
+  },
+  {
+    "number": 3,
+    "question_en": "Why is Dictionary.TryGetValue often preferred over direct indexing?",
+    "question_el": "Γιατί το Dictionary.TryGetValue προτιμάται συχνά έναντι της άμεσης προσπέλασης με index;",
+    "choices_en": [
+      "It is faster at adding items",
+      "It sorts the dictionary",
+      "It removes the key",
+      "It avoids a KeyNotFoundException when the key is missing"
+    ],
+    "choices_el": [
+      "Είναι πιο γρήγορο στην προσθήκη στοιχείων",
+      "Ταξινομεί το dictionary",
+      "Αφαιρεί το key",
+      "Αποφεύγει το KeyNotFoundException όταν το key λείπει"
+    ],
+    "correctIndex": 3,
+    "CS04": true
+  },
+  {
+    "number": 4,
+    "question_en": "What is a HashSet<T> best used for?",
+    "question_el": "Για τι χρησιμοποιείται καλύτερα ένα HashSet<T>;",
+    "choices_en": [
+      "Preserving insertion order while allowing duplicates",
+      "Storing unique elements with O(1) average lookup",
+      "FIFO processing",
+      "Storing key-value pairs"
+    ],
+    "choices_el": [
+      "Διατήρηση της σειράς εισαγωγής επιτρέποντας διπλότυπα",
+      "Αποθήκευση μοναδικών στοιχείων με O(1) μέση αναζήτηση",
+      "Επεξεργασία FIFO",
+      "Αποθήκευση ζευγών key-value"
+    ],
+    "correctIndex": 1,
+    "CS04": true
+  },
+  {
+    "number": 5,
+    "question_en": "A Queue<T> follows which processing order?",
+    "question_el": "Ποια σειρά επεξεργασίας ακολουθεί ένα Queue<T>;",
+    "choices_en": [
+      "LIFO",
+      "FIFO",
+      "Random",
+      "Sorted"
+    ],
+    "choices_el": [
+      "LIFO",
+      "FIFO",
+      "Τυχαία",
+      "Ταξινομημένη"
+    ],
+    "correctIndex": 1,
+    "CS04": true
+  },
+  {
+    "number": 6,
+    "question_en": "A Stack<T> follows which processing order?",
+    "question_el": "Ποια σειρά επεξεργασίας ακολουθεί ένα Stack<T>;",
+    "choices_en": [
+      "FIFO",
+      "Sorted",
+      "Random",
+      "LIFO"
+    ],
+    "choices_el": [
+      "FIFO",
+      "Ταξινομημένη",
+      "Τυχαία",
+      "LIFO"
+    ],
+    "correctIndex": 3,
+    "CS04": true
+  },
+  {
+    "number": 7,
+    "question_en": "Which Stack method removes and returns the top item?",
+    "question_el": "Ποια μέθοδος του Stack αφαιρεί και επιστρέφει το κορυφαίο στοιχείο;",
+    "choices_en": [
+      "Pop()",
+      "Peek()",
+      "Dequeue()",
+      "Remove()"
+    ],
+    "choices_el": [
+      "Pop()",
+      "Peek()",
+      "Dequeue()",
+      "Remove()"
+    ],
+    "correctIndex": 0,
+    "CS04": true
+  },
+  {
+    "number": 8,
+    "question_en": "Which Queue method removes and returns the front item?",
+    "question_el": "Ποια μέθοδος του Queue αφαιρεί και επιστρέφει το μπροστινό στοιχείο;",
+    "choices_en": [
+      "Pop()",
+      "Peek()",
+      "Dequeue()",
+      "Enqueue()"
+    ],
+    "choices_el": [
+      "Pop()",
+      "Peek()",
+      "Dequeue()",
+      "Enqueue()"
+    ],
+    "correctIndex": 2,
+    "CS04": true
+  },
+  {
+    "number": 9,
+    "question_en": "What does Peek() do on a Stack or Queue?",
+    "question_el": "Τι κάνει το Peek() σε ένα Stack ή Queue;",
+    "choices_en": [
+      "Removes and returns the next item",
+      "Clears the collection",
+      "Adds an item",
+      "Returns the next item without removing it"
+    ],
+    "choices_el": [
+      "Αφαιρεί και επιστρέφει το επόμενο στοιχείο",
+      "Καθαρίζει τη συλλογή",
+      "Προσθέτει ένα στοιχείο",
+      "Επιστρέφει το επόμενο στοιχείο χωρίς να το αφαιρέσει"
+    ],
+    "correctIndex": 3,
+    "CS04": true
+  },
+  {
+    "number": 10,
+    "question_en": "When iterating a Dictionary, what does each element yield?",
+    "question_el": "Όταν διατρέχεις ένα Dictionary, τι δίνει κάθε στοιχείο;",
+    "choices_en": [
+      "A single value",
+      "A KeyValuePair<TKey, TValue>",
+      "Only the key",
+      "An index"
+    ],
+    "choices_el": [
+      "Μία μεμονωμένη τιμή",
+      "Ένα KeyValuePair<TKey, TValue>",
+      "Μόνο το key",
+      "Ένα index"
+    ],
+    "correctIndex": 1,
+    "CS04": true
+  },
+  {
+    "number": 11,
+    "question_en": "What is the difference between a List's Count and Capacity?",
+    "question_el": "Ποια η διαφορά μεταξύ του Count και του Capacity μιας List;",
+    "choices_en": [
+      "Count is the number of elements; Capacity is the size of the allocated internal storage",
+      "Count is the allocated slots; Capacity is the number of elements",
+      "They are identical",
+      "Capacity is always 0"
+    ],
+    "choices_el": [
+      "Το Count είναι ο αριθμός στοιχείων· το Capacity είναι το μέγεθος του δεσμευμένου εσωτερικού χώρου",
+      "Το Count είναι οι δεσμευμένες θέσεις· το Capacity είναι ο αριθμός στοιχείων",
+      "Είναι πανομοιότυπα",
+      "Το Capacity είναι πάντα 0"
+    ],
+    "correctIndex": 0,
+    "CS04": true
+  },
+  {
+    "number": 12,
+    "question_en": "How does a SortedDictionary differ from a Dictionary?",
+    "question_el": "Πώς διαφέρει ένα SortedDictionary από ένα Dictionary;",
+    "choices_en": [
+      "It is unordered and faster",
+      "It allows duplicate keys",
+      "It keeps keys sorted, with slower inserts than a hash Dictionary",
+      "It cannot be iterated"
+    ],
+    "choices_el": [
+      "Είναι μη ταξινομημένο και πιο γρήγορο",
+      "Επιτρέπει διπλότυπα keys",
+      "Κρατά τα keys ταξινομημένα, με πιο αργές εισαγωγές από ένα hash Dictionary",
+      "Δεν μπορεί να διατρεχθεί"
+    ],
+    "correctIndex": 2,
+    "CS04": true
+  },
+  {
+    "number": 13,
+    "question_en": "Which collection provides O(1) average-time lookup by key?",
+    "question_el": "Ποια συλλογή προσφέρει O(1) μέση αναζήτηση βάσει key;",
+    "choices_en": [
+      "List<T>",
+      "Dictionary<TKey, TValue>",
+      "An array searched by value",
+      "Queue<T>"
+    ],
+    "choices_el": [
+      "List<T>",
+      "Dictionary<TKey, TValue>",
+      "Ένα array με αναζήτηση κατά τιμή",
+      "Queue<T>"
+    ],
+    "correctIndex": 1,
+    "CS04": true
+  },
+  {
+    "number": 14,
+    "question_en": "What is the Count of the HashSet below?",
+    "question_el": "Ποιο είναι το Count του παρακάτω HashSet;",
+    "code": "var set = new HashSet<int> { 1, 2, 2, 3 };\nint c = set.Count;",
+    "choices_en": [
+      "4",
+      "2",
+      "1",
+      "3"
+    ],
+    "choices_el": [
+      "4",
+      "2",
+      "1",
+      "3"
+    ],
+    "correctIndex": 3,
+    "CS04": true
+  },
+  {
+    "number": 15,
+    "question_en": "Which collection best implements undo functionality (last action undone first)?",
+    "question_el": "Ποια συλλογή υλοποιεί καλύτερα λειτουργία undo (η τελευταία ενέργεια αναιρείται πρώτη);",
+    "choices_en": [
+      "Stack<T>",
+      "Queue<T>",
+      "Dictionary",
+      "SortedList"
+    ],
+    "choices_el": [
+      "Stack<T>",
+      "Queue<T>",
+      "Dictionary",
+      "SortedList"
+    ],
+    "correctIndex": 0,
+    "CS04": true
+  }
+]

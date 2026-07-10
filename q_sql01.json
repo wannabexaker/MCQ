@@ -1,0 +1,230 @@
+[
+  {
+    "number": 1,
+    "question_en": "Which SQL clause is used to filter rows returned by a SELECT statement?",
+    "question_el": "Ποια SQL ρήτρα χρησιμοποιείται για να φιλτράρει τις γραμμές που επιστρέφει ένα SELECT;",
+    "choices_en": ["HAVING", "WHERE", "FILTER", "LIMIT"],
+    "choices_el": ["HAVING", "WHERE", "FILTER", "LIMIT"],
+    "correctIndex": 1,
+    "SQL01": true
+  },
+  {
+    "number": 2,
+    "question_en": "What does SELECT DISTINCT do?",
+    "question_el": "Τι κάνει το SELECT DISTINCT;",
+    "choices_en": ["Returns only the first row of each group", "Removes duplicate rows from the result", "Sorts the result in descending order", "Selects all columns from a table"],
+    "choices_el": ["Επιστρέφει μόνο την πρώτη γραμμή κάθε ομάδας", "Αφαιρεί τις διπλότυπες γραμμές από το αποτέλεσμα", "Ταξινομεί το αποτέλεσμα φθίνουσα", "Επιλέγει όλες τις στήλες από έναν πίνακα"],
+    "correctIndex": 1,
+    "SQL01": true
+  },
+  {
+    "number": 3,
+    "question_en": "How do you correctly check if a column value is NULL in SQL?",
+    "question_el": "Πώς ελέγχεις σωστά αν μια τιμή στήλης είναι NULL στη SQL;",
+    "choices_en": ["column = NULL", "column == NULL", "column IS NULL", "column != NULL"],
+    "choices_el": ["column = NULL", "column == NULL", "column IS NULL", "column != NULL"],
+    "correctIndex": 2,
+    "SQL01": true
+  },
+  {
+    "number": 4,
+    "question_en": "What is the difference between WHERE and HAVING?",
+    "question_el": "Ποια είναι η διαφορά μεταξύ WHERE και HAVING;",
+    "choices_en": [
+      "WHERE filters after aggregation, HAVING filters before",
+      "WHERE filters individual rows before grouping, HAVING filters groups after aggregation",
+      "They are interchangeable",
+      "HAVING is used only with ORDER BY"
+    ],
+    "choices_el": [
+      "Το WHERE φιλτράρει μετά την ομαδοποίηση, το HAVING πριν",
+      "Το WHERE φιλτράρει γραμμές πριν την ομαδοποίηση, το HAVING φιλτράρει ομάδες μετά",
+      "Είναι εναλλάξιμα",
+      "Το HAVING χρησιμοποιείται μόνο με ORDER BY"
+    ],
+    "correctIndex": 1,
+    "SQL01": true
+  },
+  {
+    "number": 5,
+    "question_en": "What does the following query return?",
+    "question_el": "Τι επιστρέφει το παρακάτω query;",
+    "code": "SELECT department, COUNT(*) AS total\nFROM employees\nGROUP BY department\nHAVING COUNT(*) > 5;",
+    "choices_en": [
+      "All departments with their employee count",
+      "Only departments that have more than 5 employees",
+      "The 5 largest departments",
+      "All employees where total is greater than 5"
+    ],
+    "choices_el": [
+      "Όλα τα τμήματα με τον αριθμό υπαλλήλων τους",
+      "Μόνο τμήματα που έχουν περισσότερους από 5 υπαλλήλους",
+      "Τα 5 μεγαλύτερα τμήματα",
+      "Όλοι οι υπάλληλοι όπου total > 5"
+    ],
+    "correctIndex": 1,
+    "SQL01": true
+  },
+  {
+    "number": 6,
+    "question_en": "Which JOIN returns all rows from the left table even if there is no match in the right table?",
+    "question_el": "Ποιο JOIN επιστρέφει όλες τις γραμμές του αριστερού πίνακα ακόμα και αν δεν υπάρχει αντιστοιχία στον δεξί;",
+    "choices_en": ["INNER JOIN", "RIGHT JOIN", "LEFT JOIN", "CROSS JOIN"],
+    "choices_el": ["INNER JOIN", "RIGHT JOIN", "LEFT JOIN", "CROSS JOIN"],
+    "correctIndex": 2,
+    "SQL01": true
+  },
+  {
+    "number": 7,
+    "question_en": "What does INNER JOIN return?",
+    "question_el": "Τι επιστρέφει το INNER JOIN;",
+    "choices_en": [
+      "All rows from both tables regardless of match",
+      "Only rows where the join condition matches in both tables",
+      "All rows from the left table and matching rows from the right",
+      "The Cartesian product of both tables"
+    ],
+    "choices_el": [
+      "Όλες τις γραμμές και από τους δύο πίνακες ανεξαρτήτως αντιστοιχίας",
+      "Μόνο γραμμές όπου η συνθήκη JOIN ταιριάζει και στους δύο πίνακες",
+      "Όλες τις γραμμές του αριστερού πίνακα και τις αντίστοιχες του δεξιού",
+      "Το Καρτεσιανό γινόμενο και των δύο πινάκων"
+    ],
+    "correctIndex": 1,
+    "SQL01": true
+  },
+  {
+    "number": 8,
+    "question_en": "Which aggregate function counts only non-NULL values in a specific column?",
+    "question_el": "Ποια aggregate function μετράει μόνο non-NULL τιμές μιας συγκεκριμένης στήλης;",
+    "choices_en": ["COUNT(*)", "COUNT(column_name)", "SUM(column_name)", "TOTAL(column_name)"],
+    "choices_el": ["COUNT(*)", "COUNT(column_name)", "SUM(column_name)", "TOTAL(column_name)"],
+    "correctIndex": 1,
+    "SQL01": true
+  },
+  {
+    "number": 9,
+    "question_en": "What is the correct clause order in a SELECT statement?",
+    "question_el": "Ποια είναι η σωστή σειρά ρητρών σε ένα SELECT;",
+    "choices_en": [
+      "SELECT → FROM → GROUP BY → WHERE → HAVING → ORDER BY",
+      "SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY",
+      "SELECT → WHERE → FROM → GROUP BY → ORDER BY → HAVING",
+      "FROM → WHERE → SELECT → GROUP BY → HAVING → ORDER BY"
+    ],
+    "choices_el": [
+      "SELECT → FROM → GROUP BY → WHERE → HAVING → ORDER BY",
+      "SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY",
+      "SELECT → WHERE → FROM → GROUP BY → ORDER BY → HAVING",
+      "FROM → WHERE → SELECT → GROUP BY → HAVING → ORDER BY"
+    ],
+    "correctIndex": 1,
+    "SQL01": true
+  },
+  {
+    "number": 10,
+    "question_en": "What does the following query do?",
+    "question_el": "Τι κάνει το παρακάτω query;",
+    "code": "UPDATE employees\nSET salary = salary * 1.10\nWHERE department = 'IT';",
+    "choices_en": [
+      "Deletes all IT department employees",
+      "Sets all salaries to 1.10 for IT employees",
+      "Increases the salary by 10% for all IT employees",
+      "Inserts a 10% bonus record for IT employees"
+    ],
+    "choices_el": [
+      "Διαγράφει όλους τους υπαλλήλους του IT τμήματος",
+      "Θέτει όλους τους μισθούς σε 1.10 για IT υπαλλήλους",
+      "Αυξάνει τον μισθό κατά 10% για όλους τους IT υπαλλήλους",
+      "Εισάγει μια εγγραφή bonus 10% για IT υπαλλήλους"
+    ],
+    "correctIndex": 2,
+    "SQL01": true
+  },
+  {
+    "number": 11,
+    "question_en": "Which statement removes all rows from a table but preserves the table structure?",
+    "question_el": "Ποια εντολή διαγράφει όλες τις γραμμές ενός πίνακα αλλά διατηρεί τη δομή του;",
+    "choices_en": ["DROP TABLE", "DELETE FROM table_name", "TRUNCATE TABLE table_name", "REMOVE FROM table_name"],
+    "choices_el": ["DROP TABLE", "DELETE FROM table_name", "TRUNCATE TABLE table_name", "REMOVE FROM table_name"],
+    "correctIndex": 2,
+    "SQL01": true
+  },
+  {
+    "number": 12,
+    "question_en": "What happens when you execute DELETE without a WHERE clause?",
+    "question_el": "Τι συμβαίνει όταν εκτελείς DELETE χωρίς WHERE;",
+    "choices_en": [
+      "SQL throws a syntax error",
+      "Only the first row is deleted",
+      "All rows in the table are deleted",
+      "The table structure is also dropped"
+    ],
+    "choices_el": [
+      "Η SQL επιστρέφει syntax error",
+      "Διαγράφεται μόνο η πρώτη γραμμή",
+      "Διαγράφονται όλες οι γραμμές του πίνακα",
+      "Διαγράφεται και η δομή του πίνακα"
+    ],
+    "correctIndex": 2,
+    "SQL01": true
+  },
+  {
+    "number": 13,
+    "question_en": "Which of the following correctly sorts results by salary from highest to lowest?",
+    "question_el": "Ποιο από τα παρακάτω ταξινομεί σωστά τα αποτελέσματα ανά μισθό από μεγαλύτερο σε μικρότερο;",
+    "choices_en": [
+      "ORDER BY salary ASC",
+      "SORT BY salary DESC",
+      "ORDER BY salary DESC",
+      "GROUP BY salary DESC"
+    ],
+    "choices_el": [
+      "ORDER BY salary ASC",
+      "SORT BY salary DESC",
+      "ORDER BY salary DESC",
+      "GROUP BY salary DESC"
+    ],
+    "correctIndex": 2,
+    "SQL01": true
+  },
+  {
+    "number": 14,
+    "question_en": "What does the IN operator do in a WHERE clause?",
+    "question_el": "Τι κάνει ο τελεστής IN σε μια WHERE ρήτρα;",
+    "choices_en": [
+      "Checks if a value matches any value in a list or subquery",
+      "Checks if a value is between two numbers",
+      "Checks if a column contains a NULL value",
+      "Joins two tables on matching values"
+    ],
+    "choices_el": [
+      "Ελέγχει αν μια τιμή ταιριάζει με οποιαδήποτε τιμή σε λίστα ή subquery",
+      "Ελέγχει αν μια τιμή είναι μεταξύ δύο αριθμών",
+      "Ελέγχει αν μια στήλη περιέχει NULL τιμή",
+      "Ενώνει δύο πίνακες σε αντίστοιχες τιμές"
+    ],
+    "correctIndex": 0,
+    "SQL01": true
+  },
+  {
+    "number": 15,
+    "question_en": "What does the following query return?",
+    "question_el": "Τι επιστρέφει το παρακάτω query;",
+    "code": "SELECT *\nFROM orders\nWHERE customer_id IN (1, 3, 7);",
+    "choices_en": [
+      "Orders where customer_id is between 1 and 7",
+      "Orders belonging to customers with id 1, 3, or 7",
+      "Orders excluding customers with id 1, 3, and 7",
+      "The first 3 orders in the table"
+    ],
+    "choices_el": [
+      "Παραγγελίες όπου customer_id είναι μεταξύ 1 και 7",
+      "Παραγγελίες που ανήκουν σε πελάτες με id 1, 3, ή 7",
+      "Παραγγελίες εκτός των πελατών με id 1, 3, και 7",
+      "Οι πρώτες 3 παραγγελίες του πίνακα"
+    ],
+    "correctIndex": 1,
+    "SQL01": true
+  }
+]

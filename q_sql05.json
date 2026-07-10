@@ -1,0 +1,287 @@
+[
+  {
+    "number": 1,
+    "question_en": "What is a database transaction?",
+    "question_el": "Τι είναι ένα database transaction;",
+    "choices_en": [
+      "A single SELECT query",
+      "A backup of the database",
+      "A logical unit of work treated as all-or-nothing",
+      "A stored procedure"
+    ],
+    "choices_el": [
+      "Ένα μεμονωμένο SELECT query",
+      "Ένα backup της βάσης δεδομένων",
+      "Μια λογική μονάδα εργασίας που αντιμετωπίζεται ως όλα-ή-τίποτα",
+      "Ένα stored procedure"
+    ],
+    "correctIndex": 2,
+    "SQL05": true
+  },
+  {
+    "number": 2,
+    "question_en": "What does the 'A' in ACID stand for?",
+    "question_el": "Τι σημαίνει το 'A' στο ACID;",
+    "choices_en": [
+      "Atomicity",
+      "Availability",
+      "Authorization",
+      "Aggregation"
+    ],
+    "choices_el": [
+      "Atomicity",
+      "Availability",
+      "Authorization",
+      "Aggregation"
+    ],
+    "correctIndex": 0,
+    "SQL05": true
+  },
+  {
+    "number": 3,
+    "question_en": "What does Atomicity guarantee?",
+    "question_el": "Τι εγγυάται το Atomicity;",
+    "choices_en": [
+      "Data is always available",
+      "Reads are always consistent",
+      "Transactions always run in parallel",
+      "All statements in a transaction succeed, or none of them do"
+    ],
+    "choices_el": [
+      "Τα δεδομένα είναι πάντα διαθέσιμα",
+      "Οι αναγνώσεις είναι πάντα συνεπείς",
+      "Τα transactions τρέχουν πάντα παράλληλα",
+      "Όλες οι εντολές ενός transaction πετυχαίνουν, ή καμία δεν εφαρμόζεται"
+    ],
+    "correctIndex": 3,
+    "SQL05": true
+  },
+  {
+    "number": 4,
+    "question_en": "What does Durability guarantee?",
+    "question_el": "Τι εγγυάται το Durability;",
+    "choices_en": [
+      "Transactions never fail",
+      "Committed changes survive a system crash",
+      "Data is always encrypted",
+      "Reads are always fast"
+    ],
+    "choices_el": [
+      "Τα transactions δεν αποτυγχάνουν ποτέ",
+      "Οι committed αλλαγές επιβιώνουν από system crash",
+      "Τα δεδομένα είναι πάντα κρυπτογραφημένα",
+      "Οι αναγνώσεις είναι πάντα γρήγορες"
+    ],
+    "correctIndex": 1,
+    "SQL05": true
+  },
+  {
+    "number": 5,
+    "question_en": "Which command undoes all changes made in the current transaction?",
+    "question_el": "Ποια εντολή αναιρεί όλες τις αλλαγές του τρέχοντος transaction;",
+    "choices_en": [
+      "COMMIT",
+      "ROLLBACK",
+      "SAVEPOINT",
+      "BEGIN"
+    ],
+    "choices_el": [
+      "COMMIT",
+      "ROLLBACK",
+      "SAVEPOINT",
+      "BEGIN"
+    ],
+    "correctIndex": 1,
+    "SQL05": true
+  },
+  {
+    "number": 6,
+    "question_en": "What does COMMIT do?",
+    "question_el": "Τι κάνει το COMMIT;",
+    "choices_en": [
+      "Discards all changes",
+      "Starts a new transaction",
+      "Creates a savepoint",
+      "Permanently saves all changes made in the transaction"
+    ],
+    "choices_el": [
+      "Απορρίπτει όλες τις αλλαγές",
+      "Ξεκινά ένα νέο transaction",
+      "Δημιουργεί ένα savepoint",
+      "Αποθηκεύει μόνιμα όλες τις αλλαγές του transaction"
+    ],
+    "correctIndex": 3,
+    "SQL05": true
+  },
+  {
+    "number": 7,
+    "question_en": "What does a SAVEPOINT allow you to do?",
+    "question_el": "Τι σου επιτρέπει να κάνεις ένα SAVEPOINT;",
+    "choices_en": [
+      "Roll back to a specific point within a transaction without undoing everything",
+      "Commit half of a transaction permanently",
+      "Lock the entire database",
+      "Skip the transaction log"
+    ],
+    "choices_el": [
+      "Να κάνεις rollback σε συγκεκριμένο σημείο μέσα σε ένα transaction χωρίς να αναιρέσεις τα πάντα",
+      "Να κάνεις μόνιμο commit στο μισό transaction",
+      "Να κλειδώσεις ολόκληρη τη βάση",
+      "Να παρακάμψεις το transaction log"
+    ],
+    "correctIndex": 0,
+    "SQL05": true
+  },
+  {
+    "number": 8,
+    "question_en": "A dirty read occurs when a transaction reads:",
+    "question_el": "Ένα dirty read συμβαίνει όταν ένα transaction διαβάζει:",
+    "choices_en": [
+      "Data committed by another transaction",
+      "Only its own uncommitted data",
+      "Data modified by another transaction that has not yet committed",
+      "Data from a backup"
+    ],
+    "choices_el": [
+      "Δεδομένα που έχουν γίνει commit από άλλο transaction",
+      "Μόνο τα δικά του uncommitted δεδομένα",
+      "Δεδομένα που τροποποιήθηκαν από άλλο transaction το οποίο δεν έχει κάνει ακόμα commit",
+      "Δεδομένα από ένα backup"
+    ],
+    "correctIndex": 2,
+    "SQL05": true
+  },
+  {
+    "number": 9,
+    "question_en": "What is a non-repeatable read?",
+    "question_el": "Τι είναι ένα non-repeatable read;",
+    "choices_en": [
+      "A row cannot be read at all",
+      "New rows appear when a range query is re-run",
+      "The same query always returns identical results",
+      "Reading the same row twice returns different values because another transaction modified it"
+    ],
+    "choices_el": [
+      "Μια γραμμή δεν μπορεί να διαβαστεί καθόλου",
+      "Νέες γραμμές εμφανίζονται όταν ξανατρέχει ένα range query",
+      "Το ίδιο query επιστρέφει πάντα πανομοιότυπα αποτελέσματα",
+      "Η ανάγνωση της ίδιας γραμμής δύο φορές επιστρέφει διαφορετικές τιμές επειδή άλλο transaction την τροποποίησε"
+    ],
+    "correctIndex": 3,
+    "SQL05": true
+  },
+  {
+    "number": 10,
+    "question_en": "What is a phantom read?",
+    "question_el": "Τι είναι ένα phantom read;",
+    "choices_en": [
+      "A single row changes its value",
+      "Re-running a range query returns new rows inserted by another transaction",
+      "A read is blocked forever",
+      "Data is permanently deleted"
+    ],
+    "choices_el": [
+      "Μια μεμονωμένη γραμμή αλλάζει τιμή",
+      "Η επανεκτέλεση ενός range query επιστρέφει νέες γραμμές που εισήχθησαν από άλλο transaction",
+      "Μια ανάγνωση μπλοκάρεται για πάντα",
+      "Δεδομένα διαγράφονται μόνιμα"
+    ],
+    "correctIndex": 1,
+    "SQL05": true
+  },
+  {
+    "number": 11,
+    "question_en": "Which isolation level allows dirty reads?",
+    "question_el": "Ποιο isolation level επιτρέπει dirty reads;",
+    "choices_en": [
+      "READ UNCOMMITTED",
+      "SERIALIZABLE",
+      "REPEATABLE READ",
+      "READ COMMITTED"
+    ],
+    "choices_el": [
+      "READ UNCOMMITTED",
+      "SERIALIZABLE",
+      "REPEATABLE READ",
+      "READ COMMITTED"
+    ],
+    "correctIndex": 0,
+    "SQL05": true
+  },
+  {
+    "number": 12,
+    "question_en": "Which is the strictest isolation level, preventing dirty, non-repeatable, and phantom reads?",
+    "question_el": "Ποιο είναι το αυστηρότερο isolation level, που αποτρέπει dirty, non-repeatable και phantom reads;",
+    "choices_en": [
+      "READ COMMITTED",
+      "REPEATABLE READ",
+      "SERIALIZABLE",
+      "READ UNCOMMITTED"
+    ],
+    "choices_el": [
+      "READ COMMITTED",
+      "REPEATABLE READ",
+      "SERIALIZABLE",
+      "READ UNCOMMITTED"
+    ],
+    "correctIndex": 2,
+    "SQL05": true
+  },
+  {
+    "number": 13,
+    "question_en": "What is a deadlock?",
+    "question_el": "Τι είναι ένα deadlock;",
+    "choices_en": [
+      "A query that simply runs slowly",
+      "Two transactions each waiting for a resource the other holds, so neither can proceed",
+      "A transaction that never starts",
+      "A corrupted table"
+    ],
+    "choices_el": [
+      "Ένα query που απλώς τρέχει αργά",
+      "Δύο transactions που το καθένα περιμένει έναν πόρο που κρατά το άλλο, οπότε κανένα δεν προχωρά",
+      "Ένα transaction που δεν ξεκινά ποτέ",
+      "Ένας κατεστραμμένος πίνακας"
+    ],
+    "correctIndex": 1,
+    "SQL05": true
+  },
+  {
+    "number": 14,
+    "question_en": "An explicit transaction is one that:",
+    "question_el": "Ένα explicit transaction είναι αυτό που:",
+    "choices_en": [
+      "Is started automatically for each statement",
+      "Never needs a COMMIT",
+      "Cannot be rolled back",
+      "Is started manually with BEGIN TRANSACTION"
+    ],
+    "choices_el": [
+      "Ξεκινά αυτόματα για κάθε εντολή",
+      "Δεν χρειάζεται ποτέ COMMIT",
+      "Δεν μπορεί να γίνει rollback",
+      "Ξεκινά χειροκίνητα με BEGIN TRANSACTION"
+    ],
+    "correctIndex": 3,
+    "SQL05": true
+  },
+  {
+    "number": 15,
+    "question_en": "What does the 'C' (Consistency) in ACID mean?",
+    "question_el": "Τι σημαίνει το 'C' (Consistency) στο ACID;",
+    "choices_en": [
+      "The database moves from one valid state to another, preserving all rules and constraints",
+      "All users see the same UI",
+      "Data is compressed",
+      "Queries are cached"
+    ],
+    "choices_el": [
+      "Η βάση μεταβαίνει από μία έγκυρη κατάσταση σε άλλη, διατηρώντας όλους τους κανόνες και τα constraints",
+      "Όλοι οι χρήστες βλέπουν το ίδιο UI",
+      "Τα δεδομένα συμπιέζονται",
+      "Τα queries αποθηκεύονται στην cache"
+    ],
+    "correctIndex": 0,
+    "SQL05": true
+  }
+]

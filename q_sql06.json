@@ -1,0 +1,287 @@
+[
+  {
+    "number": 1,
+    "question_en": "What is the primary purpose of a database index?",
+    "question_el": "Ποιος είναι ο βασικός σκοπός ενός database index;",
+    "choices_en": [
+      "To enforce foreign keys",
+      "To compress the table",
+      "To speed up data retrieval at the cost of extra storage and slower writes",
+      "To back up the data"
+    ],
+    "choices_el": [
+      "Να επιβάλλει foreign keys",
+      "Να συμπιέζει τον πίνακα",
+      "Να επιταχύνει την ανάκτηση δεδομένων με κόστος επιπλέον αποθηκευτικού χώρου και πιο αργά writes",
+      "Να κάνει backup τα δεδομένα"
+    ],
+    "correctIndex": 2,
+    "SQL06": true
+  },
+  {
+    "number": 2,
+    "question_en": "How many clustered indexes can a single table have?",
+    "question_el": "Πόσα clustered indexes μπορεί να έχει ένας πίνακας;",
+    "choices_en": [
+      "Exactly one",
+      "Unlimited",
+      "Two",
+      "Always zero"
+    ],
+    "choices_el": [
+      "Ακριβώς ένα",
+      "Απεριόριστα",
+      "Δύο",
+      "Πάντα κανένα"
+    ],
+    "correctIndex": 0,
+    "SQL06": true
+  },
+  {
+    "number": 3,
+    "question_en": "What does a clustered index determine?",
+    "question_el": "Τι καθορίζει ένα clustered index;",
+    "choices_en": [
+      "It stores a separate sorted copy of the data",
+      "It is created automatically on every column",
+      "It cannot be the primary key",
+      "The physical storage order of the rows in the table"
+    ],
+    "choices_el": [
+      "Αποθηκεύει ένα ξεχωριστό ταξινομημένο αντίγραφο των δεδομένων",
+      "Δημιουργείται αυτόματα σε κάθε στήλη",
+      "Δεν μπορεί να είναι το primary key",
+      "Τη φυσική σειρά αποθήκευσης των γραμμών στον πίνακα"
+    ],
+    "correctIndex": 3,
+    "SQL06": true
+  },
+  {
+    "number": 4,
+    "question_en": "For a composite index on (A, B, C), which query can use it efficiently (leading column rule)?",
+    "question_el": "Για ένα composite index στα (A, B, C), ποιο query μπορεί να το χρησιμοποιήσει αποδοτικά (κανόνας leading column);",
+    "choices_en": [
+      "WHERE B = 5",
+      "WHERE A = 5",
+      "WHERE C = 5",
+      "WHERE B = 5 AND C = 5"
+    ],
+    "choices_el": [
+      "WHERE B = 5",
+      "WHERE A = 5",
+      "WHERE C = 5",
+      "WHERE B = 5 AND C = 5"
+    ],
+    "correctIndex": 1,
+    "SQL06": true
+  },
+  {
+    "number": 5,
+    "question_en": "What is a covering index?",
+    "question_el": "Τι είναι ένα covering index;",
+    "choices_en": [
+      "An index that covers every column of the table",
+      "An index that contains all columns a query needs, so the base table is not read",
+      "An index that spans multiple tables",
+      "An index that is always clustered"
+    ],
+    "choices_el": [
+      "Ένα index που καλύπτει κάθε στήλη του πίνακα",
+      "Ένα index που περιέχει όλες τις στήλες που χρειάζεται ένα query, ώστε να μη διαβαστεί ο βασικός πίνακας",
+      "Ένα index που εκτείνεται σε πολλούς πίνακες",
+      "Ένα index που είναι πάντα clustered"
+    ],
+    "correctIndex": 1,
+    "SQL06": true
+  },
+  {
+    "number": 6,
+    "question_en": "What does the INCLUDE clause do in a non-clustered index?",
+    "question_el": "Τι κάνει η ρήτρα INCLUDE σε ένα non-clustered index;",
+    "choices_en": [
+      "Adds columns to the key used for sorting",
+      "Excludes columns from the index",
+      "Forces a table scan",
+      "Stores extra non-key columns at the leaf level to make the index covering"
+    ],
+    "choices_el": [
+      "Προσθέτει στήλες στο key που χρησιμοποιείται για ταξινόμηση",
+      "Εξαιρεί στήλες από το index",
+      "Επιβάλλει table scan",
+      "Αποθηκεύει επιπλέον non-key στήλες στο leaf level ώστε το index να γίνει covering"
+    ],
+    "correctIndex": 3,
+    "SQL06": true
+  },
+  {
+    "number": 7,
+    "question_en": "An Index Seek is generally:",
+    "question_el": "Ένα Index Seek γενικά είναι:",
+    "choices_en": [
+      "An efficient targeted lookup that uses the index to jump to matching rows",
+      "Slower than a table scan",
+      "The same as a full table scan",
+      "Only possible when no index exists"
+    ],
+    "choices_el": [
+      "Μια αποδοτική στοχευμένη αναζήτηση που χρησιμοποιεί το index για να πάει στις γραμμές που ταιριάζουν",
+      "Πιο αργό από ένα table scan",
+      "Το ίδιο με ένα full table scan",
+      "Δυνατό μόνο όταν δεν υπάρχει index"
+    ],
+    "correctIndex": 0,
+    "SQL06": true
+  },
+  {
+    "number": 8,
+    "question_en": "What does a Table Scan mean?",
+    "question_el": "Τι σημαίνει ένα Table Scan;",
+    "choices_en": [
+      "Only indexed rows are read",
+      "The query uses a covering index",
+      "Every row of the table is read",
+      "No rows are read"
+    ],
+    "choices_el": [
+      "Διαβάζονται μόνο οι indexed γραμμές",
+      "Το query χρησιμοποιεί covering index",
+      "Διαβάζεται κάθε γραμμή του πίνακα",
+      "Δεν διαβάζεται καμία γραμμή"
+    ],
+    "correctIndex": 2,
+    "SQL06": true
+  },
+  {
+    "number": 9,
+    "question_en": "How do indexes affect write operations (INSERT/UPDATE/DELETE)?",
+    "question_el": "Πώς επηρεάζουν τα indexes τις πράξεις write (INSERT/UPDATE/DELETE);",
+    "choices_en": [
+      "They make writes faster",
+      "They have no effect on writes",
+      "They prevent writes entirely",
+      "They add overhead because the indexes must also be maintained"
+    ],
+    "choices_el": [
+      "Κάνουν τα writes πιο γρήγορα",
+      "Δεν έχουν καμία επίδραση στα writes",
+      "Αποτρέπουν εντελώς τα writes",
+      "Προσθέτουν overhead επειδή τα indexes πρέπει επίσης να συντηρούνται"
+    ],
+    "correctIndex": 3,
+    "SQL06": true
+  },
+  {
+    "number": 10,
+    "question_en": "What does a UNIQUE index enforce?",
+    "question_el": "Τι επιβάλλει ένα UNIQUE index;",
+    "choices_en": [
+      "It allows duplicate key values",
+      "That all key values are distinct",
+      "That the index is clustered",
+      "That the column must be an integer"
+    ],
+    "choices_el": [
+      "Επιτρέπει διπλότυπες τιμές key",
+      "Ότι όλες οι τιμές του key είναι μοναδικές",
+      "Ότι το index είναι clustered",
+      "Ότι η στήλη πρέπει να είναι integer"
+    ],
+    "correctIndex": 1,
+    "SQL06": true
+  },
+  {
+    "number": 11,
+    "question_en": "When might the query optimizer choose to ignore an index and scan instead?",
+    "question_el": "Πότε μπορεί ο optimizer να επιλέξει να αγνοήσει ένα index και να κάνει scan;",
+    "choices_en": [
+      "When a very large percentage of rows match the predicate",
+      "When exactly one row matches",
+      "When the index is clustered",
+      "Never — indexes are always used"
+    ],
+    "choices_el": [
+      "Όταν ένα πολύ μεγάλο ποσοστό γραμμών ταιριάζει με το predicate",
+      "Όταν ταιριάζει ακριβώς μία γραμμή",
+      "Όταν το index είναι clustered",
+      "Ποτέ — τα indexes χρησιμοποιούνται πάντα"
+    ],
+    "correctIndex": 0,
+    "SQL06": true
+  },
+  {
+    "number": 12,
+    "question_en": "Wrapping an indexed column in a function in the WHERE clause (e.g. WHERE YEAR(date)=2024) usually:",
+    "question_el": "Το να τυλίγεις μια indexed στήλη σε function στη ρήτρα WHERE (π.χ. WHERE YEAR(date)=2024) συνήθως:",
+    "choices_en": [
+      "Speeds up the index seek",
+      "Has no effect at all",
+      "Makes the predicate non-sargable, preventing an index seek",
+      "Automatically creates a new index"
+    ],
+    "choices_el": [
+      "Επιταχύνει το index seek",
+      "Δεν έχει καμία επίδραση",
+      "Κάνει το predicate non-sargable, εμποδίζοντας το index seek",
+      "Δημιουργεί αυτόματα ένα νέο index"
+    ],
+    "correctIndex": 2,
+    "SQL06": true
+  },
+  {
+    "number": 13,
+    "question_en": "What is index fragmentation?",
+    "question_el": "Τι είναι το index fragmentation;",
+    "choices_en": [
+      "Deleting an index",
+      "The logical/physical ordering of index pages becoming out of order, hurting performance",
+      "Merging two indexes into one",
+      "Encrypting an index"
+    ],
+    "choices_el": [
+      "Η διαγραφή ενός index",
+      "Η λογική/φυσική σειρά των index pages που χαλάει, βλάπτοντας την απόδοση",
+      "Η συγχώνευση δύο indexes σε ένα",
+      "Η κρυπτογράφηση ενός index"
+    ],
+    "correctIndex": 1,
+    "SQL06": true
+  },
+  {
+    "number": 14,
+    "question_en": "How does an Index Scan differ from an Index Seek?",
+    "question_el": "Πώς διαφέρει ένα Index Scan από ένα Index Seek;",
+    "choices_en": [
+      "An Index Scan is always faster",
+      "An Index Scan does not use the index at all",
+      "An Index Scan only works on clustered indexes",
+      "An Index Scan reads the entire index rather than navigating directly to matching rows"
+    ],
+    "choices_el": [
+      "Ένα Index Scan είναι πάντα πιο γρήγορο",
+      "Ένα Index Scan δεν χρησιμοποιεί καθόλου το index",
+      "Ένα Index Scan λειτουργεί μόνο σε clustered indexes",
+      "Ένα Index Scan διαβάζει ολόκληρο το index αντί να πηγαίνει απευθείας στις γραμμές που ταιριάζουν"
+    ],
+    "correctIndex": 3,
+    "SQL06": true
+  },
+  {
+    "number": 15,
+    "question_en": "What does an execution plan show?",
+    "question_el": "Τι δείχνει ένα execution plan;",
+    "choices_en": [
+      "The physical steps the engine uses to run a query",
+      "The database backup schedule",
+      "User permissions",
+      "The DDL of the table"
+    ],
+    "choices_el": [
+      "Τα φυσικά βήματα που χρησιμοποιεί ο engine για να εκτελέσει ένα query",
+      "Το πρόγραμμα backup της βάσης",
+      "Τα δικαιώματα χρηστών",
+      "Το DDL του πίνακα"
+    ],
+    "correctIndex": 0,
+    "SQL06": true
+  }
+]

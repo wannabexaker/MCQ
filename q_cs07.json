@@ -1,0 +1,287 @@
+[
+  {
+    "number": 1,
+    "question_en": "Which construct ensures a SqlConnection is disposed and closed even if an exception occurs?",
+    "question_el": "Ποια κατασκευή εξασφαλίζει ότι ένα SqlConnection γίνεται dispose και close ακόμα κι αν συμβεί exception;",
+    "choices_en": [
+      "a lock block",
+      "a try without finally",
+      "a using statement",
+      "a goto"
+    ],
+    "choices_el": [
+      "ένα lock block",
+      "ένα try χωρίς finally",
+      "ένα using statement",
+      "ένα goto"
+    ],
+    "correctIndex": 2,
+    "CS07": true
+  },
+  {
+    "number": 2,
+    "question_en": "Which method executes a query that returns a result set (rows)?",
+    "question_el": "Ποια μέθοδος εκτελεί ένα query που επιστρέφει result set (γραμμές);",
+    "choices_en": [
+      "ExecuteReader",
+      "ExecuteNonQuery",
+      "ExecuteScalar",
+      "Open"
+    ],
+    "choices_el": [
+      "ExecuteReader",
+      "ExecuteNonQuery",
+      "ExecuteScalar",
+      "Open"
+    ],
+    "correctIndex": 0,
+    "CS07": true
+  },
+  {
+    "number": 3,
+    "question_en": "What is ExecuteNonQuery used for?",
+    "question_el": "Για τι χρησιμοποιείται το ExecuteNonQuery;",
+    "choices_en": [
+      "A SELECT returning many rows",
+      "Returning a single scalar value",
+      "Opening the connection",
+      "INSERT/UPDATE/DELETE, returning the number of affected rows"
+    ],
+    "choices_el": [
+      "Ένα SELECT που επιστρέφει πολλές γραμμές",
+      "Επιστροφή μιας μεμονωμένης scalar τιμής",
+      "Άνοιγμα της σύνδεσης",
+      "INSERT/UPDATE/DELETE, επιστρέφοντας τον αριθμό των γραμμών που επηρεάστηκαν"
+    ],
+    "correctIndex": 3,
+    "CS07": true
+  },
+  {
+    "number": 4,
+    "question_en": "What does ExecuteScalar return?",
+    "question_el": "Τι επιστρέφει το ExecuteScalar;",
+    "choices_en": [
+      "All rows",
+      "The first column of the first row (a single value)",
+      "The number of rows affected",
+      "A SqlDataReader"
+    ],
+    "choices_el": [
+      "Όλες τις γραμμές",
+      "Την πρώτη στήλη της πρώτης γραμμής (μία μεμονωμένη τιμή)",
+      "Τον αριθμό των γραμμών που επηρεάστηκαν",
+      "Ένα SqlDataReader"
+    ],
+    "correctIndex": 1,
+    "CS07": true
+  },
+  {
+    "number": 5,
+    "question_en": "How do you iterate over a SqlDataReader?",
+    "question_el": "Πώς διατρέχεις ένα SqlDataReader;",
+    "choices_en": [
+      "for (int i = 0; i < n; i++)",
+      "while (reader.Read())",
+      "foreach automatically without a loop",
+      "reader.All()"
+    ],
+    "choices_el": [
+      "for (int i = 0; i < n; i++)",
+      "while (reader.Read())",
+      "foreach αυτόματα χωρίς loop",
+      "reader.All()"
+    ],
+    "correctIndex": 1,
+    "CS07": true
+  },
+  {
+    "number": 6,
+    "question_en": "What is the main benefit of using SqlParameter / parameterized queries?",
+    "question_el": "Ποιο είναι το βασικό όφελος της χρήσης SqlParameter / parameterized queries;",
+    "choices_en": [
+      "Faster string concatenation",
+      "Automatic indexing",
+      "Bypassing the connection",
+      "Preventing SQL injection"
+    ],
+    "choices_el": [
+      "Ταχύτερη συνένωση strings",
+      "Αυτόματη δημιουργία index",
+      "Παράκαμψη της σύνδεσης",
+      "Αποτροπή SQL injection"
+    ],
+    "correctIndex": 3,
+    "CS07": true
+  },
+  {
+    "number": 7,
+    "question_en": "To call a stored procedure, which CommandType should you set?",
+    "question_el": "Για να καλέσεις ένα stored procedure, ποιο CommandType πρέπει να ορίσεις;",
+    "choices_en": [
+      "CommandType.StoredProcedure",
+      "CommandType.Text",
+      "CommandType.TableDirect",
+      "CommandType.Proc"
+    ],
+    "choices_el": [
+      "CommandType.StoredProcedure",
+      "CommandType.Text",
+      "CommandType.TableDirect",
+      "CommandType.Proc"
+    ],
+    "correctIndex": 0,
+    "CS07": true
+  },
+  {
+    "number": 8,
+    "question_en": "When must you open the connection in ADO.NET?",
+    "question_el": "Πότε πρέπει να ανοίξεις τη σύνδεση στο ADO.NET;",
+    "choices_en": [
+      "It is always open by default",
+      "Only after ExecuteReader",
+      "Before executing a command, via Open()",
+      "Never — ADO.NET opens it lazily for you"
+    ],
+    "choices_el": [
+      "Είναι πάντα ανοιχτή εξ ορισμού",
+      "Μόνο μετά το ExecuteReader",
+      "Πριν την εκτέλεση εντολής, μέσω Open()",
+      "Ποτέ — το ADO.NET την ανοίγει lazily για σένα"
+    ],
+    "correctIndex": 2,
+    "CS07": true
+  },
+  {
+    "number": 9,
+    "question_en": "How do you detect a database NULL read from a SqlDataReader?",
+    "question_el": "Πώς εντοπίζεις ένα database NULL που διαβάστηκε από ένα SqlDataReader;",
+    "choices_en": [
+      "value == null",
+      "value == 0",
+      "value == \"\"",
+      "Compare against DBNull.Value (or use reader.IsDBNull)"
+    ],
+    "choices_el": [
+      "value == null",
+      "value == 0",
+      "value == \"\"",
+      "Σύγκριση με το DBNull.Value (ή χρήση reader.IsDBNull)"
+    ],
+    "correctIndex": 3,
+    "CS07": true
+  },
+  {
+    "number": 10,
+    "question_en": "How does connection pooling help performance?",
+    "question_el": "Πώς βοηθά το connection pooling την απόδοση;",
+    "choices_en": [
+      "It encrypts the connection",
+      "It reuses existing physical connections instead of opening a new one each time",
+      "It compresses the result set",
+      "It prevents all connections"
+    ],
+    "choices_el": [
+      "Κρυπτογραφεί τη σύνδεση",
+      "Επαναχρησιμοποιεί υπάρχουσες φυσικές συνδέσεις αντί να ανοίγει νέα κάθε φορά",
+      "Συμπιέζει το result set",
+      "Αποτρέπει όλες τις συνδέσεις"
+    ],
+    "correctIndex": 1,
+    "CS07": true
+  },
+  {
+    "number": 11,
+    "question_en": "Which interface lets a using statement auto-dispose a connection?",
+    "question_el": "Ποιο interface επιτρέπει σε ένα using statement να κάνει αυτόματο dispose μιας σύνδεσης;",
+    "choices_en": [
+      "IDisposable",
+      "IEnumerable",
+      "IComparable",
+      "ICloneable"
+    ],
+    "choices_el": [
+      "IDisposable",
+      "IEnumerable",
+      "IComparable",
+      "ICloneable"
+    ],
+    "correctIndex": 0,
+    "CS07": true
+  },
+  {
+    "number": 12,
+    "question_en": "A connection string typically contains:",
+    "question_el": "Ένα connection string τυπικά περιέχει:",
+    "choices_en": [
+      "Only the username",
+      "The SQL query text",
+      "The server, database, and authentication details",
+      "The result set"
+    ],
+    "choices_el": [
+      "Μόνο το username",
+      "Το κείμενο του SQL query",
+      "Τον server, τη βάση δεδομένων και στοιχεία authentication",
+      "Το result set"
+    ],
+    "correctIndex": 2,
+    "CS07": true
+  },
+  {
+    "number": 13,
+    "question_en": "Reading a column by name versus by ordinal index — which is more robust to column reordering?",
+    "question_el": "Ανάγνωση στήλης κατά όνομα έναντι κατά ordinal index — ποιο είναι πιο ανθεκτικό στην αναδιάταξη στηλών;",
+    "choices_en": [
+      "By ordinal index",
+      "By column name",
+      "Neither works",
+      "Only index works"
+    ],
+    "choices_el": [
+      "Κατά ordinal index",
+      "Κατά όνομα στήλης",
+      "Κανένα δεν λειτουργεί",
+      "Μόνο το index λειτουργεί"
+    ],
+    "correctIndex": 1,
+    "CS07": true
+  },
+  {
+    "number": 14,
+    "question_en": "For a query that returns a single COUNT(*) value, the most appropriate method is:",
+    "question_el": "Για ένα query που επιστρέφει μία μόνο τιμή COUNT(*), η καταλληλότερη μέθοδος είναι:",
+    "choices_en": [
+      "ExecuteReader",
+      "ExecuteNonQuery",
+      "Open",
+      "ExecuteScalar"
+    ],
+    "choices_el": [
+      "ExecuteReader",
+      "ExecuteNonQuery",
+      "Open",
+      "ExecuteScalar"
+    ],
+    "correctIndex": 3,
+    "CS07": true
+  },
+  {
+    "number": 15,
+    "question_en": "What does reader.Read() return?",
+    "question_el": "Τι επιστρέφει το reader.Read();",
+    "choices_en": [
+      "true if there is another row, advancing the reader to it",
+      "The number of columns",
+      "The full result set",
+      "A SqlConnection"
+    ],
+    "choices_el": [
+      "true αν υπάρχει άλλη γραμμή, προχωρώντας τον reader σε αυτήν",
+      "Τον αριθμό των στηλών",
+      "Ολόκληρο το result set",
+      "Ένα SqlConnection"
+    ],
+    "correctIndex": 0,
+    "CS07": true
+  }
+]

@@ -1,5 +1,27 @@
 {
-  "files": [],
-  "generatedAtUtc": "2026-05-20T00:00:00.000Z",
-  "generatedAtLocal": "2026-05-20"
+  "files": [
+    "q_cs01.json",
+    "q_cs02.json",
+    "q_cs03.json",
+    "q_cs04.json",
+    "q_cs05.json",
+    "q_cs06.json",
+    "q_cs07.json",
+    "q_cs08.json",
+    "q_cybersecurity.json",
+    "q_demo.json",
+    "q_it_general.json",
+    "q_networking.json",
+    "q_RosenCh1-4.json",
+    "q_RosenCh614.json",
+    "q_sql01.json",
+    "q_sql02.json",
+    "q_sql03.json",
+    "q_sql04.json",
+    "q_sql05.json",
+    "q_sql06.json",
+    "q_sql07.json"
+  ],
+  "generatedAtUtc": "2026-07-10T00:00:00.000Z",
+  "generatedAtLocal": "2026-07-10"
 }
