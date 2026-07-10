@@ -2611,6 +2611,25 @@ const BUNDLED_SETS = [
   { file: "q_it_general.json",    icon: "💻",  title: "IT General",                    tag: "itGeneral",     desc: "Algorithms, databases, Linux, Git, web fundamentals, OOP." },
   { file: "q_demo.json",          icon: "📦",  title: "Demo (general)",                tag: "demo",          desc: "12 mixed general-knowledge questions — quick smoke test." },
 
+  // ── SQL sets ──
+  { file: "q_sql01.json", icon: "🗄️", title: "SQL — Basics",                  tag: "SQL", desc: "SELECT, WHERE, DISTINCT, NULLs, JOINs, ORDER BY, aggregates, GROUP BY/HAVING, DML." },
+  { file: "q_sql02.json", icon: "🗄️", title: "SQL — JOINs & Subqueries",      tag: "SQL", desc: "INNER/LEFT/RIGHT/FULL/CROSS/SELF JOIN, EXISTS vs IN, NOT IN NULL trap, derived tables." },
+  { file: "q_sql03.json", icon: "🗄️", title: "SQL — GROUP BY & Aggregates",   tag: "SQL", desc: "COUNT/SUM/AVG/MIN/MAX, DISTINCT, HAVING vs WHERE, logical processing order." },
+  { file: "q_sql04.json", icon: "🗄️", title: "SQL — String & Date Functions", tag: "SQL", desc: "LEN, SUBSTRING, CHARINDEX, LIKE, DATEADD/DATEDIFF, CAST/CONVERT, ISNULL/COALESCE." },
+  { file: "q_sql05.json", icon: "🗄️", title: "SQL — Transactions & ACID",     tag: "SQL", desc: "ACID, COMMIT/ROLLBACK, savepoints, isolation levels, dirty/phantom reads, deadlocks." },
+  { file: "q_sql06.json", icon: "🗄️", title: "SQL — Indexes & Performance",   tag: "SQL", desc: "Clustered vs non-clustered, covering/INCLUDE, seek vs scan, fragmentation, plans." },
+  { file: "q_sql07.json", icon: "🗄️", title: "SQL — CTEs & Window Functions", tag: "SQL", desc: "CTEs, recursion, ROW_NUMBER/RANK, PARTITION BY, LAG/LEAD, running totals." },
+
+  // ── C# sets ──
+  { file: "q_cs01.json",  icon: "#️⃣", title: "C# — Types & Control Flow",     tag: "C#",  desc: "Value vs reference, var, const/readonly, ref/out, overloading, loops, switch." },
+  { file: "q_cs02.json",  icon: "#️⃣", title: "C# — OOP",                      tag: "C#",  desc: "class vs struct, interfaces, virtual/override, sealed, access modifiers, polymorphism." },
+  { file: "q_cs03.json",  icon: "#️⃣", title: "C# — Null Handling",            tag: "C#",  desc: "?? , ??=, ?. , nullable types, HasValue, IsNullOrWhiteSpace, is not null." },
+  { file: "q_cs04.json",  icon: "#️⃣", title: "C# — Collections",              tag: "C#",  desc: "List, Dictionary, HashSet, Queue, Stack — when to use which, TryGetValue." },
+  { file: "q_cs05.json",  icon: "#️⃣", title: "C# — LINQ & Lambdas",           tag: "C#",  desc: "Where/Select/First/Any/All/GroupBy/OrderBy, deferred execution, method vs query." },
+  { file: "q_cs06.json",  icon: "#️⃣", title: "C# — Strings & StringBuilder",  tag: "C#",  desc: "Immutability, StringBuilder, Split/Join, Trim, interpolation, comparisons." },
+  { file: "q_cs07.json",  icon: "#️⃣", title: "C# — ADO.NET",                  tag: "C#",  desc: "SqlConnection/Command/Reader, ExecuteReader/NonQuery/Scalar, parameters, DBNull." },
+  { file: "q_cs08.json",  icon: "#️⃣", title: "C# — Exceptions & async/await", tag: "C#",  desc: "try/catch/finally, throw vs throw ex, async/await, Task, deadlocks, CancellationToken." },
+
   // ── Hidden sets: not shown on the welcome grid by default,
   //    only surface via the search box (match on tag or title). ──
   { file: "q_RosenCh1-4.json",    icon: "📘",  title: "Rosen — Discrete Math (Ch 1-4)", tag: "RosenCh1-4",    desc: "Logic, sets, functions, induction — 40 Q from Rosen Ch 1-4.", hidden: true },
