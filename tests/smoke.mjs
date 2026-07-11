@@ -46,21 +46,27 @@ const profile = mkdtempSync(join(tmpdir(), "mcq-smoke-"));
 const proc = spawn(chrome, [
   "--headless=new", `--remote-debugging-port=${CDP_PORT}`,
   "--no-first-run", "--no-default-browser-check", "--disable-gpu", "--no-sandbox",
+  "--disable-dev-shm-usage", // CI containers have a tiny /dev/shm; without this Chrome crashes on startup
   `--user-data-dir=${profile}`, "about:blank",
-], { stdio: "ignore" });
+], { stdio: ["ignore", "ignore", "pipe"] });
+
+let chromeStderr = "";
+proc.stderr.on("data", (d) => { chromeStderr += d; });
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function getWsUrl() {
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 60; i++) {
+    if (proc.exitCode !== null)
+      throw new Error(`Chrome exited (${proc.exitCode}): ${chromeStderr.slice(-400)}`);
     try {
       const targets = await fetch(`http://127.0.0.1:${CDP_PORT}/json`).then((r) => r.json());
       const page = targets.find((t) => t.type === "page");
       if (page) return page.webSocketDebuggerUrl;
     } catch {}
-    await sleep(300);
+    await sleep(500);
   }
-  throw new Error("CDP not reachable");
+  throw new Error("CDP not reachable. Chrome stderr: " + chromeStderr.slice(-400));
 }
 
 let msgId = 0;
