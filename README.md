@@ -34,14 +34,14 @@ Loads question banks from files matching `q_*.json`, validates them against a fi
 
 ## Architecture
 
-Single-page web app. No framework. All logic in `script.js`; state lives in browser `localStorage`. Boot reads `sources_index.json` for bundled files, merges any user-imported sets from `localStorage`, validates and deduplicates the merged set, then renders quiz cards into `<main id="quiz">`. The exact same web assets are wrapped by Capacitor into an Android WebView for the APK target.
+Single-page web app. No framework. App code lives in `js/` as ordered classic scripts (split by concern, shared top-level scope); state lives in browser `localStorage`. Boot reads `sources_index.json` for bundled files, merges any user-imported sets from `localStorage`, validates and deduplicates the merged set, then renders quiz cards into `<main id="quiz">`. The exact same web assets are wrapped by Capacitor into an Android WebView for the APK target.
 
 ### Components
 
 | File | Role |
 |---|---|
 | `index.html` | DOM skeleton, modals, mobile menu, PWA + iOS meta |
-| `script.js` | All quiz logic, validation, dedup, localStorage I/O, rendering |
+| `js/*.js` | Quiz logic split by concern (core, data, quiz, import UI, settings, ...) - loaded in order, shared scope |
 | `style.css` | Theming via CSS variables, layout, modals, welcome grid |
 | `sw.js` | Service worker — cache-first app shell, network-first `q_*.json` |
 | `manifest.json` | PWA manifest (name, icons, theme, standalone display) |
@@ -157,7 +157,7 @@ File name must match `q_*.json`. Root must be a JSON array. See `questions_templ
 ```
 mcq/
 ├── index.html               — DOM, modals, PWA meta
-├── script.js                — quiz logic (all of it)
+├── js/                      — app code, 11 ordered files split by concern
 ├── style.css                — theming, layout
 ├── sw.js                    — service worker
 ├── manifest.json            — PWA manifest

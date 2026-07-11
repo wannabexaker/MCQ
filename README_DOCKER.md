@@ -30,4 +30,4 @@ ports:
 Replace `8080` with the port you want, e.g. `3000:80`.
 
 ## Notes
-- This app is a static site. Nginx serves `index.html`, `script.js`, `style.css`, `images/`, and `q_*.json`.
+- This app is a static site. Nginx serves `index.html`, `js/`, `style.css`, `images/`, and `q_*.json`.

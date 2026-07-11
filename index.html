@@ -591,7 +591,20 @@ py -3 -m http.server 8000
     <!-- =======================================================
        SCRIPTS
   ======================================================= -->
-    <script src="script.js"></script>
+    <!-- App code, split by concern. Ordered classic scripts: they share the
+         top-level scope exactly like the former single script.js, so load
+         order matters and must match this list. -->
+    <script src="js/01-core.js"></script>
+    <script src="js/02-proctor.js"></script>
+    <script src="js/03-data.js"></script>
+    <script src="js/04-source-filter.js"></script>
+    <script src="js/05-tools.js"></script>
+    <script src="js/06-import-ui.js"></script>
+    <script src="js/07-quiz.js"></script>
+    <script src="js/08-boot-theme.js"></script>
+    <script src="js/09-modes-timer.js"></script>
+    <script src="js/10-controls.js"></script>
+    <script src="js/11-settings.js"></script>
     <script>
       if ("serviceWorker" in navigator && location.protocol !== "file:") {
         window.addEventListener("load", () => {

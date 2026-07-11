@@ -12,7 +12,6 @@ const DEST = path.join(ROOT, "www");
 
 const FILES = [
   "index.html",
-  "script.js",
   "style.css",
   "manifest.json",
   "sw.js",
@@ -20,7 +19,7 @@ const FILES = [
   "questions_template.json",
 ];
 
-const DIRS = ["images"];
+const DIRS = ["images", "js"];
 
 function rmrf(target) {
   if (!fs.existsSync(target)) return;

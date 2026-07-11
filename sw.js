@@ -1,12 +1,22 @@
 // Bump CACHE_VERSION every time the app shell (script.js/style.css/index.html)
 // changes — the activate handler purges old caches, and clients.claim() makes
 // the new SW take control of already-open tabs immediately.
-const CACHE_VERSION = "mcq-v8";
+const CACHE_VERSION = "mcq-v9";
 
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./script.js",
+  "./js/01-core.js",
+  "./js/02-proctor.js",
+  "./js/03-data.js",
+  "./js/04-source-filter.js",
+  "./js/05-tools.js",
+  "./js/06-import-ui.js",
+  "./js/07-quiz.js",
+  "./js/08-boot-theme.js",
+  "./js/09-modes-timer.js",
+  "./js/10-controls.js",
+  "./js/11-settings.js",
   "./style.css",
   "./manifest.json",
   "./images/favicon.png",
@@ -19,7 +29,7 @@ const APP_SHELL = [
 // network-first strategy: try the network, fall back to cache only if offline.
 // This is what makes the welcome search / mobile import fixes show up on
 // mobile devices that have the PWA already cached.
-const NETWORK_FIRST_SHELL = /\/(index\.html|script\.js|style\.css|manifest\.json|sw\.js)$/i;
+const NETWORK_FIRST_SHELL = /\/(index\.html|style\.css|manifest\.json|sw\.js)$|\/js\/[^/]+\.js$/i;
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
