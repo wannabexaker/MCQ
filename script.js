@@ -1,20 +1,44 @@
-﻿let progress = { answered: {}, correct: 0, total: 0 };
+﻿// Guarded storage: localStorage can throw (Safari private mode, disabled
+// cookies, quota). Falls back to an in-memory store so the app keeps working
+// for the session instead of crashing.
+const appStorage = (() => {
+  let native = null;
+  try {
+    native = window["localStorage"];
+    const probe = "__mcq_probe__";
+    native.setItem(probe, "1");
+    native.removeItem(probe);
+  } catch { native = null; }
+  const mem = new Map();
+  return {
+    getItem(k)    { try { if (native) return native.getItem(k); } catch {} return mem.has(k) ? mem.get(k) : null; },
+    setItem(k, v) { try { if (native) { native.setItem(k, v); return; } } catch {} mem.set(k, String(v)); },
+    removeItem(k) { try { if (native) { native.removeItem(k); return; } } catch {} mem.delete(k); },
+    keys()        { try { if (native) return Object.keys(native); } catch {} return [...mem.keys()]; },
+  };
+})();
+
+let progress = { answered: {}, correct: 0, total: 0 };
 let shuffleMode = false;
 let shuffleAnswersMode = false;
 let examMode = false;
 let godlikeMode = false;
 
 function loadProgress() {
-  const saved = localStorage.getItem("quiz-progress");
+  const saved = appStorage.getItem("quiz-progress");
   if (saved) progress = JSON.parse(saved);
 }
 function saveProgress() {
-  localStorage.setItem("quiz-progress", JSON.stringify(progress));
+  appStorage.setItem("quiz-progress", JSON.stringify(progress));
 }
 
 let ANSWER_KEY = Object.freeze({});
 let CURRENT_DATA = [];
-let currentLang = "en";
+const LANG_STORAGE_KEY = "quiz-lang-v1";
+let currentLang = (() => {
+  try { return appStorage.getItem(LANG_STORAGE_KEY) === "el" ? "el" : "en"; }
+  catch { return "en"; }
+})();
 let ORIGINAL_ANSWERS = Object.freeze({});
 let SOURCE_DEFINITIONS = [];
 let ACTIVE_SOURCE_IDS = new Set();
@@ -52,7 +76,7 @@ let __activityLogCache = null;
 function _readActivityLog() {
   if (__activityLogCache) return __activityLogCache;
   try {
-    const raw = localStorage.getItem(ACTIVITY_LOG_STORAGE_KEY);
+    const raw = appStorage.getItem(ACTIVITY_LOG_STORAGE_KEY);
     __activityLogCache = raw ? JSON.parse(raw) : [];
     if (!Array.isArray(__activityLogCache)) __activityLogCache = [];
   } catch {
@@ -63,12 +87,12 @@ function _readActivityLog() {
 function _writeActivityLog() {
   if (!__activityLogCache) return;
   try {
-    localStorage.setItem(ACTIVITY_LOG_STORAGE_KEY, JSON.stringify(__activityLogCache));
+    appStorage.setItem(ACTIVITY_LOG_STORAGE_KEY, JSON.stringify(__activityLogCache));
   } catch (e) {
     // Storage quota exceeded → drop oldest 25% and retry once.
     __activityLogCache.splice(0, Math.floor(__activityLogCache.length * 0.25));
     try {
-      localStorage.setItem(ACTIVITY_LOG_STORAGE_KEY, JSON.stringify(__activityLogCache));
+      appStorage.setItem(ACTIVITY_LOG_STORAGE_KEY, JSON.stringify(__activityLogCache));
     } catch {}
   }
 }
@@ -90,7 +114,7 @@ function logActivity(type, detail) {
 function getActivityLog() { return _readActivityLog().slice(); }
 function clearActivityLog() {
   __activityLogCache = [];
-  try { localStorage.removeItem(ACTIVITY_LOG_STORAGE_KEY); } catch {}
+  try { appStorage.removeItem(ACTIVITY_LOG_STORAGE_KEY); } catch {}
   renderActivityLogIfOpen();
 }
 
@@ -104,7 +128,7 @@ let __audioPrefs = null;
 function _readAudioPrefs() {
   if (__audioPrefs) return __audioPrefs;
   try {
-    const raw = localStorage.getItem(AUDIO_PREFS_STORAGE_KEY);
+    const raw = appStorage.getItem(AUDIO_PREFS_STORAGE_KEY);
     __audioPrefs = raw ? JSON.parse(raw) : { enabled: false, volume: 0.6 };
   } catch {
     __audioPrefs = { enabled: false, volume: 0.6 };
@@ -112,7 +136,7 @@ function _readAudioPrefs() {
   return __audioPrefs;
 }
 function _writeAudioPrefs() {
-  try { localStorage.setItem(AUDIO_PREFS_STORAGE_KEY, JSON.stringify(__audioPrefs)); } catch {}
+  try { appStorage.setItem(AUDIO_PREFS_STORAGE_KEY, JSON.stringify(__audioPrefs)); } catch {}
 }
 function setAudioEnabled(on) {
   _readAudioPrefs();
@@ -267,10 +291,10 @@ const MCQ_STORAGE_KEYS = [
 function wipeAllMcqStorage() {
   // Be defensive: remove known keys explicitly, then sweep anything that
   // starts with our prefixes in case future versions added more.
-  MCQ_STORAGE_KEYS.forEach((k) => { try { localStorage.removeItem(k); } catch {} });
+  MCQ_STORAGE_KEYS.forEach((k) => { try { appStorage.removeItem(k); } catch {} });
   try {
-    for (let i = localStorage.length - 1; i >= 0; i--) {
-      const k = localStorage.key(i);
+    for (let i = appStorage.length - 1; i >= 0; i--) {
+      const k = appStorage.key(i);
       if (!k) continue;
       if (
         k.startsWith("quiz-") ||
@@ -283,7 +307,7 @@ function wipeAllMcqStorage() {
         k.endsWith("-position-v1") ||
         k.endsWith("-mode-v1")
       ) {
-        try { localStorage.removeItem(k); } catch {}
+        try { appStorage.removeItem(k); } catch {}
       }
     }
   } catch {}
@@ -335,7 +359,7 @@ function getStatsKey(question) {
 
 function loadQuestionStats() {
   try {
-    const raw = localStorage.getItem(QUESTION_STATS_STORAGE_KEY);
+    const raw = appStorage.getItem(QUESTION_STATS_STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     return parsed && typeof parsed === "object" ? parsed : {};
   } catch {
@@ -345,7 +369,7 @@ function loadQuestionStats() {
 
 function saveQuestionStats(stats) {
   try {
-    localStorage.setItem(QUESTION_STATS_STORAGE_KEY, JSON.stringify(stats || {}));
+    appStorage.setItem(QUESTION_STATS_STORAGE_KEY, JSON.stringify(stats || {}));
   } catch (e) {
     console.warn("Failed to save question stats:", e);
   }
@@ -366,7 +390,7 @@ function recordQuestionAttempt(question, isCorrect) {
 
 function loadTestHistory() {
   try {
-    const raw = localStorage.getItem(TEST_HISTORY_STORAGE_KEY);
+    const raw = appStorage.getItem(TEST_HISTORY_STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : [];
     return Array.isArray(parsed) ? parsed : [];
   } catch {
@@ -376,7 +400,7 @@ function loadTestHistory() {
 
 function saveTestHistory(history) {
   try {
-    localStorage.setItem(TEST_HISTORY_STORAGE_KEY, JSON.stringify(history || []));
+    appStorage.setItem(TEST_HISTORY_STORAGE_KEY, JSON.stringify(history || []));
   } catch (e) {
     console.warn("Failed to save test history:", e);
   }
@@ -390,7 +414,7 @@ function addHistoryEntry(entry) {
 }
 
 function getPracticeMode() {
-  const raw = String(localStorage.getItem(PRACTICE_MODE_STORAGE_KEY) || "").toLowerCase();
+  const raw = String(appStorage.getItem(PRACTICE_MODE_STORAGE_KEY) || "").toLowerCase();
   if (raw === "wrong_once") return "wrong_once";
   if (raw === "wrong_repeat") return "wrong_repeat";
   return "off";
@@ -398,8 +422,8 @@ function getPracticeMode() {
 
 function setPracticeMode(mode) {
   const normalized = mode === "wrong_once" || mode === "wrong_repeat" ? mode : "off";
-  const prev = (typeof localStorage !== "undefined" && localStorage.getItem(PRACTICE_MODE_STORAGE_KEY)) || "off";
-  localStorage.setItem(PRACTICE_MODE_STORAGE_KEY, normalized);
+  const prev = (typeof localStorage !== "undefined" && appStorage.getItem(PRACTICE_MODE_STORAGE_KEY)) || "off";
+  appStorage.setItem(PRACTICE_MODE_STORAGE_KEY, normalized);
   if (prev !== normalized) {
     logActivity("mode", { name: "practice", state: normalized });
   }
@@ -407,7 +431,7 @@ function setPracticeMode(mode) {
 
 function loadImportedSourcesFromStorage() {
   try {
-    const raw = localStorage.getItem(IMPORTED_SOURCES_STORAGE_KEY);
+    const raw = appStorage.getItem(IMPORTED_SOURCES_STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
@@ -419,7 +443,7 @@ function loadImportedSourcesFromStorage() {
 
 function saveImportedSourcesToStorage(sources) {
   try {
-    localStorage.setItem(
+    appStorage.setItem(
       IMPORTED_SOURCES_STORAGE_KEY,
       JSON.stringify(Array.isArray(sources) ? sources : [])
     );
@@ -2990,7 +3014,7 @@ function onSelectChoice(q, choiceEl, card) {
     modal.style.display = "flex";
     document.getElementById("closeGodlike").onclick = () => {
       modal.style.display = "none";
-      localStorage.removeItem("quiz-progress");
+      appStorage.removeItem("quiz-progress");
       progress = { answered: {}, correct: 0, total: 0 };
       applySourceFilter();
       updateScoreUI();
@@ -3170,8 +3194,48 @@ function cycleTheme() {
 
 document.getElementById("toggleTheme").addEventListener("click", cycleTheme);
 document.getElementById("m-toggleTheme")?.addEventListener("click", cycleTheme);
+
+// ── Question language (EN/ΕΛ). UI stays English; question/choice text switches. ──
+function refreshLangButtons() {
+  const toGreek = currentLang === "en";
+  const label = toGreek ? "EL" : "EN";
+  const title = toGreek ? "Εμφάνιση ερωτήσεων στα Ελληνικά" : "Show questions in English";
+  const desk = document.getElementById("toggleLang");
+  const mob = document.getElementById("m-toggleLang");
+  if (desk) { desk.textContent = label; desk.title = title; desk.setAttribute("aria-label", title); }
+  if (mob)  { mob.textContent = `🌐 ${label}`; mob.title = title; mob.setAttribute("aria-label", title); }
+}
+
+function toggleLanguage() {
+  currentLang = currentLang === "en" ? "el" : "en";
+  try { appStorage.setItem(LANG_STORAGE_KEY, currentLang); } catch {}
+  refreshLangButtons();
+  applySourceFilter();
+  logActivity("mode", { name: "lang", state: currentLang });
+}
+
+document.getElementById("toggleLang")?.addEventListener("click", toggleLanguage);
+document.getElementById("m-toggleLang")?.addEventListener("click", toggleLanguage);
+refreshLangButtons();
 setThemeButtonsLabel(getCurrentTheme());
 updateTitleForTheme(getCurrentTheme());
+
+// Escape hatch from the Gay Edition theme: the "No" button runs away on
+// purpose, but pressing Escape 3 times within 1.5s always returns to dark.
+let gayEscapeTimes = [];
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape" || getCurrentTheme() !== "gay") return;
+  const now = Date.now();
+  gayEscapeTimes = gayEscapeTimes.filter((t) => now - t < 1500);
+  gayEscapeTimes.push(now);
+  if (gayEscapeTimes.length >= 3) {
+    gayEscapeTimes = [];
+    closeGayThemeModal();
+    const celebrate = document.getElementById("gayCelebrateModal");
+    if (celebrate) celebrate.style.display = "none";
+    applyTheme("dark");
+  }
+});
 
 const gayThemeModal = document.getElementById("gayThemeModal");
 const gayCelebrateModal = document.getElementById("gayCelebrateModal");
@@ -3335,7 +3399,7 @@ gayNoPersistClose?.addEventListener("click", () => {
 
 function resetQuizProgress() {
   const prev = { total: progress.total, correct: progress.correct };
-  localStorage.removeItem("quiz-progress");
+  appStorage.removeItem("quiz-progress");
   progress = { answered: {}, correct: 0, total: 0 };
   logActivity("reset", { kind: "progress", prev });
 }
@@ -3348,8 +3412,6 @@ function setExamModeState(enabled) {
   examBtn?.classList.toggle("active", examMode);
   examBtnMobile?.classList.toggle("active", examMode);
   document.body.classList.toggle("exam-on", examMode);
-  const revealBtn = document.getElementById("revealAll");
-  revealBtn?.classList.toggle("disabled", examMode);
   if (prev !== enabled) {
     logActivity("mode", { name: "exam", state: enabled ? "on" : "off" });
   }
@@ -3358,6 +3420,7 @@ function setExamModeState(enabled) {
 function setGodModeState(enabled) {
   const prev = godlikeMode;
   godlikeMode = enabled;
+  document.body.classList.toggle("god-on", godlikeMode);
   if (prev !== enabled) {
     logActivity("mode", { name: "god", state: enabled ? "on" : "off" });
   }
@@ -4014,7 +4077,7 @@ function resetWidgetsPositionToDefault() {
 }
 
 function getStoredQaFontSizePx() {
-  const raw = localStorage.getItem(QA_FONT_STORAGE_KEY);
+  const raw = appStorage.getItem(QA_FONT_STORAGE_KEY);
   const n = Number(raw);
   if (!Number.isFinite(n)) return 16;
   return clamp(Math.round(n), 12, 22);
@@ -4025,7 +4088,7 @@ function applyQaFontSizePx(px) {
   document.documentElement.style.setProperty("--qa-font-size", `${val}px`);
   if (settingsQaFontSize) settingsQaFontSize.value = String(val);
   if (settingsQaFontSizeValue) settingsQaFontSizeValue.textContent = `${val}px`;
-  localStorage.setItem(QA_FONT_STORAGE_KEY, String(val));
+  appStorage.setItem(QA_FONT_STORAGE_KEY, String(val));
 }
 
 function initQaFontSizeSetting() {
@@ -4040,7 +4103,7 @@ function initQaFontSizeSetting() {
 
 function getStoredControlsLayout() {
   // Default is horizontal unless user explicitly chose vertical.
-  const raw = String(localStorage.getItem(CONTROLS_LAYOUT_STORAGE_KEY) || "").toLowerCase();
+  const raw = String(appStorage.getItem(CONTROLS_LAYOUT_STORAGE_KEY) || "").toLowerCase();
   return raw === "vertical" ? "vertical" : "horizontal";
 }
 
@@ -4052,7 +4115,7 @@ function applyControlsLayout(layout) {
   }
   settingsControlsHorizontal?.classList.toggle("active", mode === "horizontal");
   settingsControlsVertical?.classList.toggle("active", mode === "vertical");
-  localStorage.setItem(CONTROLS_LAYOUT_STORAGE_KEY, mode);
+  appStorage.setItem(CONTROLS_LAYOUT_STORAGE_KEY, mode);
 }
 
 function initControlsLayoutSetting() {
@@ -4067,7 +4130,7 @@ settingsTabTest?.addEventListener("click", () => setSettingsTab("test"));
 settingsTabDocker?.addEventListener("click", () => setSettingsTab("docker"));
 
 function getStoredSettingsTab() {
-  const raw = String(localStorage.getItem(SETTINGS_TAB_STORAGE_KEY) || "").toLowerCase();
+  const raw = String(appStorage.getItem(SETTINGS_TAB_STORAGE_KEY) || "").toLowerCase();
   if (raw === "hud") return "hud";
   if (raw === "test") return "test";
   if (raw === "docker") return "docker";
@@ -4076,7 +4139,7 @@ function getStoredSettingsTab() {
 
 function setSettingsTab(tab) {
   const t = tab === "hud" || tab === "test" || tab === "docker" ? tab : "general";
-  localStorage.setItem(SETTINGS_TAB_STORAGE_KEY, t);
+  appStorage.setItem(SETTINGS_TAB_STORAGE_KEY, t);
 
   const tabs = [
     { tab: "general", btn: settingsTabGeneral, panel: settingsPanelGeneral },

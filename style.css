@@ -782,6 +782,19 @@ body.gay .choice:hover {
   border-color: var(--accent);
 }
 
+/* Exam / God mode: reveal actions are blocked in JS — reflect that visually
+   so the buttons don't look clickable. */
+body.exam-on .card .btn-toggle,
+body.god-on .card .btn-toggle {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.controls button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 .choice .letter {
   font-weight: 700;
   min-width: 22px;

@@ -30,6 +30,17 @@
     <!-- Windows -->
     <meta name="msapplication-TileColor" content="#0d1117" />
     <meta name="msapplication-TileImage" content="images/favicon.png" />
+
+    <!-- Social cards (Open Graph / Twitter) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="MCQ Trainer" />
+    <meta property="og:description" content="Multiple-choice question trainer. Pick a built-in set (SQL, C#, networking, cybersecurity) or import your own — works offline as a PWA." />
+    <meta property="og:url" content="https://wannabexaker.github.io/mcq-trainer/" />
+    <meta property="og:image" content="https://wannabexaker.github.io/mcq-trainer/images/icon-512.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="MCQ Trainer" />
+    <meta name="twitter:description" content="Multiple-choice question trainer. Pick a built-in set or import your own — works offline as a PWA." />
+    <meta name="twitter:image" content="https://wannabexaker.github.io/mcq-trainer/images/icon-512.png" />
   </head>
 
   <body class="dark">
@@ -70,7 +81,9 @@
 
         <button id="toggleWidgets" title="Show or hide side widgets." aria-label="Toggle widgets">🧩</button>
 
-        <div class="lang"></div>
+        <div class="lang">
+          <button id="toggleLang" title="Εμφάνιση ερωτήσεων στα Ελληνικά" aria-label="Show questions in Greek">EL</button>
+        </div>
       </div>
         <button id="controlsToggle" class="controls-toggle" title="Collapse controls" aria-label="Collapse controls">◀</button>
       </div>
@@ -121,7 +134,7 @@
   ======================================================= -->
     <footer class="footer">
       <p>
-        UI in English. Question sources are auto-loaded from files that match <code>q*.json</code>.
+        UI in English. Pick a question set from the landing page, or import your own <code>q_*.json</code>.
       </p>
       <div id="dataWarnings" class="data-warnings" hidden></div>
     </footer>
@@ -149,6 +162,8 @@
       <button id="m-toggleGodlike" title="God Mode: OFF" aria-label="God Mode: OFF">🧠 God Mode</button>
 
       <button id="m-toggleTheme" title="Switch to Light Mode" aria-label="Switch to Light Mode">💡 Theme</button>
+
+      <button id="m-toggleLang" title="Εμφάνιση ερωτήσεων στα Ελληνικά" aria-label="Show questions in Greek">🌐 EL</button>
 
       <button id="m-toggleWidgets" title="Show or hide side widgets." aria-label="Toggle widgets">🧩 Widgets</button>
 
