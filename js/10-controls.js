@@ -272,6 +272,9 @@ function makeDraggable(el) {
     el.style.left = left + "px";
     el.style.top = top + "px";
     el.style.position = "fixed";
+    // Dragging positions via left/top; kill any stylesheet transform so the
+    // element lands exactly where the pointer put it and stays there.
+    el.style.transform = "none";
   });
 }
 

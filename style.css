@@ -1255,9 +1255,11 @@ button.disabled {
    ======================================================= */
 .cat-widget {
   position: fixed;
-  top: 60%;
+  /* Anchor the TOP edge (no translateY centering): fact text length changes
+     the widget height, and a centered anchor made the whole box crawl
+     upward/downward on every new fact. */
+  top: calc(60% - 75px);
   left: 20px;
-  transform: translateY(-50%);
   background: var(--card-bg);
   color: var(--text);
   border: 1px solid var(--border);
