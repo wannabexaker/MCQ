@@ -37,9 +37,11 @@ const ASSESS_I18N = {
     submit: "✓ Submit",
     exitToHub: "✕ Save & exit",
     noRightAnswers: "There are no right or wrong answers — answer honestly.",
-    submitBlanksConfirm: "{n} unanswered question(s) will be scored as incorrect. Submit anyway?",
+    submitBlanksConfirm: "Unanswered questions: {n}. They will be scored as incorrect. Submit anyway?",
     sd3Incomplete: "Please answer all statements — {n} remaining.",
     retakeConfirm: "Start over? Your previous result stays until you submit the new run.",
+    confirmSubmit: "Submit",
+    cancel: "Cancel",
     you: "You",
     likelyRange: "Likely range",
     rawScore: "Raw score",
@@ -99,15 +101,17 @@ const ASSESS_I18N = {
     submit: "✓ Υποβολή",
     exitToHub: "✕ Αποθήκευση & έξοδος",
     noRightAnswers: "Δεν υπάρχουν σωστές ή λάθος απαντήσεις — απάντησε ειλικρινά.",
-    submitBlanksConfirm: "{n} αναπάντητες ερωτήσεις θα μετρηθούν ως λάθος. Υποβολή;",
-    sd3Incomplete: "Απάντησε όλες τις δηλώσεις — απομένουν {n}.",
+    submitBlanksConfirm: "Αναπάντητες ερωτήσεις: {n}. Θα μετρηθούν ως λάθος. Υποβολή;",
+    sd3Incomplete: "Απάντησε όλες τις δηλώσεις — αναπάντητες: {n}.",
     retakeConfirm: "Νέα προσπάθεια; Το προηγούμενο αποτέλεσμα μένει μέχρι να υποβάλεις τη νέα.",
+    confirmSubmit: "Υποβολή",
+    cancel: "Άκυρο",
     you: "Εσύ",
     likelyRange: "Πιθανό εύρος",
     rawScore: "Σκορ",
     whatItMeans: "Τι σημαίνει αυτό",
     domainBreakdown: "Ανάλυση ανά τομέα",
-    domainCaption: "Μπάρα = εκτιμώμενο εκατοστημόριο ανά τομέα (στρογγυλοποιημένο στο κοντινότερο 5).",
+    domainCaption: "Μπάρα = εκτιμώμενο εκατοστημόριο ανά τομέα (στρογγυλοποιημένο στο πλησιέστερο 5).",
     areaBreakdown: "Ανάλυση ανά περιοχή",
     traitBreakdown: "Ανάλυση ανά χαρακτηριστικό",
     archetypeLabel: "Το αρχέτυπό σου",
@@ -660,7 +664,9 @@ function submitAssessment() {
   if (unanswered.length > 0) {
     openModeResetConfirm(
       assessT("submitBlanksConfirm").replace("{n}", String(unanswered.length)),
-      doSubmit
+      doSubmit,
+      null,
+      { confirmLabel: assessT("confirmSubmit"), cancelLabel: assessT("cancel") }
     );
   } else {
     doSubmit();
@@ -692,12 +698,17 @@ function assessGoHub() {
 }
 
 function assessRetake(testId) {
-  openModeResetConfirm(assessT("retakeConfirm"), () => {
-    deleteAssessSession(testId);
-    createAssessSession(testId);
-    ASSESS_VIEW = { mode: "running", testId, index: 0, shared: null };
-    renderAssessmentView();
-  });
+  openModeResetConfirm(
+    assessT("retakeConfirm"),
+    () => {
+      deleteAssessSession(testId);
+      createAssessSession(testId);
+      ASSESS_VIEW = { mode: "running", testId, index: 0, shared: null };
+      renderAssessmentView();
+    },
+    null,
+    { confirmLabel: assessT("retake"), cancelLabel: assessT("cancel") }
+  );
 }
 
 function assessTakeSharedTest(testId) {

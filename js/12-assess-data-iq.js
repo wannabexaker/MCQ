@@ -474,7 +474,7 @@ const IQ_RESULT_TEXTS = {
       head_en: "Average zone (lower half)",
       head_el: "Μέση ζώνη (κάτω μισό)",
       body_en: "You scored inside the average zone, where roughly half of all test-takers land. Within that zone the domain profile is what matters: most people have one clearly stronger channel — check yours below and lean on it when you learn new material.",
-      body_el: "Σκόραρες μέσα στη μέση ζώνη, εκεί όπου πέφτει περίπου ο μισός πληθυσμός. Μέσα σε αυτή τη ζώνη σημασία έχει το προφίλ ανά τομέα: οι περισσότεροι έχουν ένα σαφώς δυνατότερο «κανάλι» — δες το δικό σου παρακάτω και πάτησε πάνω του όταν μαθαίνεις νέο υλικό.",
+      body_el: "Σκόραρες μέσα στη μέση ζώνη, εκεί όπου πέφτει περίπου ο μισός πληθυσμός. Μέσα σε αυτή τη ζώνη σημασία έχει το προφίλ ανά τομέα: οι περισσότεροι έχουν ένα σαφώς δυνατότερο «κανάλι» — δες το δικό σου παρακάτω και στηρίξου πάνω του όταν μαθαίνεις νέο υλικό.",
     },
     {
       min: 100, max: 114,

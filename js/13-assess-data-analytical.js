@@ -26,7 +26,7 @@ const ANALYTICAL_ITEMS = [
   {
     id: "an-pt-1", area: "patterns",
     text_en: "Which letter comes next? A, C, E, G, …",
-    text_el: "Ποιο γράμμα ακολουθεί; A, C, E, G, …",
+    text_el: "Ποιο γράμμα ακολουθεί (λατινικό αλφάβητο); A, C, E, G, …",
     choices_en: ["H", "J", "I", "K"],
     choices_el: ["H", "J", "I", "K"],
     correctIndex: 2,
@@ -110,7 +110,7 @@ const ANALYTICAL_ITEMS = [
   {
     id: "an-pt-3", area: "patterns",
     text_en: "Which letter comes next? Z, X, U, Q, …",
-    text_el: "Ποιο γράμμα ακολουθεί; Z, X, U, Q, …",
+    text_el: "Ποιο γράμμα ακολουθεί (λατινικό αλφάβητο); Z, X, U, Q, …",
     choices_en: ["M", "L", "N", "K"],
     choices_el: ["M", "L", "N", "K"],
     correctIndex: 1,
@@ -126,7 +126,7 @@ const ANALYTICAL_ITEMS = [
   {
     id: "an-cr-3", area: "critical",
     text_en: "After a city installed more streetlights, crime dropped. Which additional fact would MOST weaken the conclusion that the lights caused the drop?",
-    text_el: "Αφού μια πόλη τοποθέτησε περισσότερα φώτα στους δρόμους, η εγκληματικότητα έπεσε. Ποιο επιπλέον στοιχείο θα ΑΠΟΔΥΝΑΜΩΝΕ περισσότερο το συμπέρασμα ότι τα φώτα προκάλεσαν την πτώση;",
+    text_el: "Μετά την τοποθέτηση περισσότερων φώτων στους δρόμους μιας πόλης, η εγκληματικότητα έπεσε. Ποιο επιπλέον στοιχείο θα ΑΠΟΔΥΝΑΜΩΝΕ περισσότερο το συμπέρασμα ότι τα φώτα προκάλεσαν την πτώση;",
     choices_en: ["The lights were LED", "Residents liked the new lights", "Most of the drop happened at night", "Crime fell equally in similar cities that added no lights"],
     choices_el: ["Τα φώτα ήταν LED", "Στους κατοίκους άρεσαν τα νέα φώτα", "Η μεγαλύτερη πτώση έγινε τη νύχτα", "Η εγκληματικότητα έπεσε εξίσου σε παρόμοιες πόλεις χωρίς νέα φώτα"],
     correctIndex: 3,
@@ -152,7 +152,7 @@ const ANALYTICAL_ITEMS = [
   {
     id: "an-pt-4", area: "patterns",
     text_en: "What comes next? 2A, 4C, 8E, 16G, …",
-    text_el: "Τι ακολουθεί; 2A, 4C, 8E, 16G, …",
+    text_el: "Τι ακολουθεί (λατινικό αλφάβητο); 2A, 4C, 8E, 16G, …",
     choices_en: ["32I", "24I", "32H", "20K"],
     choices_el: ["32I", "24I", "32H", "20K"],
     correctIndex: 0,
@@ -239,7 +239,7 @@ const ANALYTICAL_BANDS = [
     min: 5, max: 8,
     name_en: "Impulsive Problem-Solver", name_el: "Παρορμητικός Λύτης Προβλημάτων",
     desc_en: "Quick to commit to the first plausible answer — right when the problem is simple, caught out by traps.",
-    desc_el: "Δεσμεύεσαι γρήγορα στην πρώτη εύλογη απάντηση — σωστά όταν το πρόβλημα είναι απλό, εκτεθειμένος στις παγίδες.",
+    desc_el: "Δεσμεύεσαι γρήγορα στην πρώτη εύλογη απάντηση — πετυχαίνει στα απλά προβλήματα, εκτίθεται στις παγίδες.",
     meaning_en: "You likely solved the direct items but lost points on questions engineered to punish the 'obvious' answer (the €1.10 type). The fix is cheap: whenever an answer feels instant, spend ten seconds trying to disprove it before locking it in.",
     meaning_el: "Πιθανότατα έλυσες τις άμεσες ερωτήσεις αλλά έχασες πόντους σε όσες είναι φτιαγμένες να τιμωρούν την «προφανή» απάντηση (τύπου 1,10 €). Η διόρθωση είναι φθηνή: όποτε μια απάντηση έρχεται ακαριαία, ξόδεψε δέκα δευτερόλεπτα προσπαθώντας να τη διαψεύσεις πριν την κλειδώσεις.",
   },
