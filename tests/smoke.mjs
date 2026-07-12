@@ -133,6 +133,8 @@ try {
       return v.length; })()
   `);
   check("tag search filters to SQL sets", sqlVis === 7, `got ${sqlVis}`);
+  const entryCard = await evalJs(`!!document.getElementById('assessmentsEntry')`);
+  check("assessments entry card on landing", entryCard === true);
 
   console.log("quiz flow:");
   await evalJs(`
@@ -183,6 +185,97 @@ try {
   const persisted = await evalJs(`localStorage.getItem('quiz-lang-v1')`);
   check("language persisted", persisted === "el", `got ${persisted}`);
   await evalJs(`document.getElementById('toggleLang').click(); true`);
+
+  console.log("assessments:");
+  await evalJs(`document.getElementById('openAssessments').click(); true`);
+  await waitFor(`!!document.querySelector('.assess-hub')`);
+  const testCards = await evalJs(`document.querySelectorAll('.assess-test-card').length`);
+  check("hub shows 3 test cards", testCards === 3, `got ${testCards}`);
+  const modeOn = await evalJs(`document.body.classList.contains('assessment-on')`);
+  check("assessment mode class set", modeOn === true);
+  const controlsHidden = await evalJs(`
+    getComputedStyle(document.getElementById('toggleExam')).display === 'none' &&
+    getComputedStyle(document.getElementById('scoreBox')).display === 'none'
+  `);
+  check("quiz-only controls hidden in assessment mode", controlsHidden === true);
+
+  // Full analytical run: first choice on every item, Next/Submit through all 25.
+  await evalJs(`document.querySelector('.assess-test-primary[data-test="analytical"]').click(); true`);
+  await waitFor(`!!document.querySelector('.assess-runner')`);
+  await evalJs(`
+    (async () => {
+      for (let i = 0; i < 25; i++) {
+        document.querySelector('.assess-choice')?.click();
+        await new Promise(r => setTimeout(r, 30));
+        document.getElementById('assessNavNext').click();
+        await new Promise(r => setTimeout(r, 30));
+      }
+      return true;
+    })()
+  `);
+  await waitFor(`!!document.querySelector('.assess-results')`);
+  const bandName = await evalJs(`(document.querySelector('.assess-hero-main')?.textContent || '').trim()`);
+  check("analytical results show a band name", bandName.length > 0, `got "${bandName}"`);
+  const hasDisclaimer = await evalJs(`!!document.querySelector('.assess-disclaimer')`);
+  check("results include the disclaimer", hasDisclaimer === true);
+  const storedRaw = await evalJs(`
+    (() => { try {
+      const s = JSON.parse(localStorage.getItem('assessments-results-v1'));
+      return s && s.analytical ? s.analytical.raw : null;
+    } catch { return null; } })()
+  `);
+  check("analytical result persisted", Number.isInteger(storedRaw) && storedRaw >= 0 && storedRaw <= 25, `got ${storedRaw}`);
+
+  // Resume: start IQ, answer 2, exit to hub, re-enter → index restored.
+  await evalJs(`document.querySelector('.assess-results [data-assess-action="hub"]').click(); true`);
+  await waitFor(`!!document.querySelector('.assess-hub')`);
+  await evalJs(`document.querySelector('.assess-test-primary[data-test="iq"]').click(); true`);
+  await waitFor(`!!document.querySelector('.assess-runner')`);
+  await evalJs(`
+    (async () => {
+      for (let i = 0; i < 2; i++) {
+        document.querySelector('.assess-choice, .assess-svg-choice, .assess-likert-btn')?.click();
+        await new Promise(r => setTimeout(r, 30));
+        document.getElementById('assessNavNext').click();
+        await new Promise(r => setTimeout(r, 30));
+      }
+      return true;
+    })()
+  `);
+  await evalJs(`document.getElementById('assessRunnerExit').click(); true`);
+  await waitFor(`!!document.querySelector('.assess-hub')`);
+  const inProgress = await evalJs(`!!document.querySelector('.assess-chip-progress')`);
+  check("hub shows IQ in progress", inProgress === true);
+  await evalJs(`document.querySelector('.assess-test-primary[data-test="iq"]').click(); true`);
+  await waitFor(`!!document.querySelector('.assess-runner')`);
+  const resumeText = await evalJs(`(document.querySelector('.assess-progress-text')?.textContent || '')`);
+  check("IQ resumes at question 3", resumeText.includes("3 / 20"), `got "${resumeText}"`);
+
+  // Exit restores the untouched quiz.
+  await evalJs(`document.getElementById('assessRunnerExit').click(); true`);
+  await waitFor(`!!document.querySelector('.assess-hub')`);
+  await evalJs(`document.getElementById('assessBackToQuiz').click(); true`);
+  await waitFor(`document.querySelectorAll('#quiz .card').length >= 12`);
+  const quizRestored = await evalJs(`
+    !document.body.classList.contains('assessment-on') &&
+    getComputedStyle(document.getElementById('scoreBox')).display !== 'none'
+  `);
+  check("exit restores quiz and controls", quizRestored === true);
+
+  // Shared-result boot: ?ar=1a17 renders read-only results, no storage write.
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?ar=1a17` });
+  await waitFor(`!!document.querySelector('.assess-results')`);
+  const sharedBand = await evalJs(`(document.querySelector('.assess-hero-main')?.textContent || '')`);
+  check("shared link renders Strategic Thinker", sharedBand.includes("Strategic"), `got "${sharedBand}"`);
+  const sharedNote = await evalJs(`!!document.querySelector('.assess-shared-note')`);
+  check("shared view is marked as shared", sharedNote === true);
+  const rawAfterShare = await evalJs(`
+    (() => { try {
+      const s = JSON.parse(localStorage.getItem('assessments-results-v1'));
+      return s && s.analytical ? s.analytical.raw : null;
+    } catch { return null; } })()
+  `);
+  check("shared view does not overwrite stored results", rawAfterShare === storedRaw, `got ${rawAfterShare} vs ${storedRaw}`);
 
   console.log("hygiene:");
   const benign = /favicon|catfact|Failed to load resource/i;

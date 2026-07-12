@@ -94,6 +94,13 @@ function updateSourceFilterButtonUI() {
 }
 
 function applySourceFilter() {
+  // Assessments mode owns the #quiz surface while active. Every render path
+  // (language toggle, resets, source changes) funnels through here, so this
+  // single guard keeps both worlds from clobbering each other.
+  if (typeof isAssessmentActive === "function" && isAssessmentActive()) {
+    renderAssessmentView();
+    return;
+  }
   updateSourceFilterButtonUI();
   renderQuiz(getSourceFilteredItems());
   updateScoreUI();

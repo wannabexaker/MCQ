@@ -64,6 +64,8 @@ const TEST_HISTORY_STORAGE_KEY = "test-history-v1";
 const PRACTICE_MODE_STORAGE_KEY = "practice-mode-v1";
 const ACTIVITY_LOG_STORAGE_KEY = "activity-log-v1";
 const AUDIO_PREFS_STORAGE_KEY = "audio-prefs-v1";
+const ASSESS_SESSIONS_STORAGE_KEY = "assessments-sessions-v1";
+const ASSESS_RESULTS_STORAGE_KEY = "assessments-results-v1";
 const ACTIVITY_LOG_MAX = 5000;
 
 /* ═══════════════════════════════════════════════════════════════

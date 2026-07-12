@@ -23,6 +23,17 @@ Opens on a landing page with pickable question sets, validates every bank agains
 - **EL/EN question language toggle** (topbar + mobile menu, persisted) — UI stays English, question and choice text switches
 - Per-question optional `image`, `image_answers`, and `code` fields rendered in the card
 
+### Assessments (special section)
+- **Three self-tests** behind the 🎯 topbar button and a landing-page card — a parallel track to the quiz engine with a sequential one-question-at-a-time flow, progress bar, skip & return (clickable dot strip), autosave/resume, and rich explained results:
+  - **IQ Test** — 20 original ICAR-style items (4 domains × 5 difficulties; matrix/spatial items use inline-SVG stimuli and visual answer tiles) → IQ estimate band on a bell curve, per-domain percentiles, strengths/weaknesses with concrete guidance
+  - **Analytical Thinking Test** — 25 logic items (deduction, patterns, syllogisms, critical thinking, trap puzzles) → 7 named bands (Chaotic Thinker → Mastermind Intelligence) on a band ladder, plus per-area notes
+  - **Dark Triad (SD-3 style)** — 27 Likert statements (no right answers) → narcissism / Machiavellianism / psychopathy radar, High/Low per trait, one of 8 archetypes with fictional examples and a cognitive-tendency note
+- Fully bilingual EN/ΕΛ — items, UI labels and result texts all switch with the existing language toggle
+- **Shareable results** via a compact `?ar=` URL payload (aggregates only, never per-item answers); opening a share link renders a read-only result and writes nothing to storage
+- Honest scoring: disclosed model assumptions, clamped estimates, a limitations box on every result screen, a persistent "not a clinical assessment" disclaimer, and ICAR-format + SD3 (Jones & Paulhus, 2014) attributions
+- Results and in-progress sessions persist locally (`assessments-*-v1` keys) and are wiped by Settings → Clear all data
+- Assessment data lives in `js/12–14` as JS constants — **not** `q_*.json` — so the quiz import/validation pipeline is completely untouched
+
 ### Quiz engine
 - Landing page with tag search; each set is a card with Load / Download actions
 - Schema validation on import with per-question error reporting
@@ -47,20 +58,21 @@ Opens on a landing page with pickable question sets, validates every bank agains
 ### Platform
 - Three themes (`dark`, `light`, `gay`), CSS-variable based — the third one is an easter egg with a fleeing "No" button (Esc ×3 always returns to dark)
 - **Guarded storage**: all `localStorage` access goes through a wrapper with an in-memory fallback, so private browsing modes and quota errors never crash the app
-- Service worker (cache `mcq-v9`): network-first app shell and question files, cache-first images; installable PWA
+- Service worker (cache `mcq-v10`): network-first app shell and question files, cache-first images; installable PWA
 - Open Graph + Twitter card meta for link previews
 - Optimized assets: ~140 KB of images on page load (512px icon loads only on PWA install)
 - Docker image (nginx) for production hosting; one-command local server scripts for Windows
 - Capacitor 6 Android wrapper that bundles assets into the APK; no network needed at runtime
 
 ### Quality
-- **CI on every push/PR** (GitHub Actions): syntax check, question-bank validation, headless E2E smoke test
+- **CI on every push/PR** (GitHub Actions): syntax check, question-bank validation, assessment-data validation, headless E2E smoke test
 - `tests/validate-questions.mjs` — structural validation of all `q_*.json` (schema, `correctIndex` range, EL/EN choice parity, sequential numbering, single category tag)
-- `tests/smoke.mjs` — self-contained E2E: serves the app GitHub-Pages-style (no directory listing) and drives headless Chrome over CDP with real input events; covers landing, search, set loading, scoring, keyboard access, exam mode, language toggle, and console-error hygiene
+- `tests/validate-assessments.mjs` — assessment data + scoring validation (item counts per domain/trait, SVG safety, bilingual completeness, reverse-key structure, band coverage, archetype table, scoring sanity, share-codec round-trips)
+- `tests/smoke.mjs` — self-contained E2E: serves the app GitHub-Pages-style (no directory listing) and drives headless Chrome over CDP with real input events; covers landing, search, set loading, scoring, keyboard access, exam mode, language toggle, the assessments section (hub, full run, resume, exit, shared links), and console-error hygiene
 
 ## Architecture
 
-Single-page web app. No framework, no build step. App code lives in `js/` as **11 ordered classic scripts split by concern** — they share the top-level scope exactly like the former single `script.js` (their concatenation is byte-equivalent to it), so load order matters and is fixed in `index.html`. State lives in browser `localStorage` behind a guarded wrapper. Boot shows the landing page; picking a card imports that set, after which validation, dedup, and rendering into `<main id="quiz">` run. The exact same web assets are wrapped by Capacitor into an Android WebView for the APK target.
+Single-page web app. No framework, no build step. App code lives in `js/` as **18 ordered classic scripts split by concern** (the original 11 quiz files plus 7 assessment files, `js/12–18`) — they share one top-level scope, so load order matters and is fixed in `index.html`. The assessments section is a parallel track: a single guard at the top of `applySourceFilter()` re-routes rendering while assessment mode is active, and the quiz state is never touched. State lives in browser `localStorage` behind a guarded wrapper. Boot shows the landing page; picking a card imports that set, after which validation, dedup, and rendering into `<main id="quiz">` run. The exact same web assets are wrapped by Capacitor into an Android WebView for the APK target.
 
 ### Components
 
@@ -78,14 +90,21 @@ Single-page web app. No framework, no build step. App code lives in `js/` as **1
 | `js/09-modes-timer.js` | Exam/God mode state, confirm modal, timer |
 | `js/10-controls.js` | Topbar buttons, widgets, drag & drop, shuffle answers |
 | `js/11-settings.js` | Settings modal (tabs), docs modal, activity viewer, mobile menu |
+| `js/12-assess-data-iq.js` | IQ test data — 20 bilingual items incl. inline-SVG matrix/spatial stimuli, domain & band texts |
+| `js/13-assess-data-analytical.js` | Analytical test data — 25 bilingual items, 7 score bands, per-area notes |
+| `js/14-assess-data-sd3.js` | SD-3-style data — 27 Likert items, trait texts, 8 archetypes |
+| `js/15-assess-scoring.js` | Pure scoring: IQ estimate/percentiles, band mapping, SD-3 reverse-keying, share codec |
+| `js/16-assess-charts.js` | SVG chart builders: bell curve, radar, domain bars, band ladder |
+| `js/17-assess-results.js` | Rich results screens per test (hero, charts, explanations, limitations, actions) |
+| `js/18-assess-engine.js` | Assessments state machine: hub, sequential runner, sessions, mode toggle, share boot |
 | `style.css` | Theming via CSS variables, layout, modals, welcome grid, focus styles |
 | `sw.js` | Service worker — network-first shell + questions, cache-first images |
 | `manifest.json` | PWA manifest (192px + 512px icons, theme, standalone display) |
 | `sources_index.json` | **Kept empty on purpose** — populating it auto-loads every set and skips the landing page; bundled sets are registered in `BUNDLED_SETS` (`js/07-quiz.js`) instead |
 | `questions_template.json` | Documented template for new question files |
 | `q_*.json` (21 files) | Question banks — see Content above |
-| `tests/` | Question validator + headless E2E smoke suite |
-| `.github/workflows/ci.yml` | CI: syntax check + both test suites |
+| `tests/` | Question + assessment validators, headless E2E smoke suite |
+| `.github/workflows/ci.yml` | CI: syntax check + all three test suites |
 | `scripts/copy-www.js` | Copies web assets (incl. `js/`) into `www/` for Capacitor sync |
 | `capacitor.config.json` | Capacitor app id, web dir, Android options |
 | `nginx.conf` | Caching + SW-safe headers for Docker deploy |
@@ -161,11 +180,12 @@ npm run build:apk:release # sync + assembleRelease (requires signing config)
 ## Testing
 
 ```bash
-node tests/validate-questions.mjs   # structural validation of all q_*.json
-node tests/smoke.mjs                # headless E2E (needs Chrome; CHROME_PATH overrides location)
+node tests/validate-questions.mjs     # structural validation of all q_*.json
+node tests/validate-assessments.mjs   # assessment data / scoring / share-codec validation (js/12–15)
+node tests/smoke.mjs                  # headless E2E (needs Chrome; CHROME_PATH overrides location)
 ```
 
-Both run in CI on every push and pull request, plus a syntax check of every `js/*.js` file. The smoke test starts its own static server (no directory listing, mimicking GitHub Pages) and drives a real headless Chrome through the DevTools Protocol with genuine input events.
+All three run in CI on every push and pull request, plus a syntax check of every `js/*.js` file. The smoke test starts its own static server (no directory listing, mimicking GitHub Pages) and drives a real headless Chrome through the DevTools Protocol with genuine input events.
 
 ## Question File Format
 
@@ -205,9 +225,9 @@ File name must match `q_*.json`. Root must be a JSON array. See `questions_templ
 ```
 mcq/
 ├── index.html               — DOM, modals, PWA/social meta, ordered script tags
-├── js/                      — app code, 11 ordered files split by concern
+├── js/                      — app code, 18 ordered files (01–11 quiz, 12–18 assessments)
 ├── style.css                — theming, layout, focus styles
-├── sw.js                    — service worker (cache mcq-v9)
+├── sw.js                    — service worker (cache mcq-v10)
 ├── manifest.json            — PWA manifest
 ├── sources_index.json       — intentionally empty (see Components)
 ├── questions_template.json  — annotated question template
@@ -220,10 +240,11 @@ mcq/
 ├── q_RosenCh*.json          — 2 hidden Discrete Math sets
 ├── images/                  — favicon (192px), icon-512, side banner, game-over splash
 ├── tests/
-│   ├── validate-questions.mjs — schema/parity validation of all banks
-│   └── smoke.mjs              — headless E2E via Chrome DevTools Protocol
+│   ├── validate-questions.mjs   — schema/parity validation of all banks
+│   ├── validate-assessments.mjs — assessment data/scoring/codec validation
+│   └── smoke.mjs                — headless E2E via Chrome DevTools Protocol
 ├── .github/workflows/
-│   ├── ci.yml               — syntax check + validator + smoke on push/PR
+│   ├── ci.yml               — syntax check + validators + smoke on push/PR
 │   └── build-apk.yml        — Android APK build
 ├── scripts/
 │   └── copy-www.js          — copies web assets into www/ for Capacitor

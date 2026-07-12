@@ -114,6 +114,8 @@ function renderQuiz(items) {
         </div>
         <p class="welcome-search-empty" id="welcomeSearchEmpty" hidden>No matching tags. Try clearing the search.</p>
 
+        ${typeof assessmentsEntryCardHtml === "function" ? assessmentsEntryCardHtml() : ""}
+
         <div class="welcome-custom">
           <div class="welcome-custom-title">Use your own questions</div>
           <div class="welcome-actions">
@@ -127,9 +129,11 @@ function renderQuiz(items) {
       empty.innerHTML = `
         <h2 class="welcome-title">No questions to show</h2>
         <p class="welcome-text">Your current Sources / Categories filter is hiding everything. Open <strong>📚 Sources</strong> and enable at least one source or category.</p>
+        ${typeof assessmentsEntryCardHtml === "function" ? assessmentsEntryCardHtml() : ""}
       `;
     }
     host.appendChild(empty);
+    if (typeof wireAssessmentsEntry === "function") wireAssessmentsEntry(empty);
     empty.querySelector("#welcomeImport")?.addEventListener("click", () => {
       openImportPromptModal();
     });

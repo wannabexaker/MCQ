@@ -24,6 +24,9 @@ jobs:
       - name: Validate question banks
         run: node tests/validate-questions.mjs
 
+      - name: Validate assessment data
+        run: node tests/validate-assessments.mjs
+
       - name: E2E smoke test (headless Chrome)
         run: node tests/smoke.mjs
         env:

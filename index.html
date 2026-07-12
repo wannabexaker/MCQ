@@ -67,6 +67,8 @@
 
         <button id="filterCycle" title="Sources" aria-label="Sources">📚</button>
 
+        <button id="openAssessments" title="Assessments — IQ, analytical thinking and personality tests." aria-label="Assessments">🎯</button>
+
         <button id="shuffleBtn" title="Shuffle question order. Click again to restore default order." aria-label="Shuffle questions">🎲Q</button>
 
         <button id="shuffle-answers-btn" title="Shuffle answer choices. Click again to restore default choices." aria-label="Shuffle answers">🎲A</button>
@@ -150,6 +152,8 @@
       </button>
       
       <button id="m-filterCycle" title="Sources" aria-label="Sources">📚 Sources</button>
+
+      <button id="m-openAssessments" title="Assessments — IQ, analytical thinking and personality tests." aria-label="Assessments">🎯 Assessments</button>
 
       <button id="m-shuffleBtn" title="Shuffle question order." aria-label="Shuffle questions">🎲Q Shuffle Questions</button>
 
@@ -605,6 +609,13 @@ py -3 -m http.server 8000
     <script src="js/09-modes-timer.js"></script>
     <script src="js/10-controls.js"></script>
     <script src="js/11-settings.js"></script>
+    <script src="js/12-assess-data-iq.js"></script>
+    <script src="js/13-assess-data-analytical.js"></script>
+    <script src="js/14-assess-data-sd3.js"></script>
+    <script src="js/15-assess-scoring.js"></script>
+    <script src="js/16-assess-charts.js"></script>
+    <script src="js/17-assess-results.js"></script>
+    <script src="js/18-assess-engine.js"></script>
     <script>
       if ("serviceWorker" in navigator && location.protocol !== "file:") {
         window.addEventListener("load", () => {
