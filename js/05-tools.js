@@ -533,6 +533,7 @@ function collectBundleFileList() {
     "js/16-assess-charts.js",
     "js/17-assess-results.js",
     "js/18-assess-engine.js",
+    "js/19-assess-export.js",
     "style.css",
     "sources_index.json",
     "questions_template.json",

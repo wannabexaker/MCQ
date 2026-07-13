@@ -12,15 +12,20 @@ function assessChipHtml(flag) {
 }
 
 function assessActionsHtml(opts) {
+  const saveButtons =
+    `<button type="button" data-assess-action="png">🖼️ ${escapeHTML(assessT("saveImage"))}</button>
+     <button type="button" data-assess-action="pdf">📄 ${escapeHTML(assessT("savePdf"))}</button>`;
   if (opts.shared) {
     return `<div class="assess-actions">
       <button type="button" data-assess-action="take">🎯 ${escapeHTML(assessT("takeThisTest"))}</button>
+      ${saveButtons}
       <button type="button" data-assess-action="hub">${escapeHTML(assessT("exploreAssessments"))}</button>
     </div>`;
   }
   return `<div class="assess-actions">
     <button type="button" data-assess-action="retake">🔁 ${escapeHTML(assessT("retake"))}</button>
     <button type="button" data-assess-action="share">🔗 ${escapeHTML(assessT("share"))}</button>
+    ${saveButtons}
     <button type="button" data-assess-action="hub">← ${escapeHTML(assessT("backToHub"))}</button>
   </div>`;
 }
@@ -48,6 +53,8 @@ function wireResultActions(container, testId, opts) {
       const action = btn.getAttribute("data-assess-action");
       if (action === "retake") assessRetake(testId);
       else if (action === "share") assessShare(testId, btn);
+      else if (action === "png") assessExportImage(testId);
+      else if (action === "pdf") assessExportPdf(testId);
       else if (action === "hub") assessGoHub();
       else if (action === "take") assessTakeSharedTest(testId);
     });

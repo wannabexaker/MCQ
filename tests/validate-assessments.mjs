@@ -14,6 +14,7 @@ const FILES = [
   "js/13-assess-data-analytical.js",
   "js/14-assess-data-sd3.js",
   "js/15-assess-scoring.js",
+  "js/19-assess-export.js", // top-level is pure (consts + function declarations)
 ];
 
 let errors = 0;
@@ -29,7 +30,7 @@ try {
        SD3_TEST_META, SD3_ITEMS, SD3_LIKERT, SD3_TRAIT_INFO, SD3_ARCHETYPES, SD3_RESULT_NOTES,
        SD3_THRESHOLDS, scoreIq, computeIqFromDomains, iqBandText,
        scoreAnalytical, analyticalBandIndex, analyticalAreaFlag,
-       scoreSd3, computeSd3FromSums, encodeShare, decodeShare })`;
+       scoreSd3, computeSd3FromSums, encodeShare, decodeShare, buildMinimalPdf })`;
   G = vm.runInNewContext(src, {}, { filename: "assess-combined.js" });
 } catch (e) {
   console.error(`FAIL: could not evaluate assessment scripts — ${e.message}`);
@@ -302,8 +303,32 @@ function checkUniqueIds(where, items) {
   }
 }
 
+// ── PDF builder structural check ────────────────────────────────────
+{
+  const W = "pdf";
+  const fakeJpeg = new Uint8Array([0xff, 0xd8, 0xff, 0xe0, 1, 2, 3, 4, 0xff, 0xd9]);
+  const bytes = G.buildMinimalPdf(fakeJpeg, 100, 80);
+  const text = Buffer.from(bytes).toString("latin1");
+  if (!text.startsWith("%PDF-1.4")) err(W, "missing %PDF-1.4 header");
+  if (!text.trimEnd().endsWith("%%EOF")) err(W, "missing %%EOF trailer");
+  const sx = /startxref\n(\d+)\n%%EOF$/.exec(text.trimEnd());
+  if (!sx) err(W, "missing startxref");
+  else if (text.slice(Number(sx[1]), Number(sx[1]) + 4) !== "xref") err(W, "startxref does not point at the xref table");
+  const xrefEntries = /xref\n0 6\n0000000000 65535 f \n((?:\d{10} 00000 n \n){5})/.exec(text);
+  if (!xrefEntries) err(W, "malformed xref table");
+  else {
+    xrefEntries[1].trimEnd().split("\n").forEach((line, i) => {
+      const off = Number(line.slice(0, 10));
+      const expect = `${i + 1} 0 obj`;
+      if (text.slice(off, off + expect.length) !== expect)
+        err(W, `xref offset for object ${i + 1} does not point at "${expect}"`);
+    });
+  }
+  if (!text.includes("/Filter /DCTDecode")) err(W, "image XObject is not DCTDecode");
+}
+
 if (errors) {
   console.error(`\nFAIL: ${errors} error(s) in assessment data/scoring`);
   process.exit(1);
 }
-console.log("OK: assessments valid (20 IQ · 25 analytical · 27 SD-3, scoring + codec sane)");
+console.log("OK: assessments valid (20 IQ · 25 analytical · 27 SD-3, scoring + codec + pdf sane)");

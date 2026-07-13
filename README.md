@@ -30,6 +30,7 @@ Opens on a landing page with pickable question sets, validates every bank agains
   - **Dark Triad (SD-3 style)** — 27 Likert statements (no right answers) → narcissism / Machiavellianism / psychopathy radar, High/Low per trait, one of 8 archetypes with fictional examples and a cognitive-tendency note
 - Fully bilingual EN/ΕΛ — items, UI labels and result texts all switch with the existing language toggle
 - **Shareable results** via a compact `?ar=` URL payload (aggregates only, never per-item answers); opening a share link renders a read-only result and writes nothing to storage
+- **Save any result as a designed PNG image or a real one-page PDF** — generated fully client-side from a themed SVG card (canvas rasterization + a hand-built minimal PDF writer, zero dependencies)
 - Honest scoring: disclosed model assumptions, clamped estimates, a limitations box on every result screen, a persistent "not a clinical assessment" disclaimer, and ICAR-format + SD3 (Jones & Paulhus, 2014) attributions
 - Results and in-progress sessions persist locally (`assessments-*-v1` keys) and are wiped by Settings → Clear all data
 - Assessment data lives in `js/12–14` as JS constants — **not** `q_*.json` — so the quiz import/validation pipeline is completely untouched
@@ -58,7 +59,7 @@ Opens on a landing page with pickable question sets, validates every bank agains
 ### Platform
 - Three themes (`dark`, `light`, `gay`), CSS-variable based — the third one is an easter egg with a fleeing "No" button (Esc ×3 always returns to dark)
 - **Guarded storage**: all `localStorage` access goes through a wrapper with an in-memory fallback, so private browsing modes and quota errors never crash the app
-- Service worker (cache `mcq-v10`): network-first app shell and question files, cache-first images; installable PWA
+- Service worker (cache `mcq-v11`): network-first app shell and question files, cache-first images; installable PWA
 - Open Graph + Twitter card meta for link previews
 - Optimized assets: ~140 KB of images on page load (512px icon loads only on PWA install)
 - Docker image (nginx) for production hosting; one-command local server scripts for Windows
@@ -72,7 +73,7 @@ Opens on a landing page with pickable question sets, validates every bank agains
 
 ## Architecture
 
-Single-page web app. No framework, no build step. App code lives in `js/` as **18 ordered classic scripts split by concern** (the original 11 quiz files plus 7 assessment files, `js/12–18`) — they share one top-level scope, so load order matters and is fixed in `index.html`. The assessments section is a parallel track: a single guard at the top of `applySourceFilter()` re-routes rendering while assessment mode is active, and the quiz state is never touched. State lives in browser `localStorage` behind a guarded wrapper. Boot shows the landing page; picking a card imports that set, after which validation, dedup, and rendering into `<main id="quiz">` run. The exact same web assets are wrapped by Capacitor into an Android WebView for the APK target.
+Single-page web app. No framework, no build step. App code lives in `js/` as **19 ordered classic scripts split by concern** (the original 11 quiz files plus 8 assessment files, `js/12–19`) — they share one top-level scope, so load order matters and is fixed in `index.html`. The assessments section is a parallel track: a single guard at the top of `applySourceFilter()` re-routes rendering while assessment mode is active, and the quiz state is never touched. State lives in browser `localStorage` behind a guarded wrapper. Boot shows the landing page; picking a card imports that set, after which validation, dedup, and rendering into `<main id="quiz">` run. The exact same web assets are wrapped by Capacitor into an Android WebView for the APK target.
 
 ### Components
 
@@ -97,6 +98,7 @@ Single-page web app. No framework, no build step. App code lives in `js/` as **1
 | `js/16-assess-charts.js` | SVG chart builders: bell curve, radar, domain bars, band ladder |
 | `js/17-assess-results.js` | Rich results screens per test (hero, charts, explanations, limitations, actions) |
 | `js/18-assess-engine.js` | Assessments state machine: hub, sequential runner, sessions, mode toggle, share boot |
+| `js/19-assess-export.js` | Result export: themed SVG card → PNG (canvas) and one-page PDF (hand-built, zero deps) |
 | `style.css` | Theming via CSS variables, layout, modals, welcome grid, focus styles |
 | `sw.js` | Service worker — network-first shell + questions, cache-first images |
 | `manifest.json` | PWA manifest (192px + 512px icons, theme, standalone display) |
@@ -225,9 +227,9 @@ File name must match `q_*.json`. Root must be a JSON array. See `questions_templ
 ```
 mcq/
 ├── index.html               — DOM, modals, PWA/social meta, ordered script tags
-├── js/                      — app code, 18 ordered files (01–11 quiz, 12–18 assessments)
+├── js/                      — app code, 19 ordered files (01–11 quiz, 12–19 assessments)
 ├── style.css                — theming, layout, focus styles
-├── sw.js                    — service worker (cache mcq-v10)
+├── sw.js                    — service worker (cache mcq-v11)
 ├── manifest.json            — PWA manifest
 ├── sources_index.json       — intentionally empty (see Components)
 ├── questions_template.json  — annotated question template

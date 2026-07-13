@@ -225,6 +225,20 @@ try {
     } catch { return null; } })()
   `);
   check("analytical result persisted", Number.isInteger(storedRaw) && storedRaw >= 0 && storedRaw <= 25, `got ${storedRaw}`);
+  const exportOk = await evalJs(`
+    (async () => {
+      const png = await assessBuildImageBlob('analytical');
+      const pdf = await assessBuildPdfBlob('analytical');
+      const head = new Uint8Array(await pdf.slice(0, 5).arrayBuffer());
+      const magic = String.fromCharCode.apply(null, head);
+      return {
+        png: png.type === 'image/png' && png.size > 20000,
+        pdf: pdf.type === 'application/pdf' && magic === '%PDF-' && pdf.size > 20000,
+      };
+    })()
+  `);
+  check("PNG export produces a real image", exportOk.png === true);
+  check("PDF export produces a real PDF", exportOk.pdf === true);
 
   // Resume: start IQ, answer 2, exit to hub, re-enter → index restored.
   await evalJs(`document.querySelector('.assess-results [data-assess-action="hub"]').click(); true`);
