@@ -2920,8 +2920,9 @@ body.assessment-on #m-filterCycle {
   margin: 18px 0;
 }
 .assess-hero-label {
+  /* Strings arrive pre-uppercased per language — CSS uppercase would
+     keep Greek tonos marks, which is wrong for all-caps Greek. */
   font-size: 0.8em;
-  text-transform: uppercase;
   letter-spacing: 0.12em;
   opacity: 0.7;
 }

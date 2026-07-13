@@ -178,7 +178,7 @@ function renderSd3Results(host, result, opts) {
 
   const archetype = SD3_ARCHETYPES[result.archetypeKey];
   const radarRows = SD3_TEST_META.traits.map((t) => ({
-    label: pickLang(SD3_TRAIT_INFO[t], "label"),
+    label: pickLang(SD3_TRAIT_INFO[t], "short"), // short labels — the long ones collide at the radar's bottom corners
     value: result.norm[t],
   }));
   const traitBars = SD3_TEST_META.traits.map((t) => ({
