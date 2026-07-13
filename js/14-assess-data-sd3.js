@@ -2,11 +2,12 @@
    ASSESSMENTS · DARK TRIAD (SD-3 STYLE) DATA — 27 original items,
    9 per trait (N narcissism · M Machiavellianism · P psychopathy),
    answered on a 1–5 agree/disagree scale. No right or wrong
-   answers. Reverse-keyed structure mirrors the published SD3
-   (2 reversed in N, 0 in M, 2 in P). Items are original neutral
-   paraphrases in the SD3 style — the published scale text is NOT
-   reproduced. Format follows the Short Dark Triad (SD3),
-   Jones & Paulhus (2014).
+   answers. 3 of the 9 items per trait are reverse-keyed (more
+   than the published SD3's 2/0/2) so that straight-lining
+   "agree with everything" cannot max out any trait. Items are
+   original neutral paraphrases in the SD3 style — the published
+   scale text is NOT reproduced. Format follows the Short Dark
+   Triad (SD3), Jones & Paulhus (2014).
    ═══════════════════════════════════════════════════════════════ */
 
 const SD3_TEST_META = {
@@ -35,9 +36,9 @@ const SD3_ITEMS = [
   { id: "sd3-n2", trait: "N", reverse: true,
     text_en: "I prefer to blend into the crowd rather than stand out.",
     text_el: "Προτιμώ να χάνομαι μέσα στο πλήθος παρά να ξεχωρίζω." },
-  { id: "sd3-m2", trait: "M", reverse: false,
-    text_en: "Flattery is a useful tool for getting what you want.",
-    text_el: "Η κολακεία είναι χρήσιμο εργαλείο για να πετυχαίνεις αυτό που θέλεις." },
+  { id: "sd3-m2", trait: "M", reverse: true,
+    text_en: "Flattery feels dishonest to me, even when it could get me what I want.",
+    text_el: "Η κολακεία μού φαίνεται ανέντιμη, ακόμα κι αν θα μπορούσε να μου δώσει αυτό που θέλω." },
   { id: "sd3-p2", trait: "P", reverse: false,
     text_en: "I enjoy risks that would scare most people.",
     text_el: "Απολαμβάνω ρίσκα που θα τρόμαζαν τους περισσότερους." },
@@ -45,9 +46,9 @@ const SD3_ITEMS = [
   { id: "sd3-n3", trait: "N", reverse: false,
     text_en: "I know I have qualities that most people lack.",
     text_el: "Ξέρω ότι έχω χαρίσματα που λείπουν από τους περισσότερους." },
-  { id: "sd3-m3", trait: "M", reverse: false,
-    text_en: "I keep useful information to myself until the right moment.",
-    text_el: "Κρατάω τις χρήσιμες πληροφορίες για τον εαυτό μου μέχρι την κατάλληλη στιγμή." },
+  { id: "sd3-m3", trait: "M", reverse: true,
+    text_en: "I openly share what I know, even when keeping it to myself would benefit me.",
+    text_el: "Μοιράζομαι ανοιχτά ό,τι ξέρω, ακόμα κι όταν θα με συνέφερε να το κρατήσω για τον εαυτό μου." },
   { id: "sd3-p3", trait: "P", reverse: false,
     text_en: "When someone crosses me, I hit back fast.",
     text_el: "Όταν κάποιος με αδικήσει, ανταποδίδω γρήγορα." },
@@ -58,9 +59,9 @@ const SD3_ITEMS = [
   { id: "sd3-m4", trait: "M", reverse: false,
     text_en: "Most people can be steered if you find the right approach.",
     text_el: "Τους περισσότερους ανθρώπους μπορείς να τους κατευθύνεις αν βρεις τη σωστή προσέγγιση." },
-  { id: "sd3-p4", trait: "P", reverse: false,
-    text_en: "I rarely feel guilty after upsetting someone.",
-    text_el: "Σπάνια νιώθω τύψεις όταν στενοχωρήσω κάποιον." },
+  { id: "sd3-p4", trait: "P", reverse: true,
+    text_en: "I feel guilty for a long time after upsetting someone.",
+    text_el: "Όταν στενοχωρήσω κάποιον, νιώθω τύψεις για πολλή ώρα μετά." },
 
   { id: "sd3-n5", trait: "N", reverse: false,
     text_en: "I enjoy being the person others talk about.",
@@ -85,9 +86,9 @@ const SD3_ITEMS = [
   { id: "sd3-n7", trait: "N", reverse: false,
     text_en: "Great things are expected of me — and I expect them too.",
     text_el: "Περιμένουν σπουδαία πράγματα από εμένα — και τα περιμένω κι εγώ." },
-  { id: "sd3-m7", trait: "M", reverse: false,
-    text_en: "Before trusting someone, I work out what they want from me.",
-    text_el: "Πριν εμπιστευτώ κάποιον, υπολογίζω τι θέλει από εμένα." },
+  { id: "sd3-m7", trait: "M", reverse: true,
+    text_en: "I trust people easily, without wondering what they might want from me.",
+    text_el: "Εμπιστεύομαι εύκολα τους ανθρώπους, χωρίς να σκέφτομαι τι μπορεί να θέλουν από εμένα." },
   { id: "sd3-p7", trait: "P", reverse: false,
     text_en: "I have done impulsive things that others would call reckless.",
     text_el: "Έχω κάνει παρορμητικά πράγματα που άλλοι θα χαρακτήριζαν απερίσκεπτα." },
@@ -102,9 +103,9 @@ const SD3_ITEMS = [
     text_en: "I have never gotten into trouble at school, at work, or with the law.",
     text_el: "Δεν έχω μπλέξει ποτέ σε προβλήματα με το σχολείο, τη δουλειά ή τον νόμο." },
 
-  { id: "sd3-n9", trait: "N", reverse: false,
-    text_en: "My opinion usually carries more weight than other people's.",
-    text_el: "Η γνώμη μου συνήθως μετράει περισσότερο από τη γνώμη των άλλων." },
+  { id: "sd3-n9", trait: "N", reverse: true,
+    text_en: "Other people's opinions count just as much as mine.",
+    text_el: "Οι γνώμες των άλλων μετράνε το ίδιο με τη δική μου." },
   { id: "sd3-m9", trait: "M", reverse: false,
     text_en: "Telling people what they want to hear is often the smartest move.",
     text_el: "Το να λες στους άλλους αυτό που θέλουν να ακούσουν είναι συχνά η εξυπνότερη κίνηση." },

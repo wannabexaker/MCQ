@@ -50,7 +50,7 @@ const ANALYTICAL_ITEMS = [
   {
     id: "an-pz-1", area: "puzzles",
     text_en: "A farmer has 17 sheep. All but 9 run away. How many sheep are left?",
-    text_el: "Ένας βοσκός έχει 17 πρόβατα. Όλα εκτός από 9 το σκάνε. Πόσα πρόβατα μένουν;",
+    text_el: "Ένας βοσκός έχει 17 πρόβατα. Όλα εκτός από 9 το σκάνε. Πόσα πρόβατα τού μένουν;",
     choices_en: ["9", "8", "17", "0"],
     choices_el: ["9", "8", "17", "0"],
     correctIndex: 0,

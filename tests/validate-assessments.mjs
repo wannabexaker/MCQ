@@ -188,10 +188,11 @@ function checkUniqueIds(where, items) {
   for (const t of ["N", "M", "P"]) {
     if (perTrait[t] !== 9) err(W, `trait ${t} must have exactly 9 items (found ${perTrait[t]})`);
   }
-  // Mirror the published SD3 reverse-key structure.
-  if (reversed.N !== 2) err(W, `trait N must have 2 reverse-keyed items (found ${reversed.N})`);
-  if (reversed.M !== 0) err(W, `trait M must have 0 reverse-keyed items (found ${reversed.M})`);
-  if (reversed.P !== 2) err(W, `trait P must have 2 reverse-keyed items (found ${reversed.P})`);
+  // 3 reverse-keyed items per trait — straight-lining "agree with
+  // everything" must not be able to max out any trait.
+  for (const t of ["N", "M", "P"]) {
+    if (reversed[t] !== 3) err(W, `trait ${t} must have 3 reverse-keyed items (found ${reversed[t]})`);
+  }
 
   const keys = Object.keys(G.SD3_ARCHETYPES).sort();
   const expected = ["000", "001", "010", "011", "100", "101", "110", "111"];
@@ -242,12 +243,14 @@ function checkUniqueIds(where, items) {
   });
 
   // SD-3: reverse-keying actually applies (all-5 answers).
+  // 6 forward ×5 + 3 reversed ×1 = 33 per trait — agreeing with
+  // everything lands mid-high, never at the maximum.
   const allFive = {};
   G.SD3_ITEMS.forEach((it) => { allFive[it.id] = 5; });
   const r5 = G.scoreSd3(allFive);
-  if (r5.sums.N !== 37) err(W, `all-5 N sum should be 37 (2 reversed), got ${r5.sums.N}`);
-  if (r5.sums.M !== 45) err(W, `all-5 M sum should be 45 (0 reversed), got ${r5.sums.M}`);
-  if (r5.sums.P !== 37) err(W, `all-5 P sum should be 37 (2 reversed), got ${r5.sums.P}`);
+  for (const t of ["N", "M", "P"]) {
+    if (r5.sums[t] !== 33) err(W, `all-5 ${t} sum should be 33 (3 reversed), got ${r5.sums[t]}`);
+  }
 
   // All 8 high/low combinations resolve to the right archetype key.
   const HIGH = { N: 26, M: 28, P: 19 }, LOW = { N: 25, M: 27, P: 18 };

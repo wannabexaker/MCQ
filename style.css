@@ -2555,6 +2555,12 @@ body.assessment-on #m-filterCycle {
   display: none !important;
 }
 
+/* The quiz footer (incl. the q_*.json data warnings) is meaningless
+   inside assessments — they render their own disclaimer footer. */
+body.assessment-on .footer {
+  display: none !important;
+}
+
 /* ── Landing entry card ────────────────────────────────── */
 .assessments-entry {
   margin: 18px 0 6px;
