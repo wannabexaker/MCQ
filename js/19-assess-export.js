@@ -90,17 +90,21 @@ function assessCardChrome(colors, height, testTitle, dateStr) {
   );
 }
 
+/* Footer occupies the card's last ASSESS_FOOTER_H pixels — content
+   layouts must end above height − ASSESS_FOOTER_H. */
+const ASSESS_FOOTER_H = 210;
+
 function assessCardFooter(colors, height, attribution) {
-  const yLine = height - 168;
+  const yLine = height - ASSESS_FOOTER_H;
   const disclaimer = assessWrapText(assessT("disclaimer"), 100);
   const parts = [
     `<line x1="84" y1="${yLine}" x2="${ASSESS_CARD_W - 84}" y2="${yLine}" stroke="${colors.border}" stroke-width="2"/>`,
-    assessCardText(84, yLine + 40, 20, colors.text, { opacity: "0.7" }, disclaimer),
-    // URL on its own bottom row so it can never collide with the disclaimer
-    assessCardText(ASSESS_CARD_W - 84, height - 46, 20, colors.accent, { anchor: "end", weight: "600" }, "wannabexaker.github.io/mcq-trainer"),
+    assessCardText(84, yLine + 42, 20, colors.text, { opacity: "0.7", lineH: 30 }, disclaimer),
+    // URL on its own bottom row so it can never collide with the texts above
+    assessCardText(ASSESS_CARD_W - 84, height - 40, 20, colors.accent, { anchor: "end", weight: "600" }, "wannabexaker.github.io/mcq-trainer"),
   ];
   if (attribution) {
-    parts.push(assessCardText(84, yLine + 40 + disclaimer.length * 29 + 8, 17, colors.text, { opacity: "0.45" }, assessWrapText(attribution, 90)));
+    parts.push(assessCardText(84, yLine + 42 + disclaimer.length * 30 + 12, 17, colors.text, { opacity: "0.45", lineH: 26 }, assessWrapText(attribution, 90)));
   }
   return parts.join("");
 }
@@ -112,7 +116,7 @@ function buildResultCardSvg(testId, result) {
   let height, body;
 
   if (testId === "iq") {
-    height = 1560;
+    height = 1770; // content ends ~1513, footer occupies the last 210px
     const band = iqBandText(result.iqPoint);
     const domainRows = IQ_TEST_META.domains.map((d) => ({
       label: pickLang(IQ_DOMAIN_INFO[d], "label"),
@@ -123,15 +127,15 @@ function buildResultCardSvg(testId, result) {
       assessCardText(600, 372, 116, colors.accent, { anchor: "middle", weight: "800" }, `≈ ${result.iqPoint}`) +
       assessCardText(600, 428, 34, colors.text, { anchor: "middle" }, `${assessT("likelyRange")}: ${result.band[0]}–${result.band[1]}`) +
       assessCardText(600, 468, 26, colors.text, { anchor: "middle", opacity: "0.65" }, `${assessT("rawScore")}: ${result.raw}/20`) +
-      assessPlaceChart(buildBellCurveSvg({ iqPoint: result.iqPoint, band: result.band, youLabel: assessT("you") }), 84, 500, 1032, 484) +
-      assessCardText(84, 1046, 30, colors.text, { weight: "700" }, assessT("domainBreakdown")) +
-      assessPlaceChart(buildDomainBarsSvg(domainRows), 84, 1068, 1032, 371) +
-      assessCardText(600, 1330, 24, colors.text, { anchor: "middle", opacity: "0.8" }, assessWrapText(pickLang(band, "head"), 80));
+      assessCardText(600, 528, 26, colors.text, { anchor: "middle", opacity: "0.85", lineH: 34 }, assessWrapText(pickLang(band, "head"), 70)) +
+      assessPlaceChart(buildBellCurveSvg({ iqPoint: result.iqPoint, band: result.band, youLabel: assessT("you") }), 84, 596, 1032, 484) +
+      assessCardText(84, 1136, 30, colors.text, { weight: "700" }, assessT("domainBreakdown")) +
+      assessPlaceChart(buildDomainBarsSvg(domainRows), 84, 1158, 1032, 371);
     return { svg: assessFinishCard(colors, height, assessT("iqName"), dateStr, body, assessT("attributionIq")), width: ASSESS_CARD_W, height };
   }
 
   if (testId === "analytical") {
-    height = 1290;
+    height = 1320; // content ends ~1060, footer occupies the last 210px
     const band = ANALYTICAL_BANDS[result.bandIndex];
     const nameLines = assessWrapText(pickLang(band, "name"), 30);
     const descLines = assessWrapText(pickLang(band, "desc"), 78);
@@ -145,7 +149,7 @@ function buildResultCardSvg(testId, result) {
     return { svg: assessFinishCard(colors, height, assessT("analyticalName"), dateStr, body, ""), width: ASSESS_CARD_W, height };
   }
 
-  // sd3
+  // sd3 — radar sized so its bottom labels sit close to the trait bars
   height = 1560;
   const archetype = SD3_ARCHETYPES[result.archetypeKey];
   const radarRows = SD3_TEST_META.traits.map((t) => ({
@@ -161,9 +165,12 @@ function buildResultCardSvg(testId, result) {
   body =
     assessCardText(600, 296, 26, colors.text, { anchor: "middle", spacing: "5", opacity: "0.65" }, assessT("archetypeLabel")) +
     assessCardText(600, 360, 64, colors.accent, { anchor: "middle", weight: "800" }, pickLang(archetype, "name")) +
-    assessPlaceChart(buildRadarSvg({ rows: radarRows }), 335, 408, 530, 498) +
-    assessPlaceChart(buildDomainBarsSvg(traitBars), 84, 960, 1032, 280) +
-    assessCardText(84, 1300, 24, colors.text, { opacity: "0.85", lineH: 36 }, descLines);
+    // The radar's visible content ends ~130px above its box bottom (its
+    // viewBox has intrinsic bottom padding) — the bars overlap that empty
+    // tail so there is no dead gap under the triangle.
+    assessPlaceChart(buildRadarSvg({ rows: radarRows }), 308, 420, 584, 550) +
+    assessPlaceChart(buildDomainBarsSvg(traitBars), 84, 920, 1032, 280) +
+    assessCardText(84, 1250, 24, colors.text, { opacity: "0.85", lineH: 36 }, descLines);
   return { svg: assessFinishCard(colors, height, assessT("sd3Name"), dateStr, body, assessT("attributionSd3")), width: ASSESS_CARD_W, height };
 }
 
