@@ -379,6 +379,7 @@ function renderAssessHub(host) {
       <div class="assess-test-actions">
         <button type="button" class="assess-test-primary" data-test="${id}" data-act="${primaryAction}">${primaryLabel}</button>
         ${secondary}
+        <button type="button" class="assess-test-share" data-test="${id}" title="Copy a direct link to this test" aria-label="Share this test">🔗</button>
       </div>
     </div>`;
   }).join("");
@@ -403,6 +404,13 @@ function renderAssessHub(host) {
       if (act === "results") { ASSESS_VIEW = { ...ASSESS_VIEW, mode: "results", testId: id }; renderAssessmentView(); }
       else if (act === "retake") assessRetake(id);
       else startOrResumeTest(id);
+    });
+  });
+  wrap.querySelectorAll(".assess-test-share").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute("data-test");
+      if (id && typeof window.mcqShareAssessment === "function") window.mcqShareAssessment(id);
     });
   });
 }

@@ -291,29 +291,57 @@ try {
   `);
   check("shared view does not overwrite stored results", rawAfterShare === storedRaw, `got ${rawAfterShare} vs ${storedRaw}`);
 
-  console.log("set deep-links:");
-  // Fresh visitor opens a per-test share link → lands straight in that test.
+  console.log("assessment deep-links:");
+  // A clean #hash link opens each assessment directly.
   await evalJs(`localStorage.clear()`);
-  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?set=q_cs05.json` });
-  await waitFor(`document.querySelectorAll('#quiz .card').length > 0 && !document.querySelector('.welcome-title')`);
-  const deepUrl = await evalJs(`location.search`);
-  check("?set= deep link loads the test directly", deepUrl === "?set=q_cs05.json", `got "${deepUrl}"`);
-  const deepQ = await evalJs(`(document.querySelector('#quiz .q-title')||{}).textContent || ''`);
-  check("deep-linked test shows its questions", /lambda|LINQ|C#|Where/i.test(deepQ), `got "${deepQ.slice(0, 40)}"`);
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html#iq` });
+  await waitFor(`typeof ASSESS_VIEW !== 'undefined' && ASSESS_VIEW.mode === 'running' && ASSESS_VIEW.testId === 'iq'`);
+  check("#iq opens the IQ test directly", await evalJs(`document.body.classList.contains('assessment-on')`) === true);
+  check("URL stays a clean #iq (no ?query)", await evalJs(`location.hash === '#iq' && location.search === ''`));
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html#analytical` });
+  await waitFor(`ASSESS_VIEW.mode === 'running' && ASSESS_VIEW.testId === 'analytical'`);
+  check("#analytical opens the analytical test", true);
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html#dark-triad` });
+  await waitFor(`ASSESS_VIEW.mode === 'running' && ASSESS_VIEW.testId === 'sd3'`);
+  check("#dark-triad opens the SD-3 test", true);
 
-  // Back returns to the set picker (card grid), not off-site.
+  // Hub renders share buttons; Back from a test returns to the hub.
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html#assessments` });
+  await waitFor(`ASSESS_VIEW.mode === 'hub'`);
+  check("#assessments opens the hub", await evalJs(`document.querySelectorAll('.assess-test-share').length`) === 3);
+  await evalJs(`[...document.querySelectorAll('.assess-test-primary')].find(b => b.dataset.test === 'iq')?.click()`);
+  await waitFor(`ASSESS_VIEW.mode === 'running' && ASSESS_VIEW.testId === 'iq'`);
+  check("hub card start reflects #iq in the URL", await evalJs(`location.hash`) === "#iq");
+  await evalJs(`history.back()`);
+  await waitFor(`ASSESS_VIEW.mode === 'hub'`);
+  check("Back returns to the assessments hub", await evalJs(`location.hash`) === "#assessments");
+
+  // Share builds a clean #hash link (force clipboard path).
+  const aShare = await evalJs(`
+    (() => {
+      try { Object.defineProperty(navigator, 'share', { configurable: true, value: undefined }); } catch {}
+      try { Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: (t) => { window.__c = t; return Promise.resolve(); } } }); } catch {}
+      window.__c = null;
+      window.mcqShareAssessment('iq');
+      return window.__c;
+    })()
+  `);
+  check("Share copies a clean #iq link", aShare === await evalJs(`location.origin + location.pathname + '#iq'`), `got "${aShare}"`);
+
+  console.log("set deep-links:");
+  // Question sets also get clean #hash links, isolated to just that set.
+  // (?fresh forces a full document load, as a real recipient opening the link
+  // gets — so the boot seeds the Back→picker entry.)
+  await evalJs(`localStorage.clear()`);
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=1#cs05` });
+  await waitFor(`document.querySelectorAll('#quiz .card').length > 0 && !document.querySelector('.welcome-title') && !document.body.classList.contains('assessment-on')`);
+  check("#cs05 loads the C# LINQ set directly", await evalJs(`location.hash`) === "#cs05");
+  const deepQ = await evalJs(`(document.querySelector('#quiz .q-title')||{}).textContent || ''`);
+  check("deep-linked set shows its questions", /lambda|LINQ|C#|Where/i.test(deepQ), `got "${deepQ.slice(0, 40)}"`);
   await evalJs(`history.back()`);
   await waitFor(`!!document.querySelector('.welcome-title')`);
-  const backCards = await evalJs(`document.querySelectorAll('.welcome-set:not([hidden])').length`);
-  check("Back returns to the set picker", backCards >= 19, `got ${backCards} cards`);
-
-  // Forward goes back into the test.
-  await evalJs(`history.forward()`);
-  await waitFor(`document.querySelectorAll('#quiz .card').length > 0 && !document.querySelector('.welcome-title')`);
-  check("Forward re-enters the test", true);
-
-  // Share builds the correct ?set= link (force the clipboard path).
-  const shareUrl = await evalJs(`
+  check("Back returns to the set picker", await evalJs(`document.querySelectorAll('.welcome-set:not([hidden])').length`) >= 19);
+  const sShare = await evalJs(`
     (() => {
       try { Object.defineProperty(navigator, 'share', { configurable: true, value: undefined }); } catch {}
       try { Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: (t) => { window.__c = t; return Promise.resolve(); } } }); } catch {}
@@ -322,8 +350,7 @@ try {
       return window.__c;
     })()
   `);
-  const expectShare = await evalJs(`location.origin + location.pathname + '?set=q_sql02.json'`);
-  check("Share copies the per-test link", shareUrl === expectShare, `got "${shareUrl}"`);
+  check("Set share copies a clean #sql02 link", sShare === await evalJs(`location.origin + location.pathname + '#sql02'`), `got "${sShare}"`);
 
   console.log("hygiene:");
   const benign = /favicon|catfact|Failed to load resource/i;

@@ -2751,7 +2751,8 @@ body.assessment-on .footer {
   cursor: pointer;
 }
 .assess-test-primary:hover { filter: brightness(1.08); }
-.assess-test-secondary {
+.assess-test-secondary,
+.assess-test-share {
   min-height: 42px;
   padding: 8px 14px;
   background: var(--btn-bg);
@@ -2761,7 +2762,9 @@ body.assessment-on .footer {
   font-weight: 600;
   cursor: pointer;
 }
-.assess-test-secondary:hover { border-color: var(--accent); }
+.assess-test-share { padding: 8px 12px; margin-left: auto; }
+.assess-test-secondary:hover,
+.assess-test-share:hover { border-color: var(--accent); }
 
 /* ── Runner ────────────────────────────────────────────── */
 .assess-runner-top {
