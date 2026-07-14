@@ -40,18 +40,37 @@
     try { window.scrollTo(0, 0); } catch {}
   }
 
-  // Load a specific set and show it, syncing URL + history.
-  async function openSet(file, { push = true } = {}) {
+  // Restrict the source filter to just the linked set, so a shared link shows
+  // ONLY that test even if the visitor already has other sets loaded.
+  function isolateToSet(file) {
+    try {
+      if (typeof SOURCE_DEFINITIONS !== "undefined" && typeof ACTIVE_SOURCE_IDS !== "undefined") {
+        const ids = SOURCE_DEFINITIONS.filter((s) => s && s.file === file).map((s) => s.id);
+        if (ids.length) {
+          ACTIVE_SOURCE_IDS = new Set(ids);
+          if (typeof renderSourceChecklist === "function") renderSourceChecklist();
+        }
+      }
+    } catch {}
+    if (typeof applySourceFilter === "function") applySourceFilter();
+  }
+
+  // Load a specific set and show it, syncing URL + history. `isolate` (used by
+  // shared links) narrows the view to only this set; in-app card clicks keep
+  // the app's normal multi-source merge behaviour.
+  async function openSet(file, { push = true, isolate = false } = {}) {
     if (!knownSet(file)) return false;
     window.__mcqShowPicker = false;
     if (push) {
-      try { history.pushState({ mcqSet: file }, "", shareUrl(file)); } catch {}
+      try { history.pushState({ mcqSet: file, iso: !!isolate }, "", shareUrl(file)); } catch {}
     }
-    if (isLoaded(file)) {
-      if (typeof applySourceFilter === "function") applySourceFilter();
-    } else {
+    if (!isLoaded(file)) {
       await loadBundledQuestionSet(file); // imports the set + re-renders the quiz
+    } else if (isolate && typeof reloadSourcesAndFilters === "function") {
+      await reloadSourcesAndFilters();
     }
+    if (isolate) isolateToSet(file);
+    else if (typeof applySourceFilter === "function") applySourceFilter();
     try { window.scrollTo(0, 0); } catch {}
     return true;
   }
@@ -83,7 +102,7 @@
   window.addEventListener("popstate", (e) => {
     if (assessmentActive()) return; // assessments own their own routing
     const st = e.state;
-    if (st && st.mcqSet && knownSet(st.mcqSet)) openSet(st.mcqSet, { push: false });
+    if (st && st.mcqSet && knownSet(st.mcqSet)) openSet(st.mcqSet, { push: false, isolate: !!st.iso });
     else showPicker();
   });
 
@@ -98,8 +117,8 @@
     if (!file || !knownSet(file)) return;
     try {
       history.replaceState({ mcqPicker: true }, "", location.origin + location.pathname);
-      history.pushState({ mcqSet: file }, "", shareUrl(file));
+      history.pushState({ mcqSet: file, iso: true }, "", shareUrl(file));
     } catch {}
-    openSet(file, { push: false });
+    openSet(file, { push: false, isolate: true });
   });
 })();
