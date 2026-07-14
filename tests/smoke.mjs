@@ -291,6 +291,40 @@ try {
   `);
   check("shared view does not overwrite stored results", rawAfterShare === storedRaw, `got ${rawAfterShare} vs ${storedRaw}`);
 
+  console.log("set deep-links:");
+  // Fresh visitor opens a per-test share link → lands straight in that test.
+  await evalJs(`localStorage.clear()`);
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?set=q_cs05.json` });
+  await waitFor(`document.querySelectorAll('#quiz .card').length > 0 && !document.querySelector('.welcome-title')`);
+  const deepUrl = await evalJs(`location.search`);
+  check("?set= deep link loads the test directly", deepUrl === "?set=q_cs05.json", `got "${deepUrl}"`);
+  const deepQ = await evalJs(`(document.querySelector('#quiz .q-title')||{}).textContent || ''`);
+  check("deep-linked test shows its questions", /lambda|LINQ|C#|Where/i.test(deepQ), `got "${deepQ.slice(0, 40)}"`);
+
+  // Back returns to the set picker (card grid), not off-site.
+  await evalJs(`history.back()`);
+  await waitFor(`!!document.querySelector('.welcome-title')`);
+  const backCards = await evalJs(`document.querySelectorAll('.welcome-set:not([hidden])').length`);
+  check("Back returns to the set picker", backCards >= 19, `got ${backCards} cards`);
+
+  // Forward goes back into the test.
+  await evalJs(`history.forward()`);
+  await waitFor(`document.querySelectorAll('#quiz .card').length > 0 && !document.querySelector('.welcome-title')`);
+  check("Forward re-enters the test", true);
+
+  // Share builds the correct ?set= link (force the clipboard path).
+  const shareUrl = await evalJs(`
+    (() => {
+      try { Object.defineProperty(navigator, 'share', { configurable: true, value: undefined }); } catch {}
+      try { Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: (t) => { window.__c = t; return Promise.resolve(); } } }); } catch {}
+      window.__c = null;
+      window.mcqShareSet('q_sql02.json');
+      return window.__c;
+    })()
+  `);
+  const expectShare = await evalJs(`location.origin + location.pathname + '?set=q_sql02.json'`);
+  check("Share copies the per-test link", shareUrl === expectShare, `got "${shareUrl}"`);
+
   console.log("hygiene:");
   const benign = /favicon|catfact|Failed to load resource/i;
   const realErrors = consoleErrors.filter((e) => !benign.test(e));

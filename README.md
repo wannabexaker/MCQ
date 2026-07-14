@@ -36,7 +36,8 @@ Opens on a landing page with pickable question sets, validates every bank agains
 - Assessment data lives in `js/12–14` as JS constants — **not** `q_*.json` — so the quiz import/validation pipeline is completely untouched
 
 ### Quiz engine
-- Landing page with tag search; each set is a card with Load / Download actions
+- Landing page with tag search; each set is a card with Load / **Share** / Download actions
+- **Shareable per-test links** — every bundled set has its own `?set=<file>` URL (the address bar tracks the active test, the 🔗 button copies/Web-Shares it); opening a link drops a fresh visitor straight into that test, and the browser **Back** button returns to the set picker instead of leaving the site
 - Schema validation on import with per-question error reporting
 - Duplicate detection by normalized text and Jaccard similarity across all loaded sets
 - Exam mode and God mode — reveal actions are blocked *and* visually disabled
@@ -59,7 +60,7 @@ Opens on a landing page with pickable question sets, validates every bank agains
 ### Platform
 - Three themes (`dark`, `light`, `gay`), CSS-variable based — the third one is an easter egg with a fleeing "No" button (Esc ×3 always returns to dark)
 - **Guarded storage**: all `localStorage` access goes through a wrapper with an in-memory fallback, so private browsing modes and quota errors never crash the app
-- Service worker (cache `mcq-v11`): network-first app shell and question files, cache-first images; installable PWA
+- Service worker (cache `mcq-v12`): network-first app shell and question files, cache-first images; installable PWA
 - Open Graph + Twitter card meta for link previews
 - Optimized assets: ~140 KB of images on page load (512px icon loads only on PWA install)
 - Docker image (nginx) for production hosting; one-command local server scripts for Windows
@@ -69,11 +70,11 @@ Opens on a landing page with pickable question sets, validates every bank agains
 - **CI on every push/PR** (GitHub Actions): syntax check, question-bank validation, assessment-data validation, headless E2E smoke test
 - `tests/validate-questions.mjs` — structural validation of all `q_*.json` (schema, `correctIndex` range, EL/EN choice parity, sequential numbering, single category tag)
 - `tests/validate-assessments.mjs` — assessment data + scoring validation (item counts per domain/trait, SVG safety, bilingual completeness, reverse-key structure, band coverage, archetype table, scoring sanity, share-codec round-trips)
-- `tests/smoke.mjs` — self-contained E2E: serves the app GitHub-Pages-style (no directory listing) and drives headless Chrome over CDP with real input events; covers landing, search, set loading, scoring, keyboard access, exam mode, language toggle, the assessments section (hub, full run, resume, exit, shared links), and console-error hygiene
+- `tests/smoke.mjs` — self-contained E2E: serves the app GitHub-Pages-style (no directory listing) and drives headless Chrome over CDP with real input events; covers landing, search, set loading, scoring, keyboard access, exam mode, language toggle, the assessments section (hub, full run, resume, exit, shared links), the set deep-links (open `?set=`, Back to picker, Forward, Share), and console-error hygiene
 
 ## Architecture
 
-Single-page web app. No framework, no build step. App code lives in `js/` as **19 ordered classic scripts split by concern** (the original 11 quiz files plus 8 assessment files, `js/12–19`) — they share one top-level scope, so load order matters and is fixed in `index.html`. The assessments section is a parallel track: a single guard at the top of `applySourceFilter()` re-routes rendering while assessment mode is active, and the quiz state is never touched. State lives in browser `localStorage` behind a guarded wrapper. Boot shows the landing page; picking a card imports that set, after which validation, dedup, and rendering into `<main id="quiz">` run. The exact same web assets are wrapped by Capacitor into an Android WebView for the APK target.
+Single-page web app. No framework, no build step. App code lives in `js/` as **20 ordered classic scripts split by concern** (11 quiz files, 8 assessment files `js/12–19`, and the set-links router `js/20`) — they share one top-level scope, so load order matters and is fixed in `index.html`. The assessments section is a parallel track: a single guard at the top of `applySourceFilter()` re-routes rendering while assessment mode is active, and the quiz state is never touched. State lives in browser `localStorage` behind a guarded wrapper. Boot shows the landing page; picking a card imports that set, after which validation, dedup, and rendering into `<main id="quiz">` run. The exact same web assets are wrapped by Capacitor into an Android WebView for the APK target.
 
 ### Components
 
@@ -99,6 +100,7 @@ Single-page web app. No framework, no build step. App code lives in `js/` as **1
 | `js/17-assess-results.js` | Rich results screens per test (hero, charts, explanations, limitations, actions) |
 | `js/18-assess-engine.js` | Assessments state machine: hub, sequential runner, sessions, mode toggle, share boot |
 | `js/19-assess-export.js` | Result export: themed SVG card → PNG (canvas) and one-page PDF (hand-built, zero deps) |
+| `js/20-set-links.js` | Deep-linkable question sets: `?set=` boot, Share buttons, Back/Forward history (additive, own DOMContentLoaded) |
 | `style.css` | Theming via CSS variables, layout, modals, welcome grid, focus styles |
 | `sw.js` | Service worker — network-first shell + questions, cache-first images |
 | `manifest.json` | PWA manifest (192px + 512px icons, theme, standalone display) |
@@ -229,7 +231,7 @@ mcq/
 ├── index.html               — DOM, modals, PWA/social meta, ordered script tags
 ├── js/                      — app code, 19 ordered files (01–11 quiz, 12–19 assessments)
 ├── style.css                — theming, layout, focus styles
-├── sw.js                    — service worker (cache mcq-v11)
+├── sw.js                    — service worker (cache mcq-v12)
 ├── manifest.json            — PWA manifest
 ├── sources_index.json       — intentionally empty (see Components)
 ├── questions_template.json  — annotated question template

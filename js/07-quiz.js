@@ -69,10 +69,14 @@ function renderQuiz(items) {
   if (!host) return;
   host.innerHTML = "";
 
-  if (!items || items.length === 0) {
+  // The set-links router can force the picker (the bundled-set grid) even when
+  // sets are already loaded — used by the Back button to return to the list.
+  const forcePicker = typeof window !== "undefined" && window.__mcqShowPicker === true;
+  if (forcePicker || !items || items.length === 0) {
     const noSourcesAtAll =
-      (!Array.isArray(SOURCE_DEFINITIONS) || SOURCE_DEFINITIONS.length === 0) &&
-      getImportedSources().length === 0;
+      forcePicker ||
+      ((!Array.isArray(SOURCE_DEFINITIONS) || SOURCE_DEFINITIONS.length === 0) &&
+        getImportedSources().length === 0);
     const empty = document.createElement("section");
     empty.className = "card welcome-card";
     if (noSourcesAtAll) {
@@ -87,7 +91,8 @@ function renderQuiz(items) {
           <p class="welcome-set-desc">${escapeHTML(s.desc)}</p>
           <div class="welcome-set-actions">
             <button type="button" class="welcome-set-load" data-file="${escapeHTML(s.file)}">▶ Load</button>
-            <button type="button" class="welcome-set-download" data-file="${escapeHTML(s.file)}" title="Download as .json">⬇️</button>
+            <button type="button" class="welcome-set-share" data-file="${escapeHTML(s.file)}" title="Copy a direct link to this test" aria-label="Share this test">🔗</button>
+            <button type="button" class="welcome-set-download" data-file="${escapeHTML(s.file)}" title="Download as .json" aria-label="Download this test as JSON">⬇️</button>
           </div>
         </div>`
       ).join("");
@@ -143,7 +148,16 @@ function renderQuiz(items) {
     empty.querySelectorAll(".welcome-set-load").forEach((btn) => {
       btn.addEventListener("click", () => {
         const f = btn.getAttribute("data-file");
-        if (f) loadBundledQuestionSet(f);
+        if (!f) return;
+        // Route through the set-links router (URL + history) when present.
+        if (typeof window.mcqOpenSet === "function") window.mcqOpenSet(f);
+        else loadBundledQuestionSet(f);
+      });
+    });
+    empty.querySelectorAll(".welcome-set-share").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const f = btn.getAttribute("data-file");
+        if (f && typeof window.mcqShareSet === "function") window.mcqShareSet(f);
       });
     });
     empty.querySelectorAll(".welcome-set-download").forEach((btn) => {

@@ -2151,10 +2151,12 @@ body.mobile-menu-open {
 .welcome-set-load:hover {
   filter: brightness(1.08);
 }
-.welcome-set-download {
+.welcome-set-download,
+.welcome-set-share {
   width: 44px;
 }
-.welcome-set-download:hover {
+.welcome-set-download:hover,
+.welcome-set-share:hover {
   border-color: var(--accent);
 }
 .welcome-custom {
