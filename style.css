@@ -2631,12 +2631,13 @@ body.assessment-on .footer {
   font-weight: 700;
   white-space: nowrap;
 }
-.assess-chip-strong, .assess-chip-high, .assess-chip-done {
+.assess-chip-strong, .assess-chip-high, .assess-chip-veryHigh, .assess-chip-done {
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
 }
-.assess-chip-weak { border-color: var(--accent); color: var(--accent); }
+.assess-chip-weak, .assess-chip-moderate { border-color: var(--accent); color: var(--accent); }
+.assess-chip-low, .assess-chip-veryLow { opacity: 0.7; }
 .assess-chip-progress { border-style: dashed; border-color: var(--accent); }
 
 .assess-exit-btn {

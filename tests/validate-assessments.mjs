@@ -196,7 +196,10 @@ function checkUniqueIds(where, items) {
   }
 
   const keys = Object.keys(G.SD3_ARCHETYPES).sort();
-  const expected = ["000", "001", "010", "011", "100", "101", "110", "111"];
+  const expected = [
+    "balanced", "charmer", "daredevil", "diplomat", "freespirit", "gentle",
+    "grounded", "maverick", "operator", "quiet", "star", "strategist", "triad",
+  ];
   if (keys.join(",") !== expected.join(","))
     err(W, `archetype keys must be exactly ${expected.join(" ")} (found ${keys.join(" ")})`);
 
@@ -253,7 +256,7 @@ function checkUniqueIds(where, items) {
     if (r5.sums[t] !== 33) err(W, `all-5 ${t} sum should be 33 (3 reversed), got ${r5.sums[t]}`);
   }
 
-  // All 8 high/low combinations resolve to the right archetype key.
+  // All 8 high/low combinations still resolve to the right binary key.
   const HIGH = { N: 26, M: 28, P: 19 }, LOW = { N: 25, M: 27, P: 18 };
   for (const bits of ["000", "001", "010", "011", "100", "101", "110", "111"]) {
     const sums = {
@@ -263,7 +266,26 @@ function checkUniqueIds(where, items) {
     };
     const res = G.computeSd3FromSums(sums);
     if (res.archetypeKey !== bits) err(W, `sums ${JSON.stringify(sums)} → ${res.archetypeKey}, expected ${bits}`);
-    if (!G.SD3_ARCHETYPES[res.archetypeKey]) err(W, `no archetype entry for ${res.archetypeKey}`);
+    if (!res.archetypeId || !G.SD3_ARCHETYPES[res.archetypeId]) err(W, `no archetype entry for id ${res.archetypeId}`);
+  }
+
+  // Each trait spans the full 0-100 range (the user's fix): min sum → 0%, max → 100%.
+  const loAll = G.computeSd3FromSums({ N: 9, M: 9, P: 9 });
+  const hiAll = G.computeSd3FromSums({ N: 45, M: 45, P: 45 });
+  for (const t of ["N", "M", "P"]) {
+    if (loAll.norm[t] !== 0) err(W, `min sum ${t} should be 0%, got ${loAll.norm[t]}`);
+    if (hiAll.norm[t] !== 100) err(W, `max sum ${t} should be 100%, got ${hiAll.norm[t]}`);
+  }
+
+  // Sweep the sum space: every norm stays in [0,100], every level + archetypeId is valid.
+  const LEVELS = new Set(["veryLow", "low", "moderate", "high", "veryHigh"]);
+  for (let n = 9; n <= 45; n += 3) for (let m = 9; m <= 45; m += 6) for (let p = 9; p <= 45; p += 6) {
+    const res = G.computeSd3FromSums({ N: n, M: m, P: p });
+    for (const t of ["N", "M", "P"]) {
+      if (res.norm[t] < 0 || res.norm[t] > 100) err(W, `norm ${t}=${res.norm[t]} outside [0,100]`);
+      if (!LEVELS.has(res.levels[t])) err(W, `bad level ${res.levels[t]} for norm ${res.norm[t]}`);
+    }
+    if (!G.SD3_ARCHETYPES[res.archetypeId]) err(W, `sums ${n},${m},${p} → unknown archetypeId ${res.archetypeId}`);
   }
 }
 

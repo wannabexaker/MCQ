@@ -125,15 +125,52 @@ function scoreSd3(answers) {
 }
 
 // Deterministic derivation from trait sums (also used by the decoder).
+// Map a 0-100 trait score to a graded level (5 bands with even 20-point cuts).
+function sd3LevelKey(norm) {
+  if (norm < 20) return "veryLow";
+  if (norm < 40) return "low";
+  if (norm < 60) return "moderate";
+  if (norm < 80) return "high";
+  return "veryHigh";
+}
+
+// Pick a named archetype from the three 0-100 norms, graded by overall
+// intensity (avg) and profile shape (dominant trait / balance). This is what
+// makes results span gentle → moderate → dark instead of everyone reading "high".
+function sd3ArchetypeId(norm) {
+  const N = norm.N, M = norm.M, P = norm.P;
+  const avg = (N + M + P) / 3;
+  const spread = Math.max(N, M, P) - Math.min(N, M, P);
+  const balanced = spread < 15;
+  const dom = (N >= M && N >= P) ? "N" : (M >= P ? "M" : "P");
+  const byDom = (n, m, p) => (dom === "N" ? n : dom === "M" ? m : p);
+  if (avg >= 78 && Math.min(N, M, P) >= 60) return "triad"; // all three genuinely high
+  if (avg < 22) return "gentle";
+  if (avg < 40) return balanced ? "grounded" : byDom("quiet", "diplomat", "freespirit");
+  if (avg < 60) return balanced ? "balanced" : byDom("charmer", "strategist", "maverick");
+  return byDom("star", "operator", "daredevil"); // 60+
+}
+
+// All archetype ids the selector can emit (for validation).
+const SD3_ARCHETYPE_IDS = [
+  "gentle", "grounded", "quiet", "diplomat", "freespirit",
+  "balanced", "charmer", "strategist", "maverick",
+  "star", "operator", "daredevil", "triad",
+];
+
 function computeSd3FromSums(sums) {
-  const means = {}, norm = {}, high = {};
+  const means = {}, norm = {}, high = {}, levels = {};
   SD3_TEST_META.traits.forEach((t) => {
     means[t] = sums[t] / 9;
     norm[t] = Math.round(((means[t] - 1) / 4) * 100);
     high[t] = means[t] >= SD3_THRESHOLDS[t];
+    levels[t] = sd3LevelKey(norm[t]);
   });
+  // Kept for the share codec / backwards compatibility; the results view now
+  // uses the graded archetypeId instead.
   const archetypeKey = `${high.N ? 1 : 0}${high.M ? 1 : 0}${high.P ? 1 : 0}`;
-  return { sums: { ...sums }, means, norm, high, archetypeKey };
+  const archetypeId = sd3ArchetypeId(norm);
+  return { sums: { ...sums }, means, norm, high, levels, archetypeKey, archetypeId };
 }
 
 /* ── Share-URL codec ────────────────────────────────────────────

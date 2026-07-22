@@ -183,7 +183,11 @@ function renderSd3Results(host, result, opts) {
   const section = document.createElement("section");
   section.className = "card assess-card assess-results";
 
-  const archetype = SD3_ARCHETYPES[result.archetypeKey];
+  // Graded level (veryLow…veryHigh) → which interpretation text to show.
+  const levelOf = (t) => (result.levels && result.levels[t]) || (result.high[t] ? "high" : "low");
+  const descKeyFor = (lvl) => (lvl === "moderate" ? "mid" : (lvl === "high" || lvl === "veryHigh") ? "high" : "low");
+
+  const archetype = SD3_ARCHETYPES[result.archetypeId] || SD3_ARCHETYPES.balanced;
   const radarRows = SD3_TEST_META.traits.map((t) => ({
     label: pickLang(SD3_TRAIT_INFO[t], "short"), // short labels — the long ones collide at the radar's bottom corners
     value: result.norm[t],
@@ -191,21 +195,21 @@ function renderSd3Results(host, result, opts) {
   const traitBars = SD3_TEST_META.traits.map((t) => ({
     label: pickLang(SD3_TRAIT_INFO[t], "label"),
     pct: result.norm[t],
-    valueText: `${result.norm[t]}/100 · ${assessT(result.high[t] ? "high" : "low")}`,
+    valueText: `${result.norm[t]}/100 · ${assessT(levelOf(t))}`,
   }));
 
   const traitBlocks = SD3_TEST_META.traits
     .map((t) => {
       const info = SD3_TRAIT_INFO[t];
-      const isHigh = result.high[t];
+      const lvl = levelOf(t);
       return `<div class="assess-block">
         <div class="assess-block-head">
           <span class="assess-block-label">${escapeHTML(pickLang(info, "label"))}</span>
           <span class="assess-block-score">${result.norm[t]}/100</span>
-          ${assessChipHtml(isHigh ? "high" : "low")}
+          ${assessChipHtml(lvl)}
         </div>
         <p class="assess-block-desc">${escapeHTML(pickLang(info, "desc"))}</p>
-        <p>${escapeHTML(pickLang(info, isHigh ? "high" : "low"))}</p>
+        <p>${escapeHTML(pickLang(info, descKeyFor(lvl)))}</p>
       </div>`;
     })
     .join("");
