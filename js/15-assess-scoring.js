@@ -208,6 +208,78 @@ function computeSd3FromSums(sums) {
   return { sums: { ...sums }, means, norm, high, levels, archetypeKey, archetypeId };
 }
 
+/* ── Sexuality Spectrum ─────────────────────────────────────────
+   Per item: v = reverse ? 6−answer : answer (answers 1..5).
+   Six dimensions with different item counts (see SPECTRUM_TEST_META):
+   S same-gender · O other-gender · I intensity · D bond-dependence ·
+   G gender-irrelevance · F fluidity. norm = (mean−1)/4 × 100.
+   The category is a REGION of the spectrum, framed as "your answers
+   align most closely with" — never a verdict.                    */
+function scoreSpectrum(answers) {
+  const sums = { S: 0, O: 0, I: 0, D: 0, G: 0, F: 0 };
+  SPECTRUM_ITEMS.forEach((item) => {
+    const a = Number(answers ? answers[item.id] : 0) || 0;
+    const v = item.reverse ? 6 - a : a;
+    sums[item.dim] += v;
+  });
+  return computeSpectrumFromSums(sums);
+}
+
+/* Category selection from the six 0-100 norms. Order matters:
+   intensity first (ace spectrum), then gender pattern.           */
+function spectrumCategoryId(norm) {
+  const { S, O, I, D, G } = norm;
+  if (I < 20) return "ace";
+  if (D >= 65 && I < 55) return "demi";
+  if (I < 38) return "grayAce";
+  // Allosexual zone — gender pattern decides.
+  if (S < 25 && O < 25) return "questioning"; // real intensity, no gender pattern
+  if (G >= 62 && S >= 45 && O >= 45) return "pan";
+  if (S >= 40 && O >= 40) return "bi";
+  if (O >= S) return (O >= 55 && S < 22) ? "straight" : "mostlyStraight";
+  return (S >= 55 && O < 22) ? "gay" : "mostlyGay";
+}
+
+const SPECTRUM_CATEGORY_IDS = [
+  "straight", "mostlyStraight", "bi", "pan", "mostlyGay", "gay",
+  "demi", "grayAce", "ace", "questioning",
+];
+
+// Generic 3-step level for the dimension bars (no published per-dim
+// population norms exist for this custom instrument, so keep it honest).
+function spectrumLevelKey(norm) {
+  if (norm < 35) return "low";
+  if (norm < 65) return "moderate";
+  return "high";
+}
+
+function computeSpectrumFromSums(sums) {
+  const counts = SPECTRUM_TEST_META.dimCounts;
+  const norm = {}, levels = {};
+  SPECTRUM_TEST_META.dims.forEach((d) => {
+    const mean = sums[d] / counts[d];
+    norm[d] = Math.round(((mean - 1) / 4) * 100);
+    levels[d] = spectrumLevelKey(norm[d]);
+  });
+  const categoryId = spectrumCategoryId(norm);
+  // Kinsey-style position 0..6 from the same/other ratio (allosexual only).
+  const kinsey = (norm.S + norm.O) > 0
+    ? Math.round((6 * norm.S / (norm.S + norm.O)) * 10) / 10
+    : null;
+  // Qualifier notes assembled by the renderer.
+  const fluid = norm.F >= 62;
+  const biLean = (categoryId === "bi" || categoryId === "pan")
+    ? (norm.S - norm.O >= 18 ? "same" : norm.O - norm.S >= 18 ? "other" : "balanced")
+    : null;
+  const aceCat = categoryId === "ace" || categoryId === "grayAce" || categoryId === "demi";
+  const romLean = aceCat
+    ? ((norm.S < 20 && norm.O < 20) ? "none"
+      : Math.abs(norm.S - norm.O) < 15 ? "both"
+      : norm.S > norm.O ? "same" : "other")
+    : null;
+  return { sums: { ...sums }, norm, levels, categoryId, kinsey, fluid, biLean, romLean };
+}
+
 /* ── Share-URL codec ────────────────────────────────────────────
    Param `ar`, format <version><testChar><digits> — aggregates
    only, never per-item data:
@@ -227,11 +299,14 @@ function encodeShare(testId, result) {
   if (testId === "sd3" && result && result.sums) {
     return "1d" + SD3_TEST_META.traits.map((t) => String(result.sums[t]).padStart(2, "0")).join("");
   }
+  if (testId === "spectrum" && result && result.sums) {
+    return "1x" + SPECTRUM_TEST_META.dims.map((d) => String(result.sums[d]).padStart(2, "0")).join("");
+  }
   return null;
 }
 
 function decodeShare(str) {
-  const m = /^1([iad])(\d+)$/.exec(String(str || "").trim());
+  const m = /^1([iadx])(\d+)$/.exec(String(str || "").trim());
   if (!m) return null;
   const kind = m[1], digits = m[2];
 
@@ -266,6 +341,19 @@ function decodeShare(str) {
       sums[SD3_TEST_META.traits[k]] = v;
     }
     return { testId: "sd3", result: computeSd3FromSums(sums), partial: false };
+  }
+
+  if (kind === "x") {
+    if (digits.length !== 12) return null;
+    const sums = {};
+    for (let k = 0; k < 6; k++) {
+      const d = SPECTRUM_TEST_META.dims[k];
+      const count = SPECTRUM_TEST_META.dimCounts[d];
+      const v = Number(digits.slice(k * 2, k * 2 + 2));
+      if (v < count || v > count * 5) return null;
+      sums[d] = v;
+    }
+    return { testId: "spectrum", result: computeSpectrumFromSums(sums), partial: false };
   }
 
   return null;

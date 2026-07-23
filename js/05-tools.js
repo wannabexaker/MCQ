@@ -535,6 +535,7 @@ function collectBundleFileList() {
     "js/18-assess-engine.js",
     "js/19-assess-export.js",
     "js/20-share-links.js",
+    "js/21-assess-data-spectrum.js",
     "style.css",
     "sources_index.json",
     "questions_template.json",

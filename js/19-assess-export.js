@@ -149,9 +149,39 @@ function buildResultCardSvg(testId, result) {
     return { svg: assessFinishCard(colors, height, assessT("analyticalName"), dateStr, body, ""), width: ASSESS_CARD_W, height };
   }
 
+  if (testId === "spectrum") {
+    height = 1500;
+    const cat = SPECTRUM_RESULTS[result.categoryId] || SPECTRUM_RESULTS.questioning;
+    const dimBars = SPECTRUM_TEST_META.dims.map((d) => ({
+      label: pickLang(SPECTRUM_DIM_INFO[d], "label"),
+      pct: result.norm[d],
+      valueText: `${result.norm[d]}/100 · ${assessT(result.levels[d])}`,
+    }));
+    const catNameLines = assessWrapText(pickLang(cat, "name"), 30);
+    const spDescLines = assessWrapText(pickLang(cat, "desc"), 88).slice(0, 3);
+    body =
+      assessCardText(600, 296, 26, colors.text, { anchor: "middle", spacing: "5", opacity: "0.65" }, assessT("alignLabel")) +
+      assessCardText(600, 360, 60, colors.accent, { anchor: "middle", weight: "800", lineH: 72 }, catNameLines) +
+      assessPlaceChart(buildAttractionMapSvg({
+        x: result.norm.O, y: result.norm.S,
+        labels: {
+          br: pickLang(SPECTRUM_RESULTS.straight, "name"),
+          tl: pickLang(SPECTRUM_RESULTS.gay, "name"),
+          tr: pickLang(SPECTRUM_RESULTS.bi, "name"),
+          bl: pickLang(SPECTRUM_RESULTS.ace, "name"),
+          xAxis: pickLang(SPECTRUM_DIM_INFO.O, "short"),
+          yAxis: pickLang(SPECTRUM_DIM_INFO.S, "short"),
+          you: assessT("you"),
+        },
+      }), 308, 380 + catNameLines.length * 72, 584, 500) +
+      assessPlaceChart(buildDomainBarsSvg(dimBars), 84, 920, 1032, 300) +
+      assessCardText(84, 1258, 24, colors.text, { opacity: "0.85", lineH: 36 }, spDescLines);
+    return { svg: assessFinishCard(colors, height, assessT("spectrumName"), dateStr, body, assessT("attributionSpectrum")), width: ASSESS_CARD_W, height };
+  }
+
   // sd3 — radar sized so its bottom labels sit close to the trait bars
   height = 1560;
-  const archetype = SD3_ARCHETYPES[result.archetypeKey];
+  const archetype = SD3_ARCHETYPES[result.archetypeId] || SD3_ARCHETYPES.balanced;
   const radarRows = SD3_TEST_META.traits.map((t) => ({
     label: pickLang(SD3_TRAIT_INFO[t], "short"),
     value: result.norm[t],
@@ -159,7 +189,7 @@ function buildResultCardSvg(testId, result) {
   const traitBars = SD3_TEST_META.traits.map((t) => ({
     label: pickLang(SD3_TRAIT_INFO[t], "label"),
     pct: result.norm[t],
-    valueText: `${result.norm[t]}/100 · ${assessT(result.high[t] ? "high" : "low")}`,
+    valueText: `${result.norm[t]}/100 · ${assessT(result.levels ? result.levels[t] : (result.high[t] ? "high" : "low"))}`,
   }));
   const descLines = assessWrapText(pickLang(archetype, "desc"), 88).slice(0, 3);
   body =

@@ -13,8 +13,8 @@
 // functions — no edits to their bodies.
 (function () {
   // testId → public slug, and slug → testId (dark-triad is the friendly slug for sd3)
-  const A_SLUG = { iq: "iq", analytical: "analytical", sd3: "dark-triad" };
-  const A_ID = { iq: "iq", analytical: "analytical", "dark-triad": "sd3", sd3: "sd3" };
+  const A_SLUG = { iq: "iq", analytical: "analytical", sd3: "dark-triad", spectrum: "spectrum" };
+  const A_ID = { iq: "iq", analytical: "analytical", "dark-triad": "sd3", sd3: "sd3", spectrum: "spectrum", sexuality: "spectrum" };
 
   const setSlug = (file) => String(file || "").replace(/^q_/i, "").replace(/\.json$/i, "").toLowerCase();
   const knownSet = (f) => typeof BUNDLED_SETS !== "undefined" && BUNDLED_SETS.some((s) => s.file === f);

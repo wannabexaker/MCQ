@@ -240,3 +240,87 @@ function renderSd3Results(host, result, opts) {
   host.appendChild(section);
   wireResultActions(section, "sd3", opts);
 }
+
+/* ── Sexuality Spectrum results ─────────────────────────────────── */
+function renderSpectrumResults(host, result, opts) {
+  const section = document.createElement("section");
+  section.className = "card assess-card assess-results";
+
+  const cat = SPECTRUM_RESULTS[result.categoryId] || SPECTRUM_RESULTS.questioning;
+  const note = (key) => pickLang(SPECTRUM_NOTES, key);
+
+  const mapSvg = buildAttractionMapSvg({
+    x: result.norm.O,
+    y: result.norm.S,
+    labels: {
+      br: pickLang(SPECTRUM_RESULTS.straight, "name"),
+      tl: pickLang(SPECTRUM_RESULTS.gay, "name"),
+      tr: pickLang(SPECTRUM_RESULTS.bi, "name") + " / " + pickLang(SPECTRUM_RESULTS.pan, "name"),
+      bl: pickLang(SPECTRUM_RESULTS.ace, "name"),
+      xAxis: pickLang(SPECTRUM_DIM_INFO.O, "short"),
+      yAxis: pickLang(SPECTRUM_DIM_INFO.S, "short"),
+      you: assessT("you"),
+    },
+  });
+
+  const dimBars = SPECTRUM_TEST_META.dims.map((d) => ({
+    label: pickLang(SPECTRUM_DIM_INFO[d], "label"),
+    pct: result.norm[d],
+    valueText: `${result.norm[d]}/100 · ${assessT(result.levels[d])}`,
+  }));
+
+  const dimBlocks = SPECTRUM_TEST_META.dims
+    .map((d) => {
+      const info = SPECTRUM_DIM_INFO[d];
+      return `<div class="assess-block">
+        <div class="assess-block-head">
+          <span class="assess-block-label">${escapeHTML(pickLang(info, "label"))}</span>
+          <span class="assess-block-score">${result.norm[d]}/100</span>
+          ${assessChipHtml(result.levels[d])}
+        </div>
+        <p class="assess-block-desc">${escapeHTML(pickLang(info, "desc"))}</p>
+      </div>`;
+    })
+    .join("");
+
+  const qualifiers = [];
+  if (result.biLean === "same") qualifiers.push(note("biLeanSame"));
+  if (result.biLean === "other") qualifiers.push(note("biLeanOther"));
+  if (result.romLean) {
+    const romKey = { same: "romSame", other: "romOther", both: "romBoth", none: "romNone" }[result.romLean];
+    qualifiers.push(`${note("romLead")} ${note(romKey)}.`);
+  }
+  if (result.fluid) qualifiers.push(note("fluid"));
+  const qualifiersHtml = qualifiers.length
+    ? `<div class="assess-archetype">${qualifiers.map((q) => `<p>${escapeHTML(q)}</p>`).join("")}</div>`
+    : "";
+
+  const kinseyHtml = result.kinsey !== null && !["ace", "grayAce", "demi", "questioning"].includes(result.categoryId)
+    ? `<div class="assess-hero-raw">${escapeHTML(assessT("kinseyLabel"))}: ${result.kinsey}/6</div>`
+    : "";
+
+  section.innerHTML = `
+    <h2 class="assess-title">🌈 ${escapeHTML(assessT("spectrumName"))}</h2>
+    ${assessSharedNoteHtml(opts)}
+    <div class="assess-hero">
+      <div class="assess-hero-label">${escapeHTML(assessT("alignLabel"))}</div>
+      <div class="assess-hero-main">${escapeHTML(pickLang(cat, "name"))}</div>
+      ${kinseyHtml}
+    </div>
+    <div class="assess-chart assess-chart-radar">${mapSvg}</div>
+    <div class="assess-archetype">
+      <p class="assess-band-head"><strong>${escapeHTML(pickLang(cat, "desc"))}</strong></p>
+      <p>${escapeHTML(pickLang(cat, "meaning"))}</p>
+      <p class="assess-caption">${escapeHTML(pickLang(cat, "nearby"))}</p>
+    </div>
+    ${qualifiersHtml}
+    <h3 class="assess-section-title">${escapeHTML(assessT("dimBreakdown"))}</h3>
+    <div class="assess-chart">${buildDomainBarsSvg(dimBars)}</div>
+    ${dimBlocks}
+    ${assessLimitationsHtml(note("identity") + " " + note("framing"))}
+    ${assessActionsHtml(opts)}
+    ${assessFooterHtml(assessT("attributionSpectrum"))}
+  `;
+  host.appendChild(section);
+  wireResultActions(section, "spectrum", opts);
+}

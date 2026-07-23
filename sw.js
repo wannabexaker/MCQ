@@ -1,7 +1,7 @@
 // Bump CACHE_VERSION every time the app shell (script.js/style.css/index.html)
 // changes — the activate handler purges old caches, and clients.claim() makes
 // the new SW take control of already-open tabs immediately.
-const CACHE_VERSION = "mcq-v15";
+const CACHE_VERSION = "mcq-v16";
 
 const APP_SHELL = [
   "./",
@@ -26,6 +26,7 @@ const APP_SHELL = [
   "./js/18-assess-engine.js",
   "./js/19-assess-export.js",
   "./js/20-share-links.js",
+  "./js/21-assess-data-spectrum.js",
   "./style.css",
   "./manifest.json",
   "./images/favicon.png",

@@ -11,7 +11,7 @@
 const ASSESS_I18N = {
   en: {
     hubTitle: "Assessments",
-    hubIntro: "Three self-tests with rich, explained results — an IQ estimate, an analytical-thinking profile, and a Dark-Triad personality archetype. Unlike the quiz sets, you don't just get a score: every result explains what it means.",
+    hubIntro: "Four self-tests with rich, explained results — an IQ estimate, an analytical-thinking profile, a Dark-Triad personality archetype, and a sexuality-spectrum profile. Unlike the quiz sets, you don't just get a score: every result explains what it means.",
     hubPrivacy: "Everything runs on this device — nothing is uploaded.",
     backToQuiz: "← Back to quiz",
     iqName: "IQ Test",
@@ -20,6 +20,12 @@ const ASSESS_I18N = {
     iqDesc: "20 questions · 4 domains. Estimates an IQ band with strengths and weaknesses per domain.",
     analyticalDesc: "25 logic questions. Places you on a 7-band ladder from Chaotic Thinker to Mastermind Intelligence.",
     sd3Desc: "27 statements, 1–5 agreement. Maps narcissism, Machiavellianism and psychopathy to one of 13 archetypes. No right answers.",
+    spectrumName: "Sexuality Spectrum Test",
+    spectrumDesc: "28 statements, 1–5 agreement. Maps six attraction dimensions to a region of the sexuality spectrum. No right answers — and only you can name your identity.",
+    alignLabel: "YOUR ANSWERS ALIGN MOST CLOSELY WITH",
+    kinseyLabel: "Kinsey-style position",
+    dimBreakdown: "Dimension breakdown",
+    attributionSpectrum: "Dimensions inspired by the Kinsey scale, the Klein Sexual Orientation Grid and asexuality research. Items are original.",
     itemsLabel: "questions",
     minutesLabel: "min",
     notStarted: "Not started",
@@ -82,7 +88,7 @@ const ASSESS_I18N = {
   },
   el: {
     hubTitle: "Αξιολογήσεις",
-    hubIntro: "Τρία τεστ αυτοαξιολόγησης με πλούσια, επεξηγημένα αποτελέσματα — εκτίμηση IQ, προφίλ αναλυτικής σκέψης και αρχέτυπο προσωπικότητας Σκοτεινής Τριάδας. Σε αντίθεση με τα σετ του κουίζ, δεν παίρνεις απλώς ένα σκορ: κάθε αποτέλεσμα εξηγεί τι σημαίνει.",
+    hubIntro: "Τέσσερα τεστ αυτοαξιολόγησης με πλούσια, επεξηγημένα αποτελέσματα — εκτίμηση IQ, προφίλ αναλυτικής σκέψης και αρχέτυπο προσωπικότητας Σκοτεινής Τριάδας. Σε αντίθεση με τα σετ του κουίζ, δεν παίρνεις απλώς ένα σκορ: κάθε αποτέλεσμα εξηγεί τι σημαίνει.",
     hubPrivacy: "Όλα τρέχουν σε αυτή τη συσκευή — τίποτα δεν αποστέλλεται.",
     backToQuiz: "← Πίσω στο κουίζ",
     iqName: "Τεστ IQ",
@@ -91,6 +97,12 @@ const ASSESS_I18N = {
     iqDesc: "20 ερωτήσεις · 4 τομείς. Εκτιμά εύρος IQ με δυνατά και αδύναμα σημεία ανά τομέα.",
     analyticalDesc: "25 ερωτήσεις λογικής. Σε τοποθετεί σε κλίμακα 7 βαθμίδων, από Χαοτικό Στοχαστή έως Ιδιοφυή Νου.",
     sd3Desc: "27 δηλώσεις, συμφωνία 1–5. Αποτυπώνει ναρκισσισμό, μακιαβελισμό και ψυχοπάθεια σε 1 από 13 αρχέτυπα. Δεν υπάρχουν σωστές απαντήσεις.",
+    spectrumName: "Τεστ Φάσματος Σεξουαλικότητας",
+    spectrumDesc: "28 δηλώσεις, συμφωνία 1–5. Αποτυπώνει έξι διαστάσεις έλξης σε μια περιοχή του φάσματος σεξουαλικότητας. Δεν υπάρχουν σωστές απαντήσεις — και μόνο εσύ μπορείς να ονομάσεις την ταυτότητά σου.",
+    alignLabel: "ΟΙ ΑΠΑΝΤΗΣΕΙΣ ΣΟΥ ΤΑΙΡΙΑΖΟΥΝ ΠΕΡΙΣΣΟΤΕΡΟ ΜΕ",
+    kinseyLabel: "Θέση τύπου Kinsey",
+    dimBreakdown: "Ανάλυση ανά διάσταση",
+    attributionSpectrum: "Οι διαστάσεις εμπνέονται από την κλίμακα Kinsey, το πλέγμα Klein και την έρευνα για την ασεξουαλικότητα. Τα στοιχεία είναι πρωτότυπα.",
     itemsLabel: "ερωτήσεις",
     minutesLabel: "λεπ.",
     notStarted: "Δεν ξεκίνησε",
@@ -211,8 +223,22 @@ const ASSESS_TESTS = {
     fromStored: (s) => computeSd3FromSums(s.sums),
     render: (host, result, opts) => renderSd3Results(host, result, opts),
   },
+  spectrum: {
+    icon: "🌈",
+    nameKey: "spectrumName",
+    descKey: "spectrumDesc",
+    minutes: 5,
+    kind: "likert",
+    items: () => SPECTRUM_ITEMS,
+    score: (answers) => scoreSpectrum(answers),
+    toStored: (r, attempt) => ({
+      completedAt: Date.now(), sums: r.sums, attempt,
+    }),
+    fromStored: (s) => computeSpectrumFromSums(s.sums),
+    render: (host, result, opts) => renderSpectrumResults(host, result, opts),
+  },
 };
-const ASSESS_TEST_IDS = ["iq", "analytical", "sd3"];
+const ASSESS_TEST_IDS = ["iq", "analytical", "sd3", "spectrum"];
 
 /* ── View state ─────────────────────────────────────────────────── */
 let ASSESS_VIEW = { mode: "inactive", testId: null, index: 0, shared: null };
@@ -280,7 +306,7 @@ function assessmentsEntryCardHtml() {
         <span class="assessments-entry-title">Assessments</span>
         <span class="assessments-entry-badge">NEW</span>
       </div>
-      <p class="assessments-entry-desc">IQ · Analytical Thinking · Dark Triad — three self-tests with rich, explained results. Free, on-device, bilingual (EN/EL). Not a clinical assessment.</p>
+      <p class="assessments-entry-desc">IQ · Analytical Thinking · Dark Triad · Sexuality Spectrum — four self-tests with rich, explained results. Free, on-device, bilingual (EN/EL). Not a clinical assessment.</p>
     </div>`;
 }
 
@@ -677,7 +703,7 @@ function submitAssessment() {
     saveAssessResult(testId, test.toStored(result, attempt));
     deleteAssessSession(testId);
     const logDetail = { event: "submit", test: testId, attempt };
-    if (testId !== "sd3") logDetail.raw = result.raw; // never log SD-3 scores (privacy)
+    if (testId !== "sd3" && testId !== "spectrum") logDetail.raw = result.raw; // never log SD-3/spectrum scores (privacy)
     logActivity("assessment", logDetail);
     ASSESS_VIEW = { mode: "results", testId, index: 0, shared: null };
     renderAssessmentView();

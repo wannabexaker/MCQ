@@ -190,7 +190,7 @@ try {
   await evalJs(`document.getElementById('openAssessments').click(); true`);
   await waitFor(`!!document.querySelector('.assess-hub')`);
   const testCards = await evalJs(`document.querySelectorAll('.assess-test-card').length`);
-  check("hub shows 3 test cards", testCards === 3, `got ${testCards}`);
+  check("hub shows 4 test cards", testCards === 4, `got ${testCards}`);
   const modeOn = await evalJs(`document.body.classList.contains('assessment-on')`);
   check("assessment mode class set", modeOn === true);
   const controlsHidden = await evalJs(`
@@ -308,7 +308,7 @@ try {
   // Hub renders share buttons; Back from a test returns to the hub.
   await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html#assessments` });
   await waitFor(`ASSESS_VIEW.mode === 'hub'`);
-  check("#assessments opens the hub", await evalJs(`document.querySelectorAll('.assess-test-share').length`) === 3);
+  check("#assessments opens the hub", await evalJs(`document.querySelectorAll('.assess-test-share').length`) === 4);
   await evalJs(`[...document.querySelectorAll('.assess-test-primary')].find(b => b.dataset.test === 'iq')?.click()`);
   await waitFor(`ASSESS_VIEW.mode === 'running' && ASSESS_VIEW.testId === 'iq'`);
   check("hub card start reflects #iq in the URL", await evalJs(`location.hash`) === "#iq");
@@ -327,6 +327,51 @@ try {
     })()
   `);
   check("Share copies a clean #iq link", aShare === await evalJs(`location.origin + location.pathname + '#iq'`), `got "${aShare}"`);
+
+  console.log("sexuality spectrum:");
+  // Clean #spectrum link opens the new test directly.
+  await evalJs(`localStorage.clear()`);
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html#spectrum` });
+  await waitFor(`typeof ASSESS_VIEW !== 'undefined' && ASSESS_VIEW.mode === 'running' && ASSESS_VIEW.testId === 'spectrum'`);
+  check("#spectrum opens the test directly", true);
+  // Drive all 28 likert items through the real UI with a heterosexual-profile
+  // answer key (other-gender max, same-gender min, intensity high, rest low).
+  const spOutcome = await evalJs(`
+    (() => {
+      const items = ASSESS_TESTS.spectrum.items();
+      const valFor = (it) => {
+        let hi;
+        if (it.dim === 'O' || it.dim === 'I') hi = true;
+        else hi = false;
+        const base = hi ? 5 : 1;
+        return it.reverse ? 6 - base : base;
+      };
+      let guard = 0;
+      while (ASSESS_VIEW.mode === 'running' && guard++ < 60) {
+        const it = items[ASSESS_VIEW.index];
+        const btn = [...document.querySelectorAll('#quiz .assess-likert-btn')].find(b => b.textContent.trim()[0] === String(valFor(it)));
+        if (!btn) return 'nobtn@' + ASSESS_VIEW.index;
+        btn.click();
+        const next = document.getElementById('assessNavNext');
+        if (!next) return 'nonext';
+        next.click();
+      }
+      return ASSESS_VIEW.mode;
+    })()
+  `);
+  check("spectrum full run submits", spOutcome === "results", `got ${spOutcome}`);
+  await waitFor(`!!document.querySelector('.assess-hero-main')`);
+  const spHero = await evalJs(`(document.querySelector('.assess-hero-main')||{}).textContent || ''`);
+  check("hetero profile lands on Heterosexual", /Heterosexual/i.test(spHero), `got "${spHero}"`);
+  const spMap = await evalJs(`!!document.querySelector('.assess-results svg circle')`);
+  check("attraction map renders with a marker", spMap === true);
+  const spStored = await evalJs(`
+    (() => { try {
+      const s = JSON.parse(localStorage.getItem('assessments-results-v1'));
+      return s && s.spectrum && s.spectrum.sums ? 'sums-only:' + Object.keys(s.spectrum).sort().join(',') : 'missing';
+    } catch { return 'err'; } })()
+  `);
+  check("spectrum stores aggregates only", /^sums-only:/.test(spStored) && !spStored.includes("answers"), spStored);
 
   console.log("set deep-links:");
   // Question sets also get clean #hash links, isolated to just that set.

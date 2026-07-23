@@ -145,3 +145,38 @@ function buildBandLadderSvg(opts) {
 
   return `<svg viewBox="0 0 640 112" xmlns="http://www.w3.org/2000/svg" role="img" preserveAspectRatio="xMidYMid meet">${segs}${ticks}${marker}</svg>`;
 }
+
+/* Attraction map (sexuality spectrum): 2D plane, x = other-gender
+   attraction 0-100, y = same-gender attraction 0-100, with soft
+   quadrant labels and a "you" marker. opts = { x, y, labels:
+   { br, tl, tr, bl, you } } — all labels pre-localized.          */
+function buildAttractionMapSvg(opts) {
+  const { x, y, labels } = opts;
+  const W = 460, H = 400, PAD = 52;
+  const plotW = W - PAD * 2, plotH = H - PAD * 2;
+  const px = PAD + (Math.max(0, Math.min(100, x)) / 100) * plotW;
+  const py = H - PAD - (Math.max(0, Math.min(100, y)) / 100) * plotH;
+  const grid = [25, 50, 75]
+    .map((v) => {
+      const gx = PAD + (v / 100) * plotW;
+      const gy = H - PAD - (v / 100) * plotH;
+      return `<line x1="${gx}" y1="${PAD}" x2="${gx}" y2="${H - PAD}" stroke="var(--border)" stroke-width="1" opacity="0.5"/>` +
+             `<line x1="${PAD}" y1="${gy}" x2="${W - PAD}" y2="${gy}" stroke="var(--border)" stroke-width="1" opacity="0.5"/>`;
+    })
+    .join("");
+  const quad = (qx, qy, text) =>
+    `<text x="${qx}" y="${qy}" text-anchor="middle" font-size="13" fill="var(--text)" opacity="0.45">${escapeHTML(text)}</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" preserveAspectRatio="xMidYMid meet">
+    <rect x="${PAD}" y="${PAD}" width="${plotW}" height="${plotH}" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+    ${grid}
+    ${quad(PAD + plotW * 0.75, PAD + plotH * 0.97 - 6, labels.br)}
+    ${quad(PAD + plotW * 0.25, PAD + 18, labels.tl)}
+    ${quad(PAD + plotW * 0.75, PAD + 18, labels.tr)}
+    ${quad(PAD + plotW * 0.25, PAD + plotH * 0.97 - 6, labels.bl)}
+    <text x="${W / 2}" y="${H - 12}" text-anchor="middle" font-size="14" fill="var(--text)" opacity="0.8">${escapeHTML(labels.xAxis)} →</text>
+    <text x="16" y="${H / 2}" text-anchor="middle" font-size="14" fill="var(--text)" opacity="0.8" transform="rotate(-90 16 ${H / 2})">${escapeHTML(labels.yAxis)} →</text>
+    <circle cx="${px}" cy="${py}" r="9" fill="var(--accent)"/>
+    <circle cx="${px}" cy="${py}" r="14" fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.5"/>
+    <text x="${Math.min(Math.max(px, PAD + 30), W - PAD - 30)}" y="${Math.max(py - 20, PAD + 14)}" text-anchor="middle" font-size="15" font-weight="bold" fill="var(--text)">${escapeHTML(labels.you)}</text>
+  </svg>`;
+}

@@ -13,6 +13,7 @@ const FILES = [
   "js/12-assess-data-iq.js",
   "js/13-assess-data-analytical.js",
   "js/14-assess-data-sd3.js",
+  "js/21-assess-data-spectrum.js",
   "js/15-assess-scoring.js",
   "js/19-assess-export.js", // top-level is pure (consts + function declarations)
 ];
@@ -30,7 +31,9 @@ try {
        SD3_TEST_META, SD3_ITEMS, SD3_LIKERT, SD3_TRAIT_INFO, SD3_ARCHETYPES, SD3_RESULT_NOTES,
        SD3_THRESHOLDS, scoreIq, computeIqFromDomains, iqBandText,
        scoreAnalytical, analyticalBandIndex, analyticalAreaFlag, analyticalPercentile,
-       scoreSd3, computeSd3FromSums, encodeShare, decodeShare, buildMinimalPdf })`;
+       scoreSd3, computeSd3FromSums, encodeShare, decodeShare, buildMinimalPdf,
+       SPECTRUM_TEST_META, SPECTRUM_ITEMS, SPECTRUM_DIM_INFO, SPECTRUM_RESULTS, SPECTRUM_NOTES,
+       scoreSpectrum, computeSpectrumFromSums, spectrumCategoryId })`;
   G = vm.runInNewContext(src, {}, { filename: "assess-combined.js" });
 } catch (e) {
   console.error(`FAIL: could not evaluate assessment scripts — ${e.message}`);
@@ -377,8 +380,98 @@ function checkUniqueIds(where, items) {
   if (!text.includes("/Filter /DCTDecode")) err(W, "image XObject is not DCTDecode");
 }
 
+// ── Sexuality Spectrum data + scoring ───────────────────────────────
+{
+  const W = "spectrum";
+  const items = G.SPECTRUM_ITEMS;
+  const meta = G.SPECTRUM_TEST_META;
+  if (!Array.isArray(items) || items.length !== 28) err(W, `expected exactly 28 items, found ${items?.length}`);
+  checkUniqueIds(W, items);
+
+  const perDim = {}, reversed = {};
+  items.forEach((it, i) => {
+    const at = `${W}[${it.id || i}]`;
+    if (!meta.dims.includes(it.dim)) err(at, `unknown dim ${it.dim}`);
+    perDim[it.dim] = (perDim[it.dim] || 0) + 1;
+    if (it.reverse) reversed[it.dim] = (reversed[it.dim] || 0) + 1;
+    if (typeof it.reverse !== "boolean") err(at, "reverse must be boolean");
+    if (!isNonEmptyString(it.text_en)) err(at, "missing text_en");
+  });
+  for (const d of meta.dims) {
+    if (perDim[d] !== meta.dimCounts[d]) err(W, `dim ${d} must have ${meta.dimCounts[d]} items (found ${perDim[d] || 0})`);
+    if (!reversed[d]) err(W, `dim ${d} must have at least 1 reverse-keyed item`);
+  }
+
+  const catKeys = Object.keys(G.SPECTRUM_RESULTS).sort();
+  const expectedCats = ["ace", "bi", "demi", "gay", "grayAce", "mostlyGay", "mostlyStraight", "pan", "questioning", "straight"];
+  if (catKeys.join(",") !== expectedCats.join(","))
+    err(W, `category keys must be exactly ${expectedCats.join(" ")} (found ${catKeys.join(" ")})`);
+
+  checkBilingual("spectrum.items", items);
+  checkBilingual("spectrum.dimInfo", G.SPECTRUM_DIM_INFO);
+  checkBilingual("spectrum.results", G.SPECTRUM_RESULTS);
+  checkBilingual("spectrum.notes", G.SPECTRUM_NOTES);
+
+  // Reverse-keying applies: all-5 answers must NOT max any dimension.
+  const allFive = {};
+  items.forEach((it) => { allFive[it.id] = 5; });
+  const r5 = G.scoreSpectrum(allFive);
+  for (const d of meta.dims) {
+    if (r5.norm[d] === 100) err(W, `all-5 answers max out dim ${d} — reverse keying broken`);
+  }
+
+  // Full-range: min answers → 0%, max (respecting reverse) → 100%.
+  const minA = {}, maxA = {};
+  items.forEach((it) => { minA[it.id] = it.reverse ? 5 : 1; maxA[it.id] = it.reverse ? 1 : 5; });
+  const rMin = G.scoreSpectrum(minA), rMax = G.scoreSpectrum(maxA);
+  for (const d of meta.dims) {
+    if (rMin.norm[d] !== 0) err(W, `min ${d} should be 0%, got ${rMin.norm[d]}`);
+    if (rMax.norm[d] !== 100) err(W, `max ${d} should be 100%, got ${rMax.norm[d]}`);
+  }
+
+  // Profile anchors → expected categories.
+  const mk = (o) => G.computeSpectrumFromSums({ S: o.S, O: o.O, I: o.I, D: o.D, G: o.G, F: o.F });
+  const anchors = [
+    [{ S: 6, O: 30, I: 30, D: 3, G: 4, F: 3 }, "straight"],
+    [{ S: 30, O: 6, I: 30, D: 3, G: 4, F: 3 }, "gay"],
+    [{ S: 26, O: 26, I: 30, D: 3, G: 12, F: 3 }, "bi"],
+    [{ S: 26, O: 26, I: 30, D: 3, G: 19, F: 3 }, "pan"],
+    [{ S: 6, O: 30, I: 6, D: 3, G: 4, F: 3 }, "ace"],
+    [{ S: 6, O: 30, I: 14, D: 15, G: 4, F: 3 }, "demi"],
+    [{ S: 6, O: 30, I: 13, D: 3, G: 4, F: 3 }, "grayAce"],
+    [{ S: 8, O: 8, I: 30, D: 3, G: 4, F: 15 }, "questioning"],
+    [{ S: 14, O: 30, I: 30, D: 3, G: 4, F: 3 }, "mostlyStraight"],
+    [{ S: 30, O: 14, I: 30, D: 3, G: 4, F: 3 }, "mostlyGay"],
+  ];
+  for (const [sums, expect] of anchors) {
+    const got = mk(sums).categoryId;
+    if (got !== expect) err(W, `sums ${JSON.stringify(sums)} → ${got}, expected ${expect}`);
+  }
+
+  // Sweep: every combination yields a known category and in-range norms.
+  const CATS = new Set(expectedCats);
+  for (let S = 6; S <= 30; S += 6) for (let O = 6; O <= 30; O += 6)
+  for (let I = 6; I <= 30; I += 6) for (let D = 3; D <= 15; D += 6)
+  for (let Gv = 4; Gv <= 20; Gv += 8) {
+    const res = mk({ S, O, I, D, G: Gv, F: 9 });
+    if (!CATS.has(res.categoryId)) err(W, `unknown category ${res.categoryId} for S${S} O${O} I${I} D${D} G${Gv}`);
+    for (const d of meta.dims) {
+      if (res.norm[d] < 0 || res.norm[d] > 100) { err(W, "norm out of range"); break; }
+    }
+  }
+
+  // Codec round-trip.
+  const sample = mk({ S: 22, O: 14, I: 25, D: 7, G: 11, F: 8 });
+  const enc = G.encodeShare("spectrum", sample);
+  if (!/^1x\d{12}$/.test(enc || "")) err(W, `codec payload malformed: ${enc}`);
+  const dec = G.decodeShare(enc);
+  if (!dec || dec.testId !== "spectrum") err(W, "codec decode failed");
+  else if (JSON.stringify(dec.result.sums) !== JSON.stringify(sample.sums)) err(W, "codec round-trip sums mismatch");
+  if (G.decodeShare("1x000000000000")) err(W, "codec accepted out-of-range sums");
+}
+
 if (errors) {
   console.error(`\nFAIL: ${errors} error(s) in assessment data/scoring`);
   process.exit(1);
 }
-console.log("OK: assessments valid (20 IQ · 25 analytical · 27 SD-3, scoring + codec + pdf sane)");
+console.log("OK: assessments valid (20 IQ · 25 analytical · 27 SD-3 · 28 spectrum, scoring + codec + pdf sane)");
