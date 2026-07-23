@@ -25,9 +25,9 @@ Opens on a landing page with pickable question sets, validates every bank agains
 
 ### Assessments (special section)
 - **Three self-tests** behind the 🎯 topbar button and a landing-page card — a parallel track to the quiz engine with a sequential one-question-at-a-time flow, progress bar, skip & return (clickable dot strip), autosave/resume, and rich explained results:
-  - **IQ Test** — 20 original ICAR-style items (4 domains × 5 difficulties; matrix/spatial items use inline-SVG stimuli and visual answer tiles) → IQ estimate band on a bell curve, per-domain percentiles, strengths/weaknesses with concrete guidance
-  - **Analytical Thinking Test** — 25 logic items (deduction, patterns, syllogisms, critical thinking, trap puzzles) → 7 named bands (Chaotic Thinker → Mastermind Intelligence) on a band ladder, plus per-area notes
-  - **Dark Triad (SD-3 style)** — 27 Likert statements (no right answers) → narcissism / Machiavellianism / psychopathy radar, each trait scored 0–100% on a graded 5-level scale (Very low → Very high), and one of **13 named archetypes** (gentle → moderate → dark) with fictional examples and a cognitive-tendency note
+  - **IQ Test** — 20 original ICAR-style items (4 domains × 5 difficulties; matrix/spatial items use inline-SVG stimuli and visual answer tiles) → reliability-shrunk IQ estimate band on a bell curve (honest 60-140 clamp), per-domain percentiles, strengths/weaknesses with concrete guidance
+  - **Analytical Thinking Test** — 25 logic items (deduction, patterns, syllogisms, critical thinking, trap puzzles) → 7 named bands (Chaotic Thinker → Mastermind Intelligence) on a band ladder, an estimated population percentile, plus per-area notes
+  - **Dark Triad (SD-3 style)** — 27 Likert statements (no right answers) → narcissism / Machiavellianism / psychopathy radar, each trait scored 0–100% with population-anchored 5-level grades (Very low → Very high — 'Moderate' means near the average person for THAT trait), and one of **13 named archetypes** (gentle → moderate → dark) with fictional examples and a cognitive-tendency note
 - Fully bilingual EN/ΕΛ — items, UI labels and result texts all switch with the existing language toggle
 - **Shareable results** via a compact `?ar=` URL payload (aggregates only, never per-item answers); opening a share link renders a read-only result and writes nothing to storage
 - **Save any result as a designed PNG image or a real one-page PDF** — generated fully client-side from a themed SVG card (canvas rasterization + a hand-built minimal PDF writer, zero dependencies)
@@ -60,7 +60,7 @@ Opens on a landing page with pickable question sets, validates every bank agains
 ### Platform
 - Three themes (`dark`, `light`, `gay`), CSS-variable based — the third one is an easter egg with a fleeing "No" button (Esc ×3 always returns to dark)
 - **Guarded storage**: all `localStorage` access goes through a wrapper with an in-memory fallback, so private browsing modes and quota errors never crash the app
-- Service worker (cache `mcq-v14`): network-first app shell and question files, cache-first images; installable PWA
+- Service worker (cache `mcq-v15`): network-first app shell and question files, cache-first images; installable PWA
 - Open Graph + Twitter card meta for link previews
 - Optimized assets: ~140 KB of images on page load (512px icon loads only on PWA install)
 - Docker image (nginx) for production hosting; one-command local server scripts for Windows
@@ -231,7 +231,7 @@ mcq/
 ├── index.html               — DOM, modals, PWA/social meta, ordered script tags
 ├── js/                      — app code, 19 ordered files (01–11 quiz, 12–19 assessments)
 ├── style.css                — theming, layout, focus styles
-├── sw.js                    — service worker (cache mcq-v14)
+├── sw.js                    — service worker (cache mcq-v15)
 ├── manifest.json            — PWA manifest
 ├── sources_index.json       — intentionally empty (see Components)
 ├── questions_template.json  — annotated question template

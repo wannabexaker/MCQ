@@ -163,6 +163,9 @@ function renderAnalyticalResults(host, result, opts) {
     <div class="assess-hero">
       <div class="assess-hero-main">${escapeHTML(pickLang(band, "name"))}</div>
       <div class="assess-hero-raw">${escapeHTML(assessT("rawScore"))}: ${result.raw}/25</div>
+      ${Number.isFinite(result.percentile)
+        ? `<div class="assess-hero-raw">${escapeHTML(assessT("anPercentile").replace("{p}", String(result.percentile)))}</div>`
+        : ""}
     </div>
     <div class="assess-chart">${buildBandLadderSvg({ raw: result.raw, bands: ANALYTICAL_BANDS, currentIndex: result.bandIndex })}</div>
     <ul class="assess-band-list">${bandList}</ul>

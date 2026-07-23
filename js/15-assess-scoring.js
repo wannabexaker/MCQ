@@ -29,8 +29,14 @@ function normalCdf(z) {
 const IQ_MODEL = {
   mean: 11.0,
   sd: 3.5,
-  clampLo: 55,
-  clampHi: 145,
+  // Reliability attenuation: a 20-item test measures with noise, so the best
+  // estimate of the "true" z is r·z_observed (classical true-score shrinkage).
+  // This pulls extreme results realistically toward 100 — a perfect 20/20
+  // reads ~133, not 139+ — and the clamp is narrowed to what such a short
+  // test can honestly claim.
+  reliability: 0.85,
+  clampLo: 60,
+  clampHi: 140,
   bandHalfWidth: 7.5,
   domainMean: 2.75,
   domainSd: 1.3,
@@ -55,9 +61,10 @@ function scoreIq(answers) {
 function computeIqFromDomains(domains) {
   const raw = IQ_TEST_META.domains.reduce((s, d) => s + (domains[d] || 0), 0);
   const z = (raw - IQ_MODEL.mean) / IQ_MODEL.sd;
+  const zTrue = z * IQ_MODEL.reliability; // shrink toward the mean (see IQ_MODEL)
   const iqPoint = Math.min(
     IQ_MODEL.clampHi,
-    Math.max(IQ_MODEL.clampLo, Math.round(100 + 15 * z))
+    Math.max(IQ_MODEL.clampLo, Math.round(100 + 15 * zTrue))
   );
   const bandLo = Math.max(IQ_MODEL.clampLo, Math.round((iqPoint - IQ_MODEL.bandHalfWidth) / 5) * 5);
   const bandHi = Math.min(IQ_MODEL.clampHi, Math.round((iqPoint + IQ_MODEL.bandHalfWidth) / 5) * 5);
@@ -91,12 +98,21 @@ function scoreAnalytical(answers) {
     }
   });
   const raw = ANALYTICAL_TEST_META.areas.reduce((s, a) => s + areas[a], 0);
-  return { raw, areas, bandIndex: analyticalBandIndex(raw) };
+  return { raw, areas, bandIndex: analyticalBandIndex(raw), percentile: analyticalPercentile(raw) };
 }
 
 function analyticalBandIndex(raw) {
   const i = ANALYTICAL_BANDS.findIndex((b) => raw >= b.min && raw <= b.max);
   return i >= 0 ? i : 0;
+}
+
+/* Estimated population standing for a raw 0..25: assumed μ=13, σ=4
+   (mixed-difficulty items, 4-option guessing floor ≈6). Rounded to 5,
+   clamped to [1,99] — an estimate, not a norm, and labeled as such. */
+function analyticalPercentile(raw) {
+  const z = (raw - 13) / 4;
+  const pct = Math.round((normalCdf(z) * 100) / 5) * 5;
+  return Math.min(99, Math.max(1, pct));
 }
 
 function analyticalAreaFlag(count) {
@@ -125,12 +141,25 @@ function scoreSd3(answers) {
 }
 
 // Deterministic derivation from trait sums (also used by the decoder).
-// Map a 0-100 trait score to a graded level (5 bands with even 20-point cuts).
-function sd3LevelKey(norm) {
-  if (norm < 20) return "veryLow";
-  if (norm < 40) return "low";
-  if (norm < 60) return "moderate";
-  if (norm < 80) return "high";
+/* Per-trait graded levels, anchored to published SD3 sample statistics
+   (Jones & Paulhus, 2014: means ≈ N 2.8 · M 3.1 · P 2.1 on the 1-5 scale,
+   SDs ≈ 0.75/0.72/0.66 → on the 0-100 norm: mean ≈ N 45 · M 53 · P 27,
+   σ ≈ 19/18/17). Cuts sit at mean −1.5σ, −0.5σ, +0.5σ, +1.5σ, so
+   "Moderate" genuinely means "around the average person" for EACH trait —
+   e.g. Psychopathy 50/100 is HIGH relative to people (its mean is ~27),
+   while Machiavellianism 50/100 is Moderate (its mean is ~53). */
+const SD3_LEVEL_CUTS = {
+  N: [17, 36, 54, 73],
+  M: [25, 43, 61, 79],
+  P: [5, 19, 36, 52],
+};
+
+function sd3LevelKey(trait, norm) {
+  const c = SD3_LEVEL_CUTS[trait] || [20, 40, 60, 80];
+  if (norm < c[0]) return "veryLow";
+  if (norm < c[1]) return "low";
+  if (norm < c[2]) return "moderate";
+  if (norm < c[3]) return "high";
   return "veryHigh";
 }
 
@@ -144,7 +173,13 @@ function sd3ArchetypeId(norm) {
   const balanced = spread < 15;
   const dom = (N >= M && N >= P) ? "N" : (M >= P ? "M" : "P");
   const byDom = (n, m, p) => (dom === "N" ? n : dom === "M" ? m : p);
+  const domVal = byDom(N, M, P);
+  const othersAvg = ((N + M + P) - domVal) / 2;
   if (avg >= 78 && Math.min(N, M, P) >= 60) return "triad"; // all three genuinely high
+  // Dominance override: one trait pegged very high and clearly ahead of the
+  // rest defines the profile even when the overall average is tame —
+  // e.g. Narcissism 100 with the others low IS "The Star".
+  if (domVal >= 80 && domVal - othersAvg >= 25) return byDom("star", "operator", "daredevil");
   if (avg < 22) return "gentle";
   if (avg < 40) return balanced ? "grounded" : byDom("quiet", "diplomat", "freespirit");
   if (avg < 60) return balanced ? "balanced" : byDom("charmer", "strategist", "maverick");
@@ -164,7 +199,7 @@ function computeSd3FromSums(sums) {
     means[t] = sums[t] / 9;
     norm[t] = Math.round(((means[t] - 1) / 4) * 100);
     high[t] = means[t] >= SD3_THRESHOLDS[t];
-    levels[t] = sd3LevelKey(norm[t]);
+    levels[t] = sd3LevelKey(t, norm[t]);
   });
   // Kept for the share codec / backwards compatibility; the results view now
   // uses the graded archetypeId instead.
@@ -217,7 +252,7 @@ function decodeShare(str) {
     if (raw > 25) return null;
     return {
       testId: "analytical",
-      result: { raw, areas: null, bandIndex: analyticalBandIndex(raw) },
+      result: { raw, areas: null, bandIndex: analyticalBandIndex(raw), percentile: analyticalPercentile(raw) },
       partial: true,
     };
   }

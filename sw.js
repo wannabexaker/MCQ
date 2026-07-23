@@ -1,7 +1,7 @@
 // Bump CACHE_VERSION every time the app shell (script.js/style.css/index.html)
 // changes — the activate handler purges old caches, and clients.claim() makes
 // the new SW take control of already-open tabs immediately.
-const CACHE_VERSION = "mcq-v14";
+const CACHE_VERSION = "mcq-v15";
 
 const APP_SHELL = [
   "./",

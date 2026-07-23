@@ -29,7 +29,7 @@ try {
        ANALYTICAL_TEST_META, ANALYTICAL_ITEMS, ANALYTICAL_BANDS, ANALYTICAL_AREA_INFO,
        SD3_TEST_META, SD3_ITEMS, SD3_LIKERT, SD3_TRAIT_INFO, SD3_ARCHETYPES, SD3_RESULT_NOTES,
        SD3_THRESHOLDS, scoreIq, computeIqFromDomains, iqBandText,
-       scoreAnalytical, analyticalBandIndex, analyticalAreaFlag,
+       scoreAnalytical, analyticalBandIndex, analyticalAreaFlag, analyticalPercentile,
        scoreSd3, computeSd3FromSums, encodeShare, decodeShare, buildMinimalPdf })`;
   G = vm.runInNewContext(src, {}, { filename: "assess-combined.js" });
 } catch (e) {
@@ -227,8 +227,13 @@ function checkUniqueIds(where, items) {
   const bottom = G.scoreIq(allWrong);
   if (top.raw !== 20) err(W, `all-correct raw should be 20, got ${top.raw}`);
   if (bottom.raw !== 0) err(W, `all-wrong raw should be 0, got ${bottom.raw}`);
+  // Reliability shrinkage: a perfect 20/20 should read impressive but honest
+  // (low 130s), and a chance-level ~5/20 should not bottom out the scale.
+  if (top.iqPoint < 128 || top.iqPoint > 138) err(W, `all-correct iqPoint should be ~133, got ${top.iqPoint}`);
+  const chance = G.computeIqFromDomains({ [G.IQ_TEST_META.domains[0]]: 2, [G.IQ_TEST_META.domains[1]]: 1, [G.IQ_TEST_META.domains[2]]: 1, [G.IQ_TEST_META.domains[3]]: 1 });
+  if (chance.iqPoint < 72 || chance.iqPoint > 86) err(W, `chance-level iqPoint should land ~74-84, got ${chance.iqPoint}`);
   for (const r of [top, bottom]) {
-    if (r.iqPoint < 55 || r.iqPoint > 145) err(W, `iqPoint ${r.iqPoint} outside clamp [55,145]`);
+    if (r.iqPoint < 60 || r.iqPoint > 140) err(W, `iqPoint ${r.iqPoint} outside clamp [60,140]`);
     if (!(r.band[0] <= r.iqPoint && r.iqPoint <= r.band[1])) err(W, `band ${r.band} does not contain point ${r.iqPoint}`);
     Object.values(r.domainPercentiles).forEach((p) => {
       if (p < 1 || p > 99) err(W, `domain percentile ${p} outside [1,99]`);
@@ -245,6 +250,16 @@ function checkUniqueIds(where, items) {
     const got = G.analyticalAreaFlag([5, 3, 0][i]);
     if (got !== f) err(W, `area flag for ${[5, 3, 0][i]}/5 should be ${f}, got ${got}`);
   });
+
+  // Percentile estimate: in [1,99], monotonically non-decreasing, centered at μ=13.
+  let prevPct = 0;
+  for (let raw = 0; raw <= 25; raw++) {
+    const pct = G.analyticalPercentile(raw);
+    if (pct < 1 || pct > 99) err(W, `percentile ${pct} for raw ${raw} outside [1,99]`);
+    if (pct < prevPct) err(W, `percentile not monotonic at raw ${raw}`);
+    prevPct = pct;
+  }
+  if (G.analyticalPercentile(13) !== 50) err(W, `raw 13 should be the 50th percentile, got ${G.analyticalPercentile(13)}`);
 
   // SD-3: reverse-keying actually applies (all-5 answers).
   // 6 forward ×5 + 3 reversed ×1 = 33 per trait — agreeing with
@@ -276,6 +291,19 @@ function checkUniqueIds(where, items) {
     if (loAll.norm[t] !== 0) err(W, `min sum ${t} should be 0%, got ${loAll.norm[t]}`);
     if (hiAll.norm[t] !== 100) err(W, `max sum ${t} should be 100%, got ${hiAll.norm[t]}`);
   }
+
+  // Population-anchored levels: 50/100 means different things per trait
+  // (P's sample mean is ~27 → 50 is High there; M's is ~53 → 50 is Moderate).
+  const mid = G.computeSd3FromSums({ N: 27, M: 27, P: 27 }); // all norms = 50
+  if (mid.levels.P !== "high") err(W, `P at 50/100 should read high vs population, got ${mid.levels.P}`);
+  if (mid.levels.M !== "moderate") err(W, `M at 50/100 should read moderate, got ${mid.levels.M}`);
+  if (mid.levels.N !== "moderate") err(W, `N at 50/100 should read moderate, got ${mid.levels.N}`);
+
+  // Dominance override: one pegged trait defines the profile even at a tame average.
+  const domN = G.computeSd3FromSums({ N: 45, M: 9, P: 27 }); // 100 / 0 / 50
+  if (domN.archetypeId !== "star") err(W, `N=100 dominant should be 'star', got ${domN.archetypeId}`);
+  const domP = G.computeSd3FromSums({ N: 9, M: 9, P: 45 }); // 0 / 0 / 100
+  if (domP.archetypeId !== "daredevil") err(W, `P=100 dominant should be 'daredevil', got ${domP.archetypeId}`);
 
   // Sweep the sum space: every norm stays in [0,100], every level + archetypeId is valid.
   const LEVELS = new Set(["veryLow", "low", "moderate", "high", "veryHigh"]);
