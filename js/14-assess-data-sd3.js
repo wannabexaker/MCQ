@@ -173,7 +173,7 @@ const SD3_ARCHETYPES = {
   grounded: {
     name_en: "The Grounded One", name_el: "Ο Προσγειωμένος",
     desc_en: "Low and evenly balanced across all three. Not naive — just steady, straightforward and hard to knock off centre. What you see is what you get.",
-    desc_el: "Χαμηλά και ισορροπημένα και στα τρία. Όχι αφελής — απλώς σταθερός, ευθύς και δύσκολο να χαθείς το κέντρο σου. Ό,τι βλέπεις, αυτό παίρνεις.",
+    desc_el: "Χαμηλά και ισορροπημένα και στα τρία. Όχι αφελής — απλώς σταθερός, ευθύς και δύσκολο να χάσεις το κέντρο σου. Ό,τι βλέπεις, αυτό παίρνεις.",
     cognition_en: "Tends toward calm, methodical reasoning — few careless slips, rarely rattled by trick wording.",
     cognition_el: "Τείνει σε ήρεμη, μεθοδική σκέψη — λίγες απρόσεκτες αστοχίες, σπάνια σε ξεγελούν οι παγίδες.",
     examples_en: "Hermione Granger (Harry Potter), Jim Hopper (Stranger Things)",
@@ -186,7 +186,7 @@ const SD3_ARCHETYPES = {
     cognition_en: "Quietly competent: attempts hard items without fanfare and rarely overclaims.",
     cognition_el: "Ήσυχα ικανός: επιχειρεί τα δύσκολα χωρίς φανφάρες και σπάνια υπερβάλλει.",
     examples_en: "Bruce Banner (The Avengers), Claude Monet (as popularly portrayed)",
-    examples_el: "Μπρους Μπάνερ (The Avengers), Σαμ Ουάιζ (γενικός τύπος του ήσυχου)",
+    examples_el: "Μπρους Μπάνερ (The Avengers), Κλοντ Μονέ (όπως συνήθως παρουσιάζεται)",
   },
   diplomat: {
     name_en: "The Diplomat", name_el: "Ο Διπλωμάτης",
@@ -286,5 +286,5 @@ const SD3_ARCHETYPES = {
 // ── Neutral-framing / limitations note for the SD-3 results ─────
 const SD3_RESULT_NOTES = {
   framing_en: "How to read this: these are personality dimensions, not diagnoses, and every profile has genuine strengths and costs. 'High' and 'Low' are relative to published sample averages (Jones & Paulhus, 2014) — by construction, roughly half of test-takers land 'High' on any trait. A 27-item self-report is a snapshot of how you described yourself today, nothing deeper.",
-  framing_el: "Πώς να το διαβάσεις: πρόκειται για διαστάσεις προσωπικότητας, όχι διαγνώσεις, και κάθε προφίλ έχει πραγματικά πλεονεκτήματα και κόστη. Τα «Υψηλό» και «Χαμηλό» είναι σχετικά με δημοσιευμένους μέσους όρους δείγματος (Jones & Paulhus, 2014) — εκ κατασκευής, περίπου οι μισοί βγαίνουν «Υψηλό» σε κάποιο χαρακτηριστικό. Ένα ερωτηματολόγιο αυτοαναφοράς 27 στοιχείων είναι στιγμιότυπο του πώς περιέγραψες τον εαυτό σου σήμερα, τίποτα βαθύτερο.",
+  framing_el: "Πώς να το διαβάσεις: πρόκειται για διαστάσεις προσωπικότητας, όχι διαγνώσεις, και κάθε προφίλ έχει πραγματικά πλεονεκτήματα και κόστη. Τα «Υψηλό» και «Χαμηλό» είναι σχετικά με δημοσιευμένους μέσους όρους δείγματος (Jones & Paulhus, 2014) — εκ κατασκευής, σε κάθε χαρακτηριστικό περίπου οι μισοί βγαίνουν «Υψηλό». Ένα ερωτηματολόγιο αυτοαναφοράς 27 στοιχείων είναι στιγμιότυπο του πώς περιέγραψες τον εαυτό σου σήμερα, τίποτα βαθύτερο.",
 };
