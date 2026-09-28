@@ -68,6 +68,9 @@ body {
   /* Keep a stable baseline across hosts (including Docker). */
   font-size: 16px;
   overflow-x: hidden;
+  /* clip (not hidden) so body is not a scroll container and the sticky
+     topbar/breadcrumb stay put while scrolling; hidden is the fallback. */
+  overflow-x: clip;
   /* Safe-area insets for notched phones */
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -3112,3 +3115,149 @@ body.assessment-on .footer {
 }
 .welcome-folder-body[hidden] { display: none; }
 .welcome-set-desc { overflow-wrap: anywhere; }
+
+/* =======================================================
+   CONTROLS v2 — smaller, semi-transparent, SVG icons, grouped
+   ======================================================= */
+.ic { display: block; flex-shrink: 0; }
+.controls { gap: 4px; padding: 4px 6px; }
+.controls button,
+.fixed-settings-btn,
+.controls-toggle {
+  height: 34px;
+  min-width: 34px;
+  padding: 0 7px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--btn-bg) 45%, transparent);
+  border-color: color-mix(in srgb, var(--btn-border) 55%, transparent);
+  box-shadow: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.controls-toggle { min-width: 24px; padding: 0 3px; }
+.controls button:hover,
+.fixed-settings-btn:hover,
+.controls-toggle:hover {
+  background: var(--btn-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: none;
+  box-shadow: none;
+}
+.controls button.active {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: none;
+}
+.controls .lang button { font-size: 12px; letter-spacing: 0.5px; }
+.ctrl-sep {
+  width: 1px;
+  height: 20px;
+  margin: 0 3px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.controls.vertical .ctrl-sep { width: auto; height: 1px; margin: 3px 0; }
+.controls button.ctrl-danger:hover,
+.mobile-menu button.ctrl-danger:hover { color: #e5484d; border-color: #e5484d; }
+
+/* Mobile menu: icon + label rows, grouped */
+.mobile-menu { gap: 6px; }
+.mobile-menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 8px 12px;
+  font-size: 14px;
+  background: color-mix(in srgb, var(--btn-bg) 55%, transparent);
+}
+.mobile-menu button.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.m-sep { height: 1px; background: var(--border); margin: 4px 2px; flex-shrink: 0; }
+
+/* =======================================================
+   BREADCRUMB v2 — aligned with the content, sticky under the topbar
+   ======================================================= */
+.breadcrumb {
+  position: sticky;
+  top: var(--topbar-h, 56px);
+  z-index: 9;
+  box-sizing: border-box;
+  width: calc(100% - 32px);
+  max-width: 948px;
+  margin: 12px auto 0;
+  padding: 4px 8px;
+  background: color-mix(in srgb, var(--card-bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.breadcrumb.on-landing { max-width: 820px; }
+.breadcrumb button,
+.breadcrumb span[aria-current="page"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.breadcrumb .ic { width: 16px; height: 16px; }
+.breadcrumb + #quiz .welcome-card { margin-top: 12px; }
+
+/* =======================================================
+   FOLDERS v2 — preview: meta, description, contents chips
+   ======================================================= */
+.welcome-folder {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 14px;
+}
+.welcome-folder-head { padding: 14px 14px 6px; align-items: flex-start; }
+.welcome-folder-icon { color: var(--accent); margin-top: 2px; }
+.welcome-folder-icon .ic { width: 26px; height: 26px; }
+.welcome-folder-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.welcome-folder-title { font-weight: 700; font-size: 1.1em; }
+.welcome-folder-meta { font-size: 0.8em; opacity: 0.7; }
+.welcome-folder-open {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.welcome-folder-open .ic { width: 16px; height: 16px; transition: transform 0.2s ease; }
+.welcome-folder.open .welcome-folder-open .ic { transform: rotate(90deg); }
+.welcome-folder-desc {
+  margin: 0;
+  padding: 0 14px;
+  font-size: 0.9em;
+  opacity: 0.85;
+  text-align: left;
+}
+.welcome-folder-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 14px 0;
+}
+.welcome-folder-chips span {
+  font-size: 0.75em;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--btn-bg);
+  white-space: nowrap;
+}
+.welcome-folder.open .welcome-folder-chips { display: none; }
+.welcome-folder-body { padding-top: 12px; }
+.welcome-folder-empty { grid-column: 1 / -1; text-align: center; opacity: 0.9; }
+.welcome-folder-empty p { margin: 4px 0 10px; }
+.welcome-set-custom .welcome-set-icon { color: var(--accent); }
+.welcome-set-custom .welcome-set-icon .ic { width: 22px; height: 22px; }
+
+.welcome-folder-main { flex: 1 1 auto; }
+.welcome-folder-meta { white-space: nowrap; }

@@ -5,23 +5,23 @@ const BUNDLED_SETS = [
   { file: "q_demo.json",          icon: "📦",  title: "Demo (general)",                tag: "demo",          desc: "12 mixed general-knowledge questions — quick smoke test." },
 
   // ── SQL sets ──
-  { file: "q_sql01.json", icon: "🗄️", title: "SQL — Basics",                  tag: "SQL", group: "sql", desc: "SELECT, WHERE, DISTINCT, NULLs, JOINs, ORDER BY, aggregates, GROUP BY/HAVING, DML." },
-  { file: "q_sql02.json", icon: "🗄️", title: "SQL — JOINs & Subqueries",      tag: "SQL", group: "sql", desc: "INNER/LEFT/RIGHT/FULL/CROSS/SELF JOIN, EXISTS vs IN, NOT IN NULL trap, derived tables." },
-  { file: "q_sql03.json", icon: "🗄️", title: "SQL — GROUP BY & Aggregates",   tag: "SQL", group: "sql", desc: "COUNT/SUM/AVG/MIN/MAX, DISTINCT, HAVING vs WHERE, logical processing order." },
-  { file: "q_sql04.json", icon: "🗄️", title: "SQL — String & Date Functions", tag: "SQL", group: "sql", desc: "LEN, SUBSTRING, CHARINDEX, LIKE, DATEADD/DATEDIFF, CAST/CONVERT, ISNULL/COALESCE." },
-  { file: "q_sql05.json", icon: "🗄️", title: "SQL — Transactions & ACID",     tag: "SQL", group: "sql", desc: "ACID, COMMIT/ROLLBACK, savepoints, isolation levels, dirty/phantom reads, deadlocks." },
-  { file: "q_sql06.json", icon: "🗄️", title: "SQL — Indexes & Performance",   tag: "SQL", group: "sql", desc: "Clustered vs non-clustered, covering/INCLUDE, seek vs scan, fragmentation, plans." },
-  { file: "q_sql07.json", icon: "🗄️", title: "SQL — CTEs & Window Functions", tag: "SQL", group: "sql", desc: "CTEs, recursion, ROW_NUMBER/RANK, PARTITION BY, LAG/LEAD, running totals." },
+  { file: "q_sql01.json", icon: "🗄️", title: "SQL — Basics",                  tag: "SQL", group: "sql", n: 15, desc: "SELECT, WHERE, DISTINCT, NULLs, JOINs, ORDER BY, aggregates, GROUP BY/HAVING, DML." },
+  { file: "q_sql02.json", icon: "🗄️", title: "SQL — JOINs & Subqueries",      tag: "SQL", group: "sql", n: 15, desc: "INNER/LEFT/RIGHT/FULL/CROSS/SELF JOIN, EXISTS vs IN, NOT IN NULL trap, derived tables." },
+  { file: "q_sql03.json", icon: "🗄️", title: "SQL — GROUP BY & Aggregates",   tag: "SQL", group: "sql", n: 15, desc: "COUNT/SUM/AVG/MIN/MAX, DISTINCT, HAVING vs WHERE, logical processing order." },
+  { file: "q_sql04.json", icon: "🗄️", title: "SQL — String & Date Functions", tag: "SQL", group: "sql", n: 15, desc: "LEN, SUBSTRING, CHARINDEX, LIKE, DATEADD/DATEDIFF, CAST/CONVERT, ISNULL/COALESCE." },
+  { file: "q_sql05.json", icon: "🗄️", title: "SQL — Transactions & ACID",     tag: "SQL", group: "sql", n: 15, desc: "ACID, COMMIT/ROLLBACK, savepoints, isolation levels, dirty/phantom reads, deadlocks." },
+  { file: "q_sql06.json", icon: "🗄️", title: "SQL — Indexes & Performance",   tag: "SQL", group: "sql", n: 15, desc: "Clustered vs non-clustered, covering/INCLUDE, seek vs scan, fragmentation, plans." },
+  { file: "q_sql07.json", icon: "🗄️", title: "SQL — CTEs & Window Functions", tag: "SQL", group: "sql", n: 15, desc: "CTEs, recursion, ROW_NUMBER/RANK, PARTITION BY, LAG/LEAD, running totals." },
 
   // ── C# sets ──
-  { file: "q_cs01.json",  icon: "#️⃣", title: "C# — Types & Control Flow",     tag: "C#",  group: "cs", desc: "Value vs reference, var, const/readonly, ref/out, overloading, loops, switch." },
-  { file: "q_cs02.json",  icon: "#️⃣", title: "C# — OOP",                      tag: "C#",  group: "cs", desc: "class vs struct, interfaces, virtual/override, sealed, access modifiers, polymorphism." },
-  { file: "q_cs03.json",  icon: "#️⃣", title: "C# — Null Handling",            tag: "C#",  group: "cs", desc: "?? , ??=, ?. , nullable types, HasValue, IsNullOrWhiteSpace, is not null." },
-  { file: "q_cs04.json",  icon: "#️⃣", title: "C# — Collections",              tag: "C#",  group: "cs", desc: "List, Dictionary, HashSet, Queue, Stack — when to use which, TryGetValue." },
-  { file: "q_cs05.json",  icon: "#️⃣", title: "C# — LINQ & Lambdas",           tag: "C#",  group: "cs", desc: "Where/Select/First/Any/All/GroupBy/OrderBy, deferred execution, method vs query." },
-  { file: "q_cs06.json",  icon: "#️⃣", title: "C# — Strings & StringBuilder",  tag: "C#",  group: "cs", desc: "Immutability, StringBuilder, Split/Join, Trim, interpolation, comparisons." },
-  { file: "q_cs07.json",  icon: "#️⃣", title: "C# — ADO.NET",                  tag: "C#",  group: "cs", desc: "SqlConnection/Command/Reader, ExecuteReader/NonQuery/Scalar, parameters, DBNull." },
-  { file: "q_cs08.json",  icon: "#️⃣", title: "C# — Exceptions & async/await", tag: "C#",  group: "cs", desc: "try/catch/finally, throw vs throw ex, async/await, Task, deadlocks, CancellationToken." },
+  { file: "q_cs01.json",  icon: "#️⃣", title: "C# — Types & Control Flow",     tag: "C#",  group: "cs", n: 15, desc: "Value vs reference, var, const/readonly, ref/out, overloading, loops, switch." },
+  { file: "q_cs02.json",  icon: "#️⃣", title: "C# — OOP",                      tag: "C#",  group: "cs", n: 15, desc: "class vs struct, interfaces, virtual/override, sealed, access modifiers, polymorphism." },
+  { file: "q_cs03.json",  icon: "#️⃣", title: "C# — Null Handling",            tag: "C#",  group: "cs", n: 15, desc: "?? , ??=, ?. , nullable types, HasValue, IsNullOrWhiteSpace, is not null." },
+  { file: "q_cs04.json",  icon: "#️⃣", title: "C# — Collections",              tag: "C#",  group: "cs", n: 15, desc: "List, Dictionary, HashSet, Queue, Stack — when to use which, TryGetValue." },
+  { file: "q_cs05.json",  icon: "#️⃣", title: "C# — LINQ & Lambdas",           tag: "C#",  group: "cs", n: 15, desc: "Where/Select/First/Any/All/GroupBy/OrderBy, deferred execution, method vs query." },
+  { file: "q_cs06.json",  icon: "#️⃣", title: "C# — Strings & StringBuilder",  tag: "C#",  group: "cs", n: 15, desc: "Immutability, StringBuilder, Split/Join, Trim, interpolation, comparisons." },
+  { file: "q_cs07.json",  icon: "#️⃣", title: "C# — ADO.NET",                  tag: "C#",  group: "cs", n: 15, desc: "SqlConnection/Command/Reader, ExecuteReader/NonQuery/Scalar, parameters, DBNull." },
+  { file: "q_cs08.json",  icon: "#️⃣", title: "C# — Exceptions & async/await", tag: "C#",  group: "cs", n: 15, desc: "try/catch/finally, throw vs throw ex, async/await, Task, deadlocks, CancellationToken." },
 
   // ── Hidden sets: not shown on the welcome grid by default,
   //    only surface via the search box (match on tag or title). ──
@@ -30,10 +30,14 @@ const BUNDLED_SETS = [
 ];
 
 // Landing-page folders: sets sharing a `group` are shown inside one folder card.
+// `n` on a grouped set = its question count (checked by tests/validate-questions.mjs).
 const BUNDLED_GROUPS = {
-  sql: { icon: "🗄️", title: "SQL" },
-  cs:  { icon: "#️⃣", title: "C#" },
+  sql: { title: "SQL", desc: "From SELECT basics to transactions, indexes, CTEs and window functions." },
+  cs:  { title: "C#",  desc: "From types and OOP to LINQ, ADO.NET, exceptions and async/await." },
+  my:  { title: "My MCQ", desc: "Your own question sets — imported or generated with the AI prompt." },
 };
+const MY_GROUP = "my";
+const shortSetTitle = (s) => String(s.title || "").replace(/^(SQL|C#)\s*—\s*/, "");
 
 // The folder open on the landing page (null = all closed). Kept across
 // re-renders so the breadcrumb and Back can return to it.
@@ -104,25 +108,70 @@ function renderQuiz(items) {
             <button type="button" class="welcome-set-download" data-file="${escapeHTML(s.file)}" title="Download as .json" aria-label="Download this test as JSON">⬇️</button>
           </div>
         </div>`;
+      const folderHtml = (group, { meta, chips, bodyHtml, icon }) => {
+        const g = BUNDLED_GROUPS[group];
+        const open = openWelcomeFolder === group;
+        return `
+        <div class="welcome-folder${open ? " open" : ""}" data-group="${escapeHTML(group)}">
+          <button type="button" class="welcome-folder-head" aria-expanded="${open}">
+            <span class="welcome-folder-icon">${iconSvg(icon)}</span>
+            <span class="welcome-folder-main">
+              <span class="welcome-folder-title">${escapeHTML(g.title)}</span>
+              <span class="welcome-folder-meta">${escapeHTML(meta)}</span>
+            </span>
+            <span class="welcome-folder-open">${open ? "Close" : "Open"} ${iconSvg("chevronRight")}</span>
+          </button>
+          <p class="welcome-folder-desc">${escapeHTML(g.desc)}</p>
+          ${chips.length ? `<div class="welcome-folder-chips">${chips.map((c) => `<span>${escapeHTML(c)}</span>`).join("")}</div>` : ""}
+          <div class="welcome-folder-body"${open ? "" : " hidden"}>${bodyHtml}</div>
+        </div>`;
+      };
       const seenGroups = new Set();
       const setsHtml = BUNDLED_SETS.map((s) => {
-        const g = s.group && BUNDLED_GROUPS[s.group];
-        if (!g) return setCardHtml(s);
+        if (!s.group || !BUNDLED_GROUPS[s.group]) return setCardHtml(s);
         if (seenGroups.has(s.group)) return "";
         seenGroups.add(s.group);
         const members = BUNDLED_SETS.filter((x) => x.group === s.group);
-        const open = openWelcomeFolder === s.group;
-        return `
-        <div class="welcome-folder${open ? " open" : ""}" data-group="${escapeHTML(s.group)}">
-          <button type="button" class="welcome-folder-head" aria-expanded="${open}">
-            <span class="welcome-set-icon">📁</span>
-            <span class="welcome-set-title">${g.icon} ${escapeHTML(g.title)}</span>
-            <span class="welcome-folder-count">${members.length} sets</span>
-            <span class="welcome-folder-chevron" aria-hidden="true">▸</span>
-          </button>
-          <div class="welcome-folder-body"${open ? "" : " hidden"}>${members.map(setCardHtml).join("")}</div>
-        </div>`;
-      }).join("");
+        const total = members.reduce((sum, x) => sum + (x.n || 0), 0);
+        return folderHtml(s.group, {
+          icon: "folder",
+          meta: `${members.length} sets · ${total} questions`,
+          chips: members.map(shortSetTitle),
+          bodyHtml: members.map(setCardHtml).join(""),
+        });
+      }).join("") + (() => {
+        // The user's own sets: every imported source that is not a bundled set.
+        const bundledFiles = new Set(BUNDLED_SETS.map((x) => x.file));
+        const mine = getImportedSources().filter((x) => x && !bundledFiles.has(x.fileName));
+        const count = (x) => (Array.isArray(x.questions) ? x.questions.length : 0);
+        const cards = mine.map((x) => `
+          <div class="welcome-set welcome-set-custom" data-source="${escapeHTML(x.id)}" data-tag="${escapeHTML(String(x.tagKey || "").toLowerCase())}" data-title="${escapeHTML(String(x.label || x.fileName || "").toLowerCase())}" data-hidden="false">
+            <div class="welcome-set-head">
+              <span class="welcome-set-icon">${iconSvg("user")}</span>
+              <span class="welcome-set-title">${escapeHTML(x.label || x.fileName || "Imported")}</span>
+            </div>
+            <p class="welcome-set-desc">${count(x)} questions · ${escapeHTML(x.fileName || "")}</p>
+            <div class="welcome-set-actions">
+              <button type="button" class="welcome-set-load" data-source="${escapeHTML(x.id)}">▶ Open</button>
+              <button type="button" class="welcome-custom-export" data-source="${escapeHTML(x.id)}" title="Export as .json" aria-label="Export this set as JSON">⬇️</button>
+              <button type="button" class="welcome-custom-delete" data-source="${escapeHTML(x.id)}" title="Delete this set" aria-label="Delete this set">🗑</button>
+            </div>
+          </div>`).join("");
+        const empty = `
+          <div class="welcome-folder-empty">
+            <p>No sets of your own yet. Import a <code>q_*.json</code> file or generate one from any text with the AI prompt.</p>
+            <div class="welcome-actions">
+              <button type="button" class="welcome-my-import" data-tab="bring">⤴️ Import .json</button>
+              <button type="button" class="welcome-my-import" data-tab="ai">✨ AI prompt</button>
+            </div>
+          </div>`;
+        return folderHtml(MY_GROUP, {
+          icon: "user",
+          meta: mine.length ? `${mine.length} set${mine.length === 1 ? "" : "s"} · ${mine.reduce((a, x) => a + count(x), 0)} questions` : "Empty — add your first set",
+          chips: mine.map((x) => x.label || x.fileName || "Imported"),
+          bodyHtml: mine.length ? cards : empty,
+        });
+      })();
 
       empty.innerHTML = `
         <h2 class="welcome-title">Welcome to MCQ Trainer</h2>
@@ -172,7 +221,22 @@ function renderQuiz(items) {
     empty.querySelector("#welcomeTemplate")?.addEventListener("click", () => {
       downloadQuestionsTemplate();
     });
-    empty.querySelectorAll(".welcome-set-load").forEach((btn) => {
+    empty.querySelectorAll(".welcome-set-load[data-source]").forEach((btn) => {
+      btn.addEventListener("click", () => window.mcqOpenCustomSet?.(btn.getAttribute("data-source")));
+    });
+    empty.querySelectorAll(".welcome-custom-export").forEach((btn) => {
+      btn.addEventListener("click", () => exportImportedSource(btn.getAttribute("data-source")));
+    });
+    empty.querySelectorAll(".welcome-custom-delete").forEach((btn) => {
+      btn.addEventListener("click", () => confirmDeleteImportedSource(btn.getAttribute("data-source")));
+    });
+    empty.querySelectorAll(".welcome-my-import").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        openImportPromptModal();
+        setImportTab(btn.getAttribute("data-tab"));
+      });
+    });
+    empty.querySelectorAll(".welcome-set-load[data-file]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const f = btn.getAttribute("data-file");
         if (!f) return;
@@ -233,6 +297,8 @@ function renderQuiz(items) {
 
     function setWelcomeFolderOpen(folder, open) {
       folder.classList.toggle("open", open);
+      const openLabel = folder.querySelector(".welcome-folder-open");
+      if (openLabel) openLabel.innerHTML = `${open ? "Close" : "Open"} ${iconSvg("chevronRight")}`;
       folder.querySelector(".welcome-folder-head")?.setAttribute("aria-expanded", String(open));
       const body = folder.querySelector(".welcome-folder-body");
       if (body) body.hidden = !open;

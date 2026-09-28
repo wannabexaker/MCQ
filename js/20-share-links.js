@@ -101,6 +101,8 @@
       if (!slug) {
         if (assessActive() && typeof exitAssessments === "function") exitAssessments();
         else showPicker();
+      } else if (slug === "my") {
+        window.mcqGoHome("my");
       } else if (slug === "assessments" || slug === "tests") {
         openHub();
       } else if (A_ID[slug]) {
@@ -118,6 +120,21 @@
   // In-app "Load" on a set card → reflect in the URL; the hashchange drives the load.
   window.mcqOpenSet = (file) => { if (knownSet(file)) setHash(setSlug(file)); };
   window.mcqShowSetPicker = () => setHash("");
+
+  // A set from the user's "My MCQ" folder: show only that imported source.
+  // "#my" marks the entry so Back returns to the landing page.
+  window.mcqOpenCustomSet = (sourceId) => {
+    if (!sourceId) return;
+    if (assessActive() && typeof exitAssessments === "function") exitAssessments();
+    window.__mcqShowPicker = false;
+    try { history.pushState(null, "", location.pathname + location.search + "#my"); } catch {}
+    try {
+      ACTIVE_SOURCE_IDS = new Set([String(sourceId)]);
+      if (typeof renderSourceChecklist === "function") renderSourceChecklist();
+    } catch {}
+    if (typeof applySourceFilter === "function") applySourceFilter();
+    try { window.scrollTo(0, 0); } catch {}
+  };
 
   // Breadcrumb "Home" (optionally with a landing folder open). A new history
   // entry is pushed first so Back returns to where the user was.

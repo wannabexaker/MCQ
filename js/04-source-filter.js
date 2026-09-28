@@ -1,7 +1,12 @@
 function setButtonIconLabel(btn, icon, label) {
   if (!btn) return;
-  const text = btn.id?.startsWith("m-") ? `${icon} ${label}` : icon;
-  btn.textContent = text;
+  const mobile = btn.id?.startsWith("m-");
+  const name = typeof ICON_BY_EMOJI !== "undefined" ? ICON_BY_EMOJI[icon] : null;
+  if (name) {
+    setIconContent(btn, name, mobile ? label : "");
+    return;
+  }
+  btn.textContent = mobile ? `${icon} ${label}` : icon;
 }
 
 function clamp(n, min, max) {

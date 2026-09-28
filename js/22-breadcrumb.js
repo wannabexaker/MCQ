@@ -11,7 +11,7 @@
   const shortTitle = (s) => String(s.title || "").replace(/^(SQL|C#)\s*—\s*/, "");
 
   function crumbs() {
-    const home = { label: "🏠 Home", go: () => window.mcqGoHome?.() };
+    const home = { label: "Home", icon: "home", go: () => window.mcqGoHome?.() };
     // Assessments
     if (typeof isAssessmentActive === "function" && isAssessmentActive()) {
       const hub = { label: typeof assessT === "function" ? assessT("hubTitle") : "Assessments", go: () => typeof assessGoHub === "function" && assessGoHub() };
@@ -35,13 +35,15 @@
           ? [home, { label: g.title, go: () => window.mcqGoHome?.(s.group) }, { label: shortTitle(s) }]
           : [home, { label: s.title }];
       }
-      return [home, { label: active[0]?.label || files[0] }];
+      const my = groupMeta("my");
+      return [home, { label: my ? my.title : "My MCQ", go: () => window.mcqGoHome?.("my") }, { label: active[0]?.label || files[0] }];
     }
     return [home, { label: files.length ? `Quiz · ${files.length} sets` : "Quiz" }];
   }
 
   function render() {
     const list = crumbs();
+    host.classList.toggle("on-landing", !!document.querySelector("#quiz .welcome-card") && !(typeof isAssessmentActive === "function" && isAssessmentActive()));
     host.innerHTML = "";
     const ol = document.createElement("ol");
     list.forEach((c, i) => {
@@ -50,12 +52,14 @@
       if (!last && c.go) {
         const b = document.createElement("button");
         b.type = "button";
-        b.textContent = c.label;
+        if (c.icon && typeof iconSvg === "function") b.innerHTML = iconSvg(c.icon);
+        b.appendChild(document.createTextNode(c.label));
         b.addEventListener("click", c.go);
         li.appendChild(b);
       } else {
         const span = document.createElement("span");
-        span.textContent = c.label;
+        if (c.icon && typeof iconSvg === "function") span.innerHTML = iconSvg(c.icon);
+        span.appendChild(document.createTextNode(c.label));
         if (last) span.setAttribute("aria-current", "page");
         li.appendChild(span);
       }
@@ -64,6 +68,14 @@
     host.appendChild(ol);
   }
   window.mcqUpdateBreadcrumb = render;
+
+  // Keep the bar just under the sticky topbar, whatever its height.
+  const syncTop = () => {
+    const bar = document.querySelector(".topbar");
+    if (bar) document.documentElement.style.setProperty("--topbar-h", `${bar.offsetHeight}px`);
+  };
+  syncTop();
+  window.addEventListener("resize", syncTop);
 
   // Refresh after every render path (same wrap pattern as 20-share-links.js).
   ["renderQuiz", "renderAssessmentView"].forEach((name) => {

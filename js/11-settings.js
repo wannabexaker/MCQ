@@ -70,7 +70,7 @@ docsModal?.addEventListener("click", (e) => {
 function toggleControlsCollapsed() {
   controlsShell?.classList.toggle("collapsed");
   const collapsed = controlsShell?.classList.contains("collapsed");
-  controlsToggle.textContent = collapsed ? "▶" : "◀";
+  setIconContent(controlsToggle, collapsed ? "chevronRight" : "chevronLeft");
   controlsToggle.title = collapsed ? "Expand controls" : "Collapse controls";
   controlsToggle.setAttribute(
     "aria-label",

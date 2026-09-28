@@ -62,43 +62,44 @@
       <!-- DESKTOP CONTROLS -->
       <div class="controls-shell" id="controlsShell">
       <div class="controls" id="controlsPanel">
-        
-        <button id="resetQuiz" title="Clear all answers and reset the score." aria-label="Reset quiz">♻️</button>
-
-        <button id="filterCycle" title="Sources" aria-label="Sources">📚</button>
-
-        <button id="openAssessments" title="Assessments — IQ, analytical thinking and personality tests." aria-label="Assessments">🎯</button>
-
-        <button id="shuffleBtn" title="Shuffle question order. Click again to restore default order." aria-label="Shuffle questions">🎲Q</button>
-
-        <button id="shuffle-answers-btn" title="Shuffle answer choices. Click again to restore default choices." aria-label="Shuffle answers">🎲A</button>
-
-        <button id="toggleExam" title="Enable exam mode and hide answer reveal actions." aria-label="Exam mode">📝</button>
-
-        <button id="toggleAll" class="btn" title="Show or hide all correct answers." aria-label="Show all answers">👁️</button>
-
-        <button id="toggleGodlike" class="godlike-btn" title="God Mode: OFF" aria-label="God Mode: OFF">🧠</button>
-
-        <button id="toggleTheme" title="Switch to Light Mode" aria-label="Switch to Light Mode">💡</button>
-
-        <button id="toggleWidgets" title="Show or hide side widgets." aria-label="Toggle widgets">🧩</button>
-
+        <!-- Content -->
+        <button id="filterCycle" data-icon="sources" title="Sources" aria-label="Sources"></button>
+        <button id="openAssessments" data-icon="target" title="Assessments — IQ, analytical thinking and personality tests." aria-label="Assessments"></button>
+        <span class="ctrl-sep" aria-hidden="true"></span>
+        <!-- Shuffle -->
+        <button id="shuffleBtn" data-icon="shuffle" data-badge="Q" title="Shuffle question order. Click again to restore default order." aria-label="Shuffle questions"></button>
+        <button id="shuffle-answers-btn" data-icon="shuffle" data-badge="A" title="Shuffle answer choices. Click again to restore default choices." aria-label="Shuffle answers"></button>
+        <span class="ctrl-sep" aria-hidden="true"></span>
+        <!-- Test mode -->
+        <button id="toggleExam" data-icon="exam" title="Enable exam mode and hide answer reveal actions." aria-label="Exam mode"></button>
+        <button id="toggleGodlike" class="godlike-btn" data-icon="bolt" title="God Mode: OFF" aria-label="God Mode: OFF"></button>
+        <button id="toggleAll" class="btn" data-icon="eye" title="Show or hide all correct answers." aria-label="Show all answers"></button>
+        <span class="ctrl-sep" aria-hidden="true"></span>
+        <!-- Tools -->
+        <button id="toggleWidgets" data-icon="widgets" title="Show or hide side widgets." aria-label="Toggle widgets"></button>
+        <span class="ctrl-sep" aria-hidden="true"></span>
+        <!-- Display -->
         <div class="lang">
           <button id="toggleLang" title="Εμφάνιση ερωτήσεων στα Ελληνικά" aria-label="Show questions in Greek">EL</button>
         </div>
+        <button id="toggleTheme" data-icon="sun" title="Switch to Light Mode" aria-label="Switch to Light Mode"></button>
+        <span class="ctrl-sep" aria-hidden="true"></span>
+        <!-- Reset (destructive, last) -->
+        <button id="resetQuiz" class="ctrl-danger" data-icon="reset" title="Clear all answers and reset the score." aria-label="Reset quiz"></button>
       </div>
-        <button id="controlsToggle" class="controls-toggle" title="Collapse controls" aria-label="Collapse controls">◀</button>
+        <button id="controlsToggle" class="controls-toggle" data-icon="chevronLeft" title="Collapse controls" aria-label="Collapse controls"></button>
       </div>
 
       <!-- FIXED SETTINGS (never moves) -->
       <button
         id="resetControlsPosition"
+        data-icon="gear"
         class="fixed-settings-btn"
         type="button"
         title="Reset controls position"
         aria-label="Reset controls position"
       >
-        ⚙️
+        
       </button>
 
       <!-- TIMER -->
@@ -144,35 +145,23 @@
 
     <!-- MOBILE PANEL -->
     <div class="mobile-menu" id="mobileMenu">
-      <button
-        id="m-resetQuiz"
-        title="Clear all answers and reset the score."
-        aria-label="Reset quiz"
-      >
-        ♻️ Reset
-      </button>
-      
-      <button id="m-filterCycle" title="Sources" aria-label="Sources">📚 Sources</button>
-
-      <button id="m-openAssessments" title="Assessments — IQ, analytical thinking and personality tests." aria-label="Assessments">🎯 Assessments</button>
-
-      <button id="m-shuffleBtn" title="Shuffle question order." aria-label="Shuffle questions">🎲Q Shuffle Questions</button>
-
-      <button id="m-shuffle-answers-btn" title="Shuffle answer choices." aria-label="Shuffle answers">🎲A Shuffle Answers</button>
-
-      <button id="m-toggleExam" title="Enable exam mode and hide answer reveal actions." aria-label="Exam mode">📝 Exam Mode</button>
-
-      <button id="m-toggleAll" title="Show or hide all correct answers." aria-label="Show all answers">👁️ Show All</button>
-
-      <button id="m-toggleGodlike" title="God Mode: OFF" aria-label="God Mode: OFF">🧠 God Mode</button>
-
-      <button id="m-toggleTheme" title="Switch to Light Mode" aria-label="Switch to Light Mode">💡 Theme</button>
-
-      <button id="m-toggleLang" title="Εμφάνιση ερωτήσεων στα Ελληνικά" aria-label="Show questions in Greek">🌐 EL</button>
-
-      <button id="m-toggleWidgets" title="Show or hide side widgets." aria-label="Toggle widgets">🧩 Widgets</button>
-
-      <button id="m-toggleTimer" title="Show or hide timer." aria-label="Toggle timer">⏱️ Timer</button>
+      <button id="m-filterCycle" data-icon="sources" data-label="Sources" title="Sources" aria-label="Sources"></button>
+      <button id="m-openAssessments" data-icon="target" data-label="Assessments" title="Assessments — IQ, analytical thinking and personality tests." aria-label="Assessments"></button>
+      <div class="m-sep" aria-hidden="true"></div>
+      <button id="m-shuffleBtn" data-icon="shuffle" data-badge="Q" data-label="Shuffle Questions" title="Shuffle question order." aria-label="Shuffle questions"></button>
+      <button id="m-shuffle-answers-btn" data-icon="shuffle" data-badge="A" data-label="Shuffle Answers" title="Shuffle answer choices." aria-label="Shuffle answers"></button>
+      <div class="m-sep" aria-hidden="true"></div>
+      <button id="m-toggleExam" data-icon="exam" data-label="Exam Mode" title="Enable exam mode and hide answer reveal actions." aria-label="Exam mode"></button>
+      <button id="m-toggleGodlike" data-icon="bolt" data-label="God Mode" title="God Mode: OFF" aria-label="God Mode: OFF"></button>
+      <button id="m-toggleAll" data-icon="eye" data-label="Show All" title="Show or hide all correct answers." aria-label="Show all answers"></button>
+      <div class="m-sep" aria-hidden="true"></div>
+      <button id="m-toggleTimer" data-icon="timer" data-label="Timer" title="Show or hide timer." aria-label="Toggle timer"></button>
+      <button id="m-toggleWidgets" data-icon="widgets" data-label="Widgets" title="Show or hide side widgets." aria-label="Toggle widgets"></button>
+      <div class="m-sep" aria-hidden="true"></div>
+      <button id="m-toggleLang" data-icon="globe" data-label="Language: EL" title="Εμφάνιση ερωτήσεων στα Ελληνικά" aria-label="Show questions in Greek"></button>
+      <button id="m-toggleTheme" data-icon="sun" data-label="Theme" title="Switch to Light Mode" aria-label="Switch to Light Mode"></button>
+      <div class="m-sep" aria-hidden="true"></div>
+      <button id="m-resetQuiz" class="ctrl-danger" data-icon="reset" data-label="Reset" title="Clear all answers and reset the score." aria-label="Reset quiz"></button>
     </div>
 
     <div id="menuOverlay" class="menu-overlay" hidden></div>
@@ -599,6 +588,7 @@ py -3 -m http.server 8000
     <!-- App code, split by concern. Ordered classic scripts: they share the
          top-level scope exactly like the former single script.js, so load
          order matters and must match this list. -->
+    <script src="js/00-icons.js"></script>
     <script src="js/01-core.js"></script>
     <script src="js/02-proctor.js"></script>
     <script src="js/03-data.js"></script>

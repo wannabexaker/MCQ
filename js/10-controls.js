@@ -301,9 +301,9 @@ document.getElementById("toggleAll").addEventListener("click", () => {
         el.classList.toggle("correct", idx === correctIndex);
       });
 
-      ansBox.textContent = `Correct: ${["A", "B", "C", "D", "E", "F", "G"][correctIndex]}`;
+      ansBox.textContent = `Correct: ${"ABCDEFGH"[correctIndex] ?? "?"}`;
       ansBox.classList.add("show");
-      btn.textContent = "🙈";
+      setButtonIconLabel(btn, "🙈", "Hide All");
       btn.setAttribute("aria-label", "Hide all answers");
       btn.title = "Hide all answers";
       if (mobileBtn) {
@@ -318,7 +318,7 @@ document.getElementById("toggleAll").addEventListener("click", () => {
 
       ansBox.classList.remove("show");
       ansBox.textContent = "";
-      btn.textContent = "👁️";
+      setButtonIconLabel(btn, "👁️", "Show All");
       btn.setAttribute("aria-label", "Show all answers");
       btn.title = "Show all answers";
       if (mobileBtn) {

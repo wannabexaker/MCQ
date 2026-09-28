@@ -109,6 +109,21 @@ for (const file of files) {
   }
 }
 
+// Question counts shown on the landing folders (BUNDLED_SETS[].n) must match the files.
+try {
+  const { runInNewContext } = await import("node:vm");
+  const src = readFileSync(join(ROOT, "js", "07-quiz.js"), "utf8");
+  const start = src.indexOf("const BUNDLED_SETS");
+  const end = src.indexOf("];", start) + 2;
+  const sets = runInNewContext(src.slice(start, end).replace("const BUNDLED_SETS =", "") );
+  sets.filter((s) => Number.isInteger(s.n)).forEach((s) => {
+    const len = JSON.parse(readFileSync(join(ROOT, s.file), "utf8")).length;
+    if (len !== s.n) err(s.file, `BUNDLED_SETS n=${s.n} but the file has ${len} questions (update js/07-quiz.js)`);
+  });
+} catch (e) {
+  err("js/07-quiz.js", `could not read BUNDLED_SETS: ${e.message}`);
+}
+
 const total = files.length;
 if (errors) {
   console.error(`\nFAIL: ${errors} error(s) across ${total} file(s)`);

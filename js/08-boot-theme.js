@@ -151,7 +151,7 @@ function refreshLangButtons() {
   const desk = document.getElementById("toggleLang");
   const mob = document.getElementById("m-toggleLang");
   if (desk) { desk.textContent = label; desk.title = title; desk.setAttribute("aria-label", title); }
-  if (mob)  { mob.textContent = `🌐 ${label}`; mob.title = title; mob.setAttribute("aria-label", title); }
+  if (mob)  { setIconContent(mob, "globe", `Language: ${label}`); mob.title = title; mob.setAttribute("aria-label", title); }
 }
 
 function toggleLanguage() {
