@@ -199,20 +199,27 @@ try {
   `);
   check("quiz-only controls hidden in assessment mode", controlsHidden === true);
 
-  // Full analytical run: first choice on every item, Next/Submit through all 25.
+  // Full analytical run: answer items 2..25 first, then go back to item 1.
+  // Once all are answered, Submit must be available without reaching the end.
   await evalJs(`document.querySelector('.assess-test-primary[data-test="analytical"]').click(); true`);
   await waitFor(`!!document.querySelector('.assess-runner')`);
-  await evalJs(`
+  const earlySubmit = await evalJs(`
     (async () => {
-      for (let i = 0; i < 25; i++) {
-        document.querySelector('.assess-choice')?.click();
-        await new Promise(r => setTimeout(r, 30));
-        document.getElementById('assessNavNext').click();
-        await new Promise(r => setTimeout(r, 30));
+      const wait = () => new Promise(r => setTimeout(r, 30));
+      for (let i = 1; i < 25; i++) {
+        document.querySelectorAll('.assess-dot')[i].click(); await wait();
+        document.querySelector('.assess-choice')?.click(); await wait();
       }
-      return true;
+      document.querySelectorAll('.assess-dot')[0].click(); await wait();
+      const before = !!document.getElementById('assessNavSubmit');
+      document.querySelector('.assess-choice')?.click(); await wait();
+      const after = !!document.getElementById('assessNavSubmit');
+      document.getElementById('assessNavSubmit')?.click();
+      return { before, after };
     })()
   `);
+  check("no early Submit while a question is unanswered", earlySubmit.before === false);
+  check("Submit appears on any question once all are answered", earlySubmit.after === true);
   await waitFor(`!!document.querySelector('.assess-results')`);
   const bandName = await evalJs(`(document.querySelector('.assess-hero-main')?.textContent || '').trim()`);
   check("analytical results show a band name", bandName.length > 0, `got "${bandName}"`);
