@@ -152,8 +152,7 @@ try {
 
   console.log("quiz flow:");
   await evalJs(`
-    [...document.querySelectorAll('.welcome-set')].find(c=>/SQL — Basics/.test(c.textContent))
-      .querySelector('.welcome-set-load').click(); true
+    document.querySelector('.welcome-set[data-file="q_sql01.json"] .welcome-set-load').click(); true
   `);
   // The app's near-duplicate detector may drop a question or two, so expect
   // "most of the set" rather than exactly 15.

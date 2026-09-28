@@ -3261,3 +3261,45 @@ body.assessment-on .footer {
 
 .welcome-folder-main { flex: 1 1 auto; }
 .welcome-folder-meta { white-space: nowrap; }
+
+/* =======================================================
+   LANDING GRID — every set card and closed folder has the same size;
+   extra content is clipped instead of stretching the card.
+   ======================================================= */
+#welcomeSetsGrid > .welcome-set,
+#welcomeSetsGrid > .welcome-folder:not(.open),
+#welcomeSetsGrid .welcome-folder-body > .welcome-set {
+  height: 236px;
+  overflow: hidden;
+}
+#welcomeSetsGrid .welcome-set-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+#welcomeSetsGrid > .welcome-set,
+#welcomeSetsGrid .welcome-folder-body > .welcome-set {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+#welcomeSetsGrid .welcome-set-desc {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent);
+  mask-image: linear-gradient(to bottom, #000 75%, transparent);
+}
+#welcomeSetsGrid .welcome-folder-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+#welcomeSetsGrid .welcome-folder:not(.open) .welcome-folder-chips {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  align-content: flex-start;
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent);
+}

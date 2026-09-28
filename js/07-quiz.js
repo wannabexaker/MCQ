@@ -94,11 +94,11 @@ function renderQuiz(items) {
     const empty = document.createElement("section");
     empty.className = "card welcome-card";
     if (noSourcesAtAll) {
-      const setCardHtml = (s) => `
+      const setCardHtml = (s, inFolder) => `
         <div class="welcome-set" data-file="${escapeHTML(s.file)}" data-tag="${escapeHTML((s.tag || "").toLowerCase())}" data-title="${escapeHTML((s.title || "").toLowerCase())}" data-hidden="${s.hidden ? "true" : "false"}"${s.hidden ? " hidden" : ""}>
           <div class="welcome-set-head">
             <span class="welcome-set-icon">${s.icon}</span>
-            <span class="welcome-set-title">${escapeHTML(s.title)}</span>
+            <span class="welcome-set-title">${escapeHTML(inFolder ? shortSetTitle(s) : s.title)}</span>
             <span class="welcome-set-tag" title="Category tag">#${escapeHTML(s.tag || "")}</span>
           </div>
           <p class="welcome-set-desc">${escapeHTML(s.desc)}</p>
@@ -128,7 +128,7 @@ function renderQuiz(items) {
       };
       const seenGroups = new Set();
       const setsHtml = BUNDLED_SETS.map((s) => {
-        if (!s.group || !BUNDLED_GROUPS[s.group]) return setCardHtml(s);
+        if (!s.group || !BUNDLED_GROUPS[s.group]) return setCardHtml(s, false);
         if (seenGroups.has(s.group)) return "";
         seenGroups.add(s.group);
         const members = BUNDLED_SETS.filter((x) => x.group === s.group);
@@ -137,7 +137,7 @@ function renderQuiz(items) {
           icon: "folder",
           meta: `${members.length} sets · ${total} questions`,
           chips: members.map(shortSetTitle),
-          bodyHtml: members.map(setCardHtml).join(""),
+          bodyHtml: members.map((m) => setCardHtml(m, true)).join(""),
         });
       }).join("") + (() => {
         // The user's own sets: every imported source that is not a bundled set.
