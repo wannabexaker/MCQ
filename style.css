@@ -3012,3 +3012,103 @@ body.assessment-on .footer {
   .assess-svg-choices { max-width: 100%; }
   .assess-dot { width: 12px; height: 12px; }
 }
+
+/* =======================================================
+   BREADCRUMB (🏠 Home › section › item)
+   ======================================================= */
+.breadcrumb {
+  max-width: 980px;
+  margin: 14px auto -6px;
+  padding: 0 16px;
+}
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9em;
+}
+.breadcrumb li {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.breadcrumb li + li::before {
+  content: "›";
+  opacity: 0.5;
+  margin: 0 2px;
+}
+.breadcrumb button {
+  background: none;
+  border: none;
+  padding: 4px 6px;
+  border-radius: 6px;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.breadcrumb button:hover,
+.breadcrumb button:focus-visible {
+  background: var(--btn-bg);
+}
+.breadcrumb span[aria-current="page"] {
+  padding: 4px 6px;
+  font-weight: 600;
+  opacity: 0.85;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60vw;
+}
+
+/* =======================================================
+   LANDING FOLDERS (SQL, C#)
+   ======================================================= */
+.welcome-folder {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  transition: border-color 0.2s ease;
+}
+.welcome-folder[hidden] { display: none !important; }
+.welcome-folder:hover { border-color: var(--accent); }
+.welcome-folder.open {
+  grid-column: 1 / -1;
+  border-color: var(--accent);
+}
+.welcome-folder-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.welcome-folder-count {
+  margin-left: auto;
+  font-size: 0.8em;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+.welcome-folder-chevron {
+  transition: transform 0.2s ease;
+}
+.welcome-folder.open .welcome-folder-chevron { transform: rotate(90deg); }
+.welcome-folder-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  padding: 0 14px 14px;
+}
+.welcome-folder-body[hidden] { display: none; }
+.welcome-set-desc { overflow-wrap: anywhere; }

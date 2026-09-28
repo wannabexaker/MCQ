@@ -136,6 +136,20 @@ try {
   const entryCard = await evalJs(`!!document.getElementById('assessmentsEntry')`);
   check("assessments entry card on landing", entryCard === true);
 
+  console.log("folders + breadcrumb:");
+  const folders = await evalJs(`[...document.querySelectorAll('.welcome-folder')].map(f => f.dataset.group + ':' + f.querySelectorAll('.welcome-set').length).join(',')`);
+  check("SQL and C# sets sit in two folders", folders === "sql:7,cs:8", `got ${folders}`);
+  const folderOpen = await evalJs(`
+    (() => { const f = document.querySelector('.welcome-folder[data-group="sql"]');
+      const closed = f.querySelector('.welcome-folder-body').hidden;
+      f.querySelector('.welcome-folder-head').click();
+      return closed && !f.querySelector('.welcome-folder-body').hidden; })()
+  `);
+  check("clicking a folder opens it", folderOpen === true);
+  const crumbFolder = await evalJs(`document.getElementById('breadcrumb').textContent`);
+  check("breadcrumb shows Home › SQL", /Home/.test(crumbFolder) && /SQL/.test(crumbFolder), `got "${crumbFolder}"`);
+  await evalJs(`document.querySelector('.welcome-folder-head').click(); true`); // close again
+
   console.log("quiz flow:");
   await evalJs(`
     [...document.querySelectorAll('.welcome-set')].find(c=>/SQL — Basics/.test(c.textContent))
@@ -403,6 +417,24 @@ try {
     })()
   `);
   check("Set share copies a clean #sql02 link", sShare === await evalJs(`location.origin + location.pathname + '#sql02'`), `got "${sShare}"`);
+
+  console.log("breadcrumb navigation:");
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=4#sql02` });
+  await waitFor(`document.querySelectorAll('#quiz .card').length > 0 && !document.querySelector('.welcome-title')`);
+  const crumbSet = await evalJs(`[...document.querySelectorAll('#breadcrumb li')].map(li => li.textContent.trim()).join(' > ')`);
+  check("breadcrumb names folder and set", crumbSet === "🏠 Home > SQL > JOINs & Subqueries", `got "${crumbSet}"`);
+  await evalJs(`document.querySelectorAll('#breadcrumb button')[1].click(); true`);
+  await waitFor(`!!document.querySelector('.welcome-folder.open[data-group="sql"]')`);
+  check("folder crumb returns to that open folder", true);
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=5#iq` });
+  await waitFor(`!!document.querySelector('.assess-runner')`);
+  await evalJs(`document.querySelector('#breadcrumb button').click(); true`);
+  await waitFor(`!!document.querySelector('.welcome-title') && !document.body.classList.contains('assessment-on')`);
+  check("Home crumb leaves an assessment for the landing page", true);
+  await evalJs(`history.back(); true`);
+  await waitFor(`document.body.classList.contains('assessment-on') && location.hash === '#iq'`);
+  check("Back after Home returns to the test", true);
+  await evalJs(`localStorage.clear(); true`);
 
   console.log("robustness:");
   await evalJs(`localStorage.clear(); localStorage.setItem('quiz-progress', '{broken'); true`);

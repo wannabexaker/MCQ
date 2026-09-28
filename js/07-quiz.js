@@ -5,29 +5,39 @@ const BUNDLED_SETS = [
   { file: "q_demo.json",          icon: "📦",  title: "Demo (general)",                tag: "demo",          desc: "12 mixed general-knowledge questions — quick smoke test." },
 
   // ── SQL sets ──
-  { file: "q_sql01.json", icon: "🗄️", title: "SQL — Basics",                  tag: "SQL", desc: "SELECT, WHERE, DISTINCT, NULLs, JOINs, ORDER BY, aggregates, GROUP BY/HAVING, DML." },
-  { file: "q_sql02.json", icon: "🗄️", title: "SQL — JOINs & Subqueries",      tag: "SQL", desc: "INNER/LEFT/RIGHT/FULL/CROSS/SELF JOIN, EXISTS vs IN, NOT IN NULL trap, derived tables." },
-  { file: "q_sql03.json", icon: "🗄️", title: "SQL — GROUP BY & Aggregates",   tag: "SQL", desc: "COUNT/SUM/AVG/MIN/MAX, DISTINCT, HAVING vs WHERE, logical processing order." },
-  { file: "q_sql04.json", icon: "🗄️", title: "SQL — String & Date Functions", tag: "SQL", desc: "LEN, SUBSTRING, CHARINDEX, LIKE, DATEADD/DATEDIFF, CAST/CONVERT, ISNULL/COALESCE." },
-  { file: "q_sql05.json", icon: "🗄️", title: "SQL — Transactions & ACID",     tag: "SQL", desc: "ACID, COMMIT/ROLLBACK, savepoints, isolation levels, dirty/phantom reads, deadlocks." },
-  { file: "q_sql06.json", icon: "🗄️", title: "SQL — Indexes & Performance",   tag: "SQL", desc: "Clustered vs non-clustered, covering/INCLUDE, seek vs scan, fragmentation, plans." },
-  { file: "q_sql07.json", icon: "🗄️", title: "SQL — CTEs & Window Functions", tag: "SQL", desc: "CTEs, recursion, ROW_NUMBER/RANK, PARTITION BY, LAG/LEAD, running totals." },
+  { file: "q_sql01.json", icon: "🗄️", title: "SQL — Basics",                  tag: "SQL", group: "sql", desc: "SELECT, WHERE, DISTINCT, NULLs, JOINs, ORDER BY, aggregates, GROUP BY/HAVING, DML." },
+  { file: "q_sql02.json", icon: "🗄️", title: "SQL — JOINs & Subqueries",      tag: "SQL", group: "sql", desc: "INNER/LEFT/RIGHT/FULL/CROSS/SELF JOIN, EXISTS vs IN, NOT IN NULL trap, derived tables." },
+  { file: "q_sql03.json", icon: "🗄️", title: "SQL — GROUP BY & Aggregates",   tag: "SQL", group: "sql", desc: "COUNT/SUM/AVG/MIN/MAX, DISTINCT, HAVING vs WHERE, logical processing order." },
+  { file: "q_sql04.json", icon: "🗄️", title: "SQL — String & Date Functions", tag: "SQL", group: "sql", desc: "LEN, SUBSTRING, CHARINDEX, LIKE, DATEADD/DATEDIFF, CAST/CONVERT, ISNULL/COALESCE." },
+  { file: "q_sql05.json", icon: "🗄️", title: "SQL — Transactions & ACID",     tag: "SQL", group: "sql", desc: "ACID, COMMIT/ROLLBACK, savepoints, isolation levels, dirty/phantom reads, deadlocks." },
+  { file: "q_sql06.json", icon: "🗄️", title: "SQL — Indexes & Performance",   tag: "SQL", group: "sql", desc: "Clustered vs non-clustered, covering/INCLUDE, seek vs scan, fragmentation, plans." },
+  { file: "q_sql07.json", icon: "🗄️", title: "SQL — CTEs & Window Functions", tag: "SQL", group: "sql", desc: "CTEs, recursion, ROW_NUMBER/RANK, PARTITION BY, LAG/LEAD, running totals." },
 
   // ── C# sets ──
-  { file: "q_cs01.json",  icon: "#️⃣", title: "C# — Types & Control Flow",     tag: "C#",  desc: "Value vs reference, var, const/readonly, ref/out, overloading, loops, switch." },
-  { file: "q_cs02.json",  icon: "#️⃣", title: "C# — OOP",                      tag: "C#",  desc: "class vs struct, interfaces, virtual/override, sealed, access modifiers, polymorphism." },
-  { file: "q_cs03.json",  icon: "#️⃣", title: "C# — Null Handling",            tag: "C#",  desc: "?? , ??=, ?. , nullable types, HasValue, IsNullOrWhiteSpace, is not null." },
-  { file: "q_cs04.json",  icon: "#️⃣", title: "C# — Collections",              tag: "C#",  desc: "List, Dictionary, HashSet, Queue, Stack — when to use which, TryGetValue." },
-  { file: "q_cs05.json",  icon: "#️⃣", title: "C# — LINQ & Lambdas",           tag: "C#",  desc: "Where/Select/First/Any/All/GroupBy/OrderBy, deferred execution, method vs query." },
-  { file: "q_cs06.json",  icon: "#️⃣", title: "C# — Strings & StringBuilder",  tag: "C#",  desc: "Immutability, StringBuilder, Split/Join, Trim, interpolation, comparisons." },
-  { file: "q_cs07.json",  icon: "#️⃣", title: "C# — ADO.NET",                  tag: "C#",  desc: "SqlConnection/Command/Reader, ExecuteReader/NonQuery/Scalar, parameters, DBNull." },
-  { file: "q_cs08.json",  icon: "#️⃣", title: "C# — Exceptions & async/await", tag: "C#",  desc: "try/catch/finally, throw vs throw ex, async/await, Task, deadlocks, CancellationToken." },
+  { file: "q_cs01.json",  icon: "#️⃣", title: "C# — Types & Control Flow",     tag: "C#",  group: "cs", desc: "Value vs reference, var, const/readonly, ref/out, overloading, loops, switch." },
+  { file: "q_cs02.json",  icon: "#️⃣", title: "C# — OOP",                      tag: "C#",  group: "cs", desc: "class vs struct, interfaces, virtual/override, sealed, access modifiers, polymorphism." },
+  { file: "q_cs03.json",  icon: "#️⃣", title: "C# — Null Handling",            tag: "C#",  group: "cs", desc: "?? , ??=, ?. , nullable types, HasValue, IsNullOrWhiteSpace, is not null." },
+  { file: "q_cs04.json",  icon: "#️⃣", title: "C# — Collections",              tag: "C#",  group: "cs", desc: "List, Dictionary, HashSet, Queue, Stack — when to use which, TryGetValue." },
+  { file: "q_cs05.json",  icon: "#️⃣", title: "C# — LINQ & Lambdas",           tag: "C#",  group: "cs", desc: "Where/Select/First/Any/All/GroupBy/OrderBy, deferred execution, method vs query." },
+  { file: "q_cs06.json",  icon: "#️⃣", title: "C# — Strings & StringBuilder",  tag: "C#",  group: "cs", desc: "Immutability, StringBuilder, Split/Join, Trim, interpolation, comparisons." },
+  { file: "q_cs07.json",  icon: "#️⃣", title: "C# — ADO.NET",                  tag: "C#",  group: "cs", desc: "SqlConnection/Command/Reader, ExecuteReader/NonQuery/Scalar, parameters, DBNull." },
+  { file: "q_cs08.json",  icon: "#️⃣", title: "C# — Exceptions & async/await", tag: "C#",  group: "cs", desc: "try/catch/finally, throw vs throw ex, async/await, Task, deadlocks, CancellationToken." },
 
   // ── Hidden sets: not shown on the welcome grid by default,
   //    only surface via the search box (match on tag or title). ──
   { file: "q_RosenCh1-4.json",    icon: "📘",  title: "Rosenberg — Philosophy of Social Science (Ch 1-4)", tag: "RosenCh1-4",    desc: "Naturalism vs interpretation, explanation, reasons and causes, intentionality — 40 Q.", hidden: true },
   { file: "q_RosenCh614.json",    icon: "📗",  title: "Rosenberg — Philosophy of Social Science (Ch 6-14)", tag: "RosenCh614",    desc: "Rational choice, game theory, facts and values, objectivity — 50 Q.", hidden: true },
 ];
+
+// Landing-page folders: sets sharing a `group` are shown inside one folder card.
+const BUNDLED_GROUPS = {
+  sql: { icon: "🗄️", title: "SQL" },
+  cs:  { icon: "#️⃣", title: "C#" },
+};
+
+// The folder open on the landing page (null = all closed). Kept across
+// re-renders so the breadcrumb and Back can return to it.
+let openWelcomeFolder = null;
 
 async function loadBundledQuestionSet(fileName) {
   try {
@@ -80,8 +90,7 @@ function renderQuiz(items) {
     const empty = document.createElement("section");
     empty.className = "card welcome-card";
     if (noSourcesAtAll) {
-      const setsHtml = BUNDLED_SETS.map(
-        (s) => `
+      const setCardHtml = (s) => `
         <div class="welcome-set" data-file="${escapeHTML(s.file)}" data-tag="${escapeHTML((s.tag || "").toLowerCase())}" data-title="${escapeHTML((s.title || "").toLowerCase())}" data-hidden="${s.hidden ? "true" : "false"}"${s.hidden ? " hidden" : ""}>
           <div class="welcome-set-head">
             <span class="welcome-set-icon">${s.icon}</span>
@@ -94,8 +103,26 @@ function renderQuiz(items) {
             <button type="button" class="welcome-set-share" data-file="${escapeHTML(s.file)}" title="Copy a direct link to this test" aria-label="Share this test">🔗</button>
             <button type="button" class="welcome-set-download" data-file="${escapeHTML(s.file)}" title="Download as .json" aria-label="Download this test as JSON">⬇️</button>
           </div>
-        </div>`
-      ).join("");
+        </div>`;
+      const seenGroups = new Set();
+      const setsHtml = BUNDLED_SETS.map((s) => {
+        const g = s.group && BUNDLED_GROUPS[s.group];
+        if (!g) return setCardHtml(s);
+        if (seenGroups.has(s.group)) return "";
+        seenGroups.add(s.group);
+        const members = BUNDLED_SETS.filter((x) => x.group === s.group);
+        const open = openWelcomeFolder === s.group;
+        return `
+        <div class="welcome-folder${open ? " open" : ""}" data-group="${escapeHTML(s.group)}">
+          <button type="button" class="welcome-folder-head" aria-expanded="${open}">
+            <span class="welcome-set-icon">📁</span>
+            <span class="welcome-set-title">${g.icon} ${escapeHTML(g.title)}</span>
+            <span class="welcome-folder-count">${members.length} sets</span>
+            <span class="welcome-folder-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="welcome-folder-body"${open ? "" : " hidden"}>${members.map(setCardHtml).join("")}</div>
+        </div>`;
+      }).join("");
 
       empty.innerHTML = `
         <h2 class="welcome-title">Welcome to MCQ Trainer</h2>
@@ -192,9 +219,37 @@ function renderQuiz(items) {
         card.hidden = !match;
         if (match) visible++;
       });
+      // Folders: while searching, open the ones with matches and hide the rest;
+      // otherwise show them all and restore the user's open folder.
+      setsGrid?.querySelectorAll(".welcome-folder").forEach((folder) => {
+        const hasMatch = [...folder.querySelectorAll(".welcome-set")].some((c) => !c.hidden);
+        const open = q ? hasMatch : folder.getAttribute("data-group") === openWelcomeFolder;
+        folder.hidden = q ? !hasMatch : false;
+        setWelcomeFolderOpen(folder, open);
+      });
       // "No matches" message only when actively searching and nothing visible.
       if (emptyMsg) emptyMsg.hidden = !(q && visible === 0);
     }
+
+    function setWelcomeFolderOpen(folder, open) {
+      folder.classList.toggle("open", open);
+      folder.querySelector(".welcome-folder-head")?.setAttribute("aria-expanded", String(open));
+      const body = folder.querySelector(".welcome-folder-body");
+      if (body) body.hidden = !open;
+    }
+
+    setsGrid?.querySelectorAll(".welcome-folder-head").forEach((head) => {
+      head.addEventListener("click", () => {
+        const folder = head.closest(".welcome-folder");
+        const group = folder?.getAttribute("data-group") || null;
+        const opening = !folder.classList.contains("open");
+        openWelcomeFolder = opening ? group : null;
+        setsGrid.querySelectorAll(".welcome-folder").forEach((f) =>
+          setWelcomeFolderOpen(f, opening && f === folder)
+        );
+        if (typeof window.mcqUpdateBreadcrumb === "function") window.mcqUpdateBreadcrumb();
+      });
+    });
 
     searchInput?.addEventListener("input", applyWelcomeFilter);
     searchClear?.addEventListener("click", () => {
