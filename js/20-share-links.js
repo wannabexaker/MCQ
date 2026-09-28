@@ -119,6 +119,17 @@
   window.mcqOpenSet = (file) => { if (knownSet(file)) setHash(setSlug(file)); };
   window.mcqShowSetPicker = () => setHash("");
 
+  // Breadcrumb "Home" (optionally with a landing folder open). A new history
+  // entry is pushed first so Back returns to where the user was.
+  window.mcqGoHome = (folder) => {
+    try {
+      if (typeof openWelcomeFolder !== "undefined") openWelcomeFolder = folder || null;
+      if (location.hash) history.pushState(null, "", location.pathname + location.search);
+    } catch {}
+    if (assessActive() && typeof exitAssessments === "function") exitAssessments();
+    showPicker();
+  };
+
   // ── Reflect app navigation into the URL (wrap, don't edit, the originals) ──
   function wrapAfter(name, after) {
     const orig = window[name];
