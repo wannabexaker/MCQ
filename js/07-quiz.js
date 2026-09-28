@@ -25,8 +25,8 @@ const BUNDLED_SETS = [
 
   // ── Hidden sets: not shown on the welcome grid by default,
   //    only surface via the search box (match on tag or title). ──
-  { file: "q_RosenCh1-4.json",    icon: "📘",  title: "Rosen — Discrete Math (Ch 1-4)", tag: "RosenCh1-4",    desc: "Logic, sets, functions, induction — 40 Q from Rosen Ch 1-4.", hidden: true },
-  { file: "q_RosenCh614.json",    icon: "📗",  title: "Rosen — Discrete Math (Ch 6-14)", tag: "RosenCh614",    desc: "Counting, graphs, trees, advanced topics — 50 Q from Rosen Ch 6-14.", hidden: true },
+  { file: "q_RosenCh1-4.json",    icon: "📘",  title: "Rosenberg — Philosophy of Social Science (Ch 1-4)", tag: "RosenCh1-4",    desc: "Naturalism vs interpretation, explanation, reasons and causes, intentionality — 40 Q.", hidden: true },
+  { file: "q_RosenCh614.json",    icon: "📗",  title: "Rosenberg — Philosophy of Social Science (Ch 6-14)", tag: "RosenCh614",    desc: "Rational choice, game theory, facts and values, objectivity — 50 Q.", hidden: true },
 ];
 
 async function loadBundledQuestionSet(fileName) {

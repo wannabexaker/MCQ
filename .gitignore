@@ -38,8 +38,9 @@ desktop.ini
 # Editor extension hooks (VS Code Java upgrade, etc.)
 .github/java-upgrade/
 
-# Claude Code agent local config (per-user)
-.claude/
+# Claude Code agent local config (per-user); project skills are shared
+.claude/*
+!.claude/skills/
 
 # Local analysis caches (readme-identity / repo-hygiene skills — never commit)
 docs/

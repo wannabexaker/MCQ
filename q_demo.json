@@ -2,68 +2,81 @@
   {
     "number": 1,
     "question_en": "Which planet in our solar system is known as the Red Planet?",
+    "question_el": "Ποιος πλανήτης του ηλιακού μας συστήματος είναι γνωστός ως ο Κόκκινος Πλανήτης;",
     "choices_en": ["Earth", "Mars", "Jupiter", "Venus"],
+    "choices_el": ["Γη", "Άρης", "Δίας", "Αφροδίτη"],
     "correctIndex": 1,
     "demo": true
   },
   {
     "number": 2,
     "question_en": "Who wrote the play 'Hamlet'?",
+    "question_el": "Ποιος έγραψε το θεατρικό 'Άμλετ';",
     "choices_en": ["William Shakespeare", "Charles Dickens", "Mark Twain", "Jane Austen"],
+    "choices_el": ["Ουίλιαμ Σαίξπηρ", "Κάρολος Ντίκενς", "Μαρκ Τουέιν", "Τζέιν Όστεν"],
     "correctIndex": 0,
     "demo": true
   },
   {
     "number": 3,
     "question_en": "What is the chemical symbol for gold?",
+    "question_el": "Ποιο είναι το χημικό σύμβολο του χρυσού;",
     "choices_en": ["Gd", "Go", "Au", "Ag"],
+    "choices_el": ["Gd", "Go", "Au", "Ag"],
     "correctIndex": 2,
     "demo": true
   },
   {
     "number": 4,
     "question_en": "Which is the largest ocean on Earth?",
+    "question_el": "Ποιος είναι ο μεγαλύτερος ωκεανός της Γης;",
     "choices_en": ["Atlantic", "Indian", "Arctic", "Pacific"],
+    "choices_el": ["Ατλαντικός", "Ινδικός", "Αρκτικός", "Ειρηνικός"],
     "correctIndex": 3,
     "demo": true
   },
   {
     "number": 5,
     "question_en": "In computing, what does 'HTTP' stand for?",
-    "choices_en": [
-      "HyperText Transfer Protocol",
-      "High Transfer Text Protocol",
-      "Hyperlink Text Transmission Process",
-      "Home Tool Transfer Protocol"
-    ],
+    "question_el": "Στην πληροφορική, τι σημαίνει 'HTTP';",
+    "choices_en": ["HyperText Transfer Protocol", "High Transfer Text Protocol", "Hyperlink Text Transmission Process", "Home Tool Transfer Protocol"],
+    "choices_el": ["HyperText Transfer Protocol", "High Transfer Text Protocol", "Hyperlink Text Transmission Process", "Home Tool Transfer Protocol"],
     "correctIndex": 0,
     "demo": true
   },
   {
     "number": 6,
     "question_en": "Which year did the first human walk on the Moon?",
+    "question_el": "Ποια χρονιά περπάτησε ο πρώτος άνθρωπος στη Σελήνη;",
     "choices_en": ["1965", "1969", "1972", "1958"],
+    "choices_el": ["1965", "1969", "1972", "1958"],
     "correctIndex": 1,
     "demo": true
   },
   {
     "number": 7,
     "question_en": "What is the capital city of Australia?",
+    "question_el": "Ποια είναι η πρωτεύουσα της Αυστραλίας;",
     "choices_en": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+    "choices_el": ["Σίδνεϊ", "Μελβούρνη", "Καμπέρα", "Μπρισμπέιν"],
     "correctIndex": 2,
     "demo": true
   },
   {
     "number": 8,
     "question_en": "Which gas do plants primarily absorb from the atmosphere for photosynthesis?",
-    "choices_en": ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
+    "question_el": "Ποιο αέριο απορροφούν κυρίως τα φυτά από την ατμόσφαιρα για τη φωτοσύνθεση;",
+    "choices_en": ["Oxygen", "Nitrogen", "Carbon dioxide", "Carbon monoxide"],
+    "choices_el": ["Οξυγόνο", "Άζωτο", "Διοξείδιο του άνθρακα", "Μονοξείδιο του άνθρακα"],
     "correctIndex": 2,
     "demo": true
   },
   {
     "number": 9,
     "question_en": "Which SQL clause is used to filter rows in a SELECT query?",
+    "question_el": "Ποια ρήτρα SQL χρησιμοποιείται για το φιλτράρισμα γραμμών σε ένα ερώτημα SELECT;",
     "choices_en": ["ORDER BY", "WHERE", "GROUP BY", "HAVING"],
+    "choices_el": ["ORDER BY", "WHERE", "GROUP BY", "HAVING"],
     "correctIndex": 1,
     "demo": true,
     "code": "SELECT name, age\nFROM users\nWHERE active = 1;"
@@ -71,26 +84,27 @@
   {
     "number": 10,
     "question_en": "Which painter created the Mona Lisa?",
+    "question_el": "Ποιος ζωγράφος δημιούργησε τη Μόνα Λίζα;",
     "choices_en": ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"],
+    "choices_el": ["Βίνσεντ βαν Γκογκ", "Πάμπλο Πικάσο", "Λεονάρντο ντα Βίντσι", "Μιχαήλ Άγγελος"],
     "correctIndex": 2,
     "demo": true
   },
   {
     "number": 11,
     "question_en": "Which language has the most native speakers worldwide?",
-    "choices_en": ["English", "Hindi", "Spanish", "Mandarin Chinese"],
+    "question_el": "Ποια γλώσσα έχει τους περισσότερους φυσικούς ομιλητές στον κόσμο;",
+    "choices_en": ["English", "Hindi", "Spanish", "Mandarin"],
+    "choices_el": ["Αγγλικά", "Χίντι", "Ισπανικά", "Μανδαρινικά"],
     "correctIndex": 3,
     "demo": true
   },
   {
     "number": 12,
     "question_en": "What does CPU stand for?",
-    "choices_en": [
-      "Central Processing Unit",
-      "Computer Personal Unit",
-      "Central Program Utility",
-      "Control Processing Unit"
-    ],
+    "question_el": "Τι σημαίνει CPU;",
+    "choices_en": ["Central Processing Unit", "Computer Personal Unit", "Central Program Utility", "Control Processing Unit"],
+    "choices_el": ["Central Processing Unit", "Computer Personal Unit", "Central Program Utility", "Control Processing Unit"],
     "correctIndex": 0,
     "demo": true
   }

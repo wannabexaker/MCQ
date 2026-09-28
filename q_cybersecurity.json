@@ -2,251 +2,271 @@
   {
     "number": 1,
     "question_en": "What does the 'C' in the CIA triad stand for?",
-    "choices_en": ["Control", "Confidentiality", "Compliance", "Continuity"],
-    "correctIndex": 1,
+    "question_el": "Τι σημαίνει το 'C' στην τριάδα CIA;",
+    "choices_en": ["Control", "Continuity", "Compliance", "Confidentiality"],
+    "choices_el": ["Control (Έλεγχος)", "Continuity (Συνέχεια)", "Compliance (Συμμόρφωση)", "Confidentiality (Εμπιστευτικότητα)"],
+    "correctIndex": 3,
     "cybersecurity": true
   },
   {
     "number": 2,
     "question_en": "Which attack injects malicious SQL into an application's input to manipulate the database?",
-    "choices_en": ["XSS", "CSRF", "SQL Injection", "SSRF"],
-    "correctIndex": 2,
+    "question_el": "Ποια επίθεση εισάγει κακόβουλη SQL στην είσοδο μιας εφαρμογής για να χειραγωγήσει τη βάση δεδομένων;",
+    "choices_en": ["SQL Injection", "Cross-Site Request Forgery (CSRF)", "Cross-Site Scripting (XSS)", "Server-Side Request Forgery (SSRF)"],
+    "choices_el": ["SQL Injection", "Cross-Site Request Forgery (CSRF)", "Cross-Site Scripting (XSS)", "Server-Side Request Forgery (SSRF)"],
+    "correctIndex": 0,
     "cybersecurity": true
   },
   {
     "number": 3,
     "question_en": "Which type of XSS is stored persistently on the server and served to other users?",
-    "choices_en": ["Reflected XSS", "Stored XSS", "DOM-based XSS", "Blind XSS"],
-    "correctIndex": 1,
+    "question_el": "Ποιος τύπος XSS αποθηκεύεται μόνιμα στον server και σερβίρεται σε άλλους χρήστες;",
+    "choices_en": ["Reflected XSS", "DOM-based XSS", "Stored XSS", "Blind XSS"],
+    "choices_el": ["Reflected XSS", "DOM-based XSS", "Stored XSS", "Blind XSS"],
+    "correctIndex": 2,
     "cybersecurity": true
   },
   {
     "number": 4,
     "question_en": "Which OWASP Top 10 (2021) category covers broken access control?",
+    "question_el": "Ποια κατηγορία του OWASP Top 10 (2021) καλύπτει το broken access control;",
     "choices_en": ["A01", "A03", "A07", "A09"],
+    "choices_el": ["A01", "A03", "A07", "A09"],
     "correctIndex": 0,
     "cybersecurity": true
   },
   {
     "number": 5,
     "question_en": "Which hashing algorithm is considered cryptographically broken and should NOT be used for passwords?",
-    "choices_en": ["bcrypt", "Argon2", "MD5", "scrypt"],
-    "correctIndex": 2,
+    "question_el": "Ποιος αλγόριθμος κατακερματισμού θεωρείται κρυπτογραφικά σπασμένος και ΔΕΝ πρέπει να χρησιμοποιείται για κωδικούς;",
+    "choices_en": ["bcrypt", "Argon2", "scrypt", "MD5"],
+    "choices_el": ["bcrypt", "Argon2", "scrypt", "MD5"],
+    "correctIndex": 3,
     "cybersecurity": true
   },
   {
     "number": 6,
     "question_en": "What is the primary purpose of a salt in password hashing?",
-    "choices_en": [
-      "Encrypt the hash so it cannot be reversed",
-      "Defeat precomputed rainbow tables and identical-password collisions",
-      "Speed up hash computation",
-      "Make the hash output shorter"
-    ],
-    "correctIndex": 1,
+    "question_el": "Ποιος είναι ο κύριος σκοπός του salt στον κατακερματισμό κωδικών;",
+    "choices_en": ["Defeat rainbow tables and make equal passwords hash differently", "Encrypt the hash so that attackers can never reverse it", "Speed up hash computation on large password databases", "Shorten the stored hash to save database space"],
+    "choices_el": ["Ακυρώνει τα rainbow tables και κάνει ίδιους κωδικούς να δίνουν διαφορετικό hash", "Κρυπτογραφεί το hash ώστε να μην αντιστρέφεται ποτέ", "Επιταχύνει τον υπολογισμό hash σε μεγάλες βάσεις κωδικών", "Μικραίνει το αποθηκευμένο hash για εξοικονόμηση χώρου"],
+    "correctIndex": 0,
     "cybersecurity": true
   },
   {
     "number": 7,
     "question_en": "Which protocol secures HTTP traffic with TLS?",
+    "question_el": "Ποιο πρωτόκολλο ασφαλίζει την κίνηση HTTP με TLS;",
     "choices_en": ["HTTP/2", "HTTPS", "SFTP", "FTPS"],
+    "choices_el": ["HTTP/2", "HTTPS", "SFTP", "FTPS"],
     "correctIndex": 1,
     "cybersecurity": true
   },
   {
     "number": 8,
     "question_en": "Which attack tricks a logged-in user's browser into submitting an unwanted authenticated request?",
+    "question_el": "Ποια επίθεση ξεγελά τον browser ενός συνδεδεμένου χρήστη ώστε να στείλει ένα ανεπιθύμητο αυθεντικοποιημένο αίτημα;",
     "choices_en": ["CSRF", "XSS", "Clickjacking", "SSRF"],
+    "choices_el": ["CSRF", "XSS", "Clickjacking", "SSRF"],
     "correctIndex": 0,
     "cybersecurity": true
   },
   {
     "number": 9,
     "question_en": "Which type of malware encrypts user files and demands payment for decryption?",
-    "choices_en": ["Worm", "Trojan", "Ransomware", "Adware"],
-    "correctIndex": 2,
+    "question_el": "Ποιος τύπος κακόβουλου λογισμικού κρυπτογραφεί τα αρχεία του χρήστη και ζητά πληρωμή για την αποκρυπτογράφηση;",
+    "choices_en": ["Worm", "Ransomware", "Trojan", "Adware"],
+    "choices_el": ["Worm", "Ransomware", "Trojan", "Adware"],
+    "correctIndex": 1,
     "cybersecurity": true
   },
   {
     "number": 10,
     "question_en": "In asymmetric cryptography, which key is used to encrypt a message that only the holder of the private key can read?",
+    "question_el": "Στην ασύμμετρη κρυπτογραφία, με ποιο κλειδί κρυπτογραφείται ένα μήνυμα ώστε να το διαβάσει μόνο ο κάτοχος του ιδιωτικού κλειδιού;",
     "choices_en": ["The sender's private key", "The recipient's public key", "The recipient's private key", "A shared session key"],
+    "choices_el": ["Το ιδιωτικό κλειδί του αποστολέα", "Το δημόσιο κλειδί του παραλήπτη", "Το ιδιωτικό κλειδί του παραλήπτη", "Ένα κοινό κλειδί συνόδου"],
     "correctIndex": 1,
     "cybersecurity": true
   },
   {
     "number": 11,
     "question_en": "What is the main goal of a Man-in-the-Middle (MITM) attack?",
-    "choices_en": [
-      "Crash the target server",
-      "Intercept or alter communication between two parties",
-      "Brute-force a password",
-      "Mine cryptocurrency on the victim"
-    ],
-    "correctIndex": 1,
+    "question_el": "Ποιος είναι ο κύριος στόχος μιας επίθεσης Man-in-the-Middle (MITM);",
+    "choices_en": ["Intercept or alter communication between two parties", "Take a web server offline by exhausting its resources", "Brute-force a user's password over the network", "Mine cryptocurrency on the victim's machine"],
+    "choices_el": ["Να υποκλέψει ή να αλλοιώσει την επικοινωνία δύο μερών", "Να ρίξει έναν web server εξαντλώντας τους πόρους του", "Να σπάσει με brute force τον κωδικό ενός χρήστη", "Να κάνει mining κρυπτονομισμάτων στο μηχάνημα του θύματος"],
+    "correctIndex": 0,
     "cybersecurity": true
   },
   {
     "number": 12,
     "question_en": "Which HTTP header instructs browsers to enforce HTTPS for future requests to a domain?",
-    "choices_en": ["Content-Security-Policy", "X-Frame-Options", "Strict-Transport-Security", "X-Content-Type-Options"],
-    "correctIndex": 2,
+    "question_el": "Ποια κεφαλίδα HTTP λέει στους browsers να επιβάλλουν HTTPS στα μελλοντικά αιτήματα προς έναν τομέα;",
+    "choices_en": ["Content-Security-Policy", "Strict-Transport-Security", "X-Frame-Options", "X-Content-Type-Options"],
+    "choices_el": ["Content-Security-Policy", "Strict-Transport-Security", "X-Frame-Options", "X-Content-Type-Options"],
+    "correctIndex": 1,
     "cybersecurity": true
   },
   {
     "number": 13,
     "question_en": "Which technique helps mitigate clickjacking by preventing the page from being framed?",
-    "choices_en": [
-      "CSP frame-ancestors directive",
-      "Setting CORS to *",
-      "Disabling cookies",
-      "HTTP Basic Auth"
-    ],
-    "correctIndex": 0,
+    "question_el": "Ποια τεχνική βοηθά κατά του clickjacking εμποδίζοντας τη σελίδα να ενσωματωθεί σε frame;",
+    "choices_en": ["Requiring HTTP Basic authentication", "Setting Access-Control-Allow-Origin to *", "Marking all cookies as HttpOnly", "CSP frame-ancestors directive"],
+    "choices_el": ["Απαίτηση HTTP Basic authentication", "Ορισμός του Access-Control-Allow-Origin σε *", "Σήμανση όλων των cookies ως HttpOnly", "Η οδηγία CSP frame-ancestors"],
+    "correctIndex": 3,
     "cybersecurity": true
   },
   {
     "number": 14,
     "question_en": "What does MFA stand for in security?",
-    "choices_en": ["Multi-Factor Authentication", "Managed File Access", "Mandatory Firewall Access", "Multi-Function Authorization"],
-    "correctIndex": 0,
+    "question_el": "Τι σημαίνει MFA στην ασφάλεια;",
+    "choices_en": ["Mandatory Firewall Access", "Managed File Access", "Multi-Factor Authentication", "Multi-Function Authorization"],
+    "choices_el": ["Mandatory Firewall Access", "Managed File Access", "Multi-Factor Authentication", "Multi-Function Authorization"],
+    "correctIndex": 2,
     "cybersecurity": true
   },
   {
     "number": 15,
     "question_en": "Which port does a default OpenSSH server listen on?",
-    "choices_en": ["21", "22", "23", "3389"],
-    "correctIndex": 1,
+    "question_el": "Σε ποια θύρα ακούει από προεπιλογή ένας OpenSSH server;",
+    "choices_en": ["21", "23", "22", "3389"],
+    "choices_el": ["21", "23", "22", "3389"],
+    "correctIndex": 2,
     "cybersecurity": true
   },
   {
     "number": 16,
     "question_en": "Which file on a Linux system stores hashed user passwords?",
-    "choices_en": ["/etc/passwd", "/etc/shadow", "/etc/hosts", "/etc/sudoers"],
-    "correctIndex": 1,
+    "question_el": "Ποιο αρχείο σε σύστημα Linux αποθηκεύει τα hashes των κωδικών των χρηστών;",
+    "choices_en": ["/etc/passwd", "/etc/sudoers", "/etc/hosts", "/etc/shadow"],
+    "choices_el": ["/etc/passwd", "/etc/sudoers", "/etc/hosts", "/etc/shadow"],
+    "correctIndex": 3,
     "cybersecurity": true
   },
   {
     "number": 17,
     "question_en": "Which tool is commonly used for network port scanning and service enumeration?",
-    "choices_en": ["Wireshark", "Nmap", "Metasploit", "John the Ripper"],
-    "correctIndex": 1,
+    "question_el": "Ποιο εργαλείο χρησιμοποιείται συνήθως για σάρωση θυρών και καταγραφή υπηρεσιών;",
+    "choices_en": ["Wireshark", "Metasploit", "Nmap", "John the Ripper"],
+    "choices_el": ["Wireshark", "Metasploit", "Nmap", "John the Ripper"],
+    "correctIndex": 2,
     "cybersecurity": true
   },
   {
     "number": 18,
     "question_en": "Which tool is the de-facto standard for offline password cracking?",
-    "choices_en": ["Burp Suite", "Aircrack-ng", "Hashcat", "Nessus"],
-    "correctIndex": 2,
+    "question_el": "Ποιο εργαλείο είναι το de-facto standard για offline σπάσιμο κωδικών;",
+    "choices_en": ["Hashcat", "Aircrack-ng", "Burp Suite", "Nessus"],
+    "choices_el": ["Hashcat", "Aircrack-ng", "Burp Suite", "Nessus"],
+    "correctIndex": 0,
     "cybersecurity": true
   },
   {
     "number": 19,
     "question_en": "What is a 'zero-day' vulnerability?",
-    "choices_en": [
-      "A vulnerability with no impact",
-      "A vulnerability fixed within 24 hours",
-      "A vulnerability unknown to the vendor with no patch available",
-      "A vulnerability discovered in legacy software"
-    ],
-    "correctIndex": 2,
+    "question_el": "Τι είναι μια ευπάθεια 'zero-day';",
+    "choices_en": ["A vulnerability that has no real impact on systems", "A vulnerability the vendor patched within 24 hours of disclosure", "A vulnerability found only in legacy, unsupported software", "A vulnerability unknown to the vendor with no patch available"],
+    "choices_el": ["Ευπάθεια χωρίς πραγματικό αντίκτυπο στα συστήματα", "Ευπάθεια που ο κατασκευαστής διόρθωσε μέσα σε 24 ώρες", "Ευπάθεια που υπάρχει μόνο σε παλιό, μη υποστηριζόμενο λογισμικό", "Ευπάθεια άγνωστη στον κατασκευαστή, χωρίς διαθέσιμο patch"],
+    "correctIndex": 3,
     "cybersecurity": true
   },
   {
     "number": 20,
     "question_en": "Which HTTP status code is returned when authentication is required but missing/invalid?",
+    "question_el": "Ποιος κωδικός κατάστασης HTTP επιστρέφεται όταν απαιτείται αυθεντικοποίηση αλλά λείπει ή είναι άκυρη;",
     "choices_en": ["400", "401", "403", "404"],
+    "choices_el": ["400", "401", "403", "404"],
     "correctIndex": 1,
     "cybersecurity": true
   },
   {
     "number": 21,
     "question_en": "Which TLS version is the current recommended baseline (others below it are deprecated)?",
+    "question_el": "Ποια έκδοση TLS είναι η τρέχουσα προτεινόμενη βάση (οι παλαιότερες έχουν αποσυρθεί);",
     "choices_en": ["SSL 3.0", "TLS 1.0", "TLS 1.2", "TLS 1.1"],
+    "choices_el": ["SSL 3.0", "TLS 1.0", "TLS 1.2", "TLS 1.1"],
     "correctIndex": 2,
     "cybersecurity": true
   },
   {
     "number": 22,
     "question_en": "Which security principle states that a user should have only the access strictly needed for their job?",
-    "choices_en": [
-      "Defense in depth",
-      "Principle of least privilege",
-      "Separation of duties",
-      "Need to know"
-    ],
+    "question_el": "Ποια αρχή ασφάλειας λέει ότι ένας χρήστης πρέπει να έχει μόνο την πρόσβαση που χρειάζεται αυστηρά για τη δουλειά του;",
+    "choices_en": ["Defense in depth", "Principle of least privilege", "Separation of duties", "Need to know"],
+    "choices_el": ["Defense in depth (άμυνα σε βάθος)", "Principle of least privilege (ελάχιστο προνόμιο)", "Separation of duties (διαχωρισμός καθηκόντων)", "Need to know (ανάγκη γνώσης)"],
     "correctIndex": 1,
     "cybersecurity": true
   },
   {
     "number": 23,
     "question_en": "What is the role of a SIEM system?",
-    "choices_en": [
-      "Sign code packages",
-      "Aggregate, correlate, and alert on security events from many sources",
-      "Encrypt disks at rest",
-      "Manage password rotations"
-    ],
-    "correctIndex": 1,
+    "question_el": "Ποιος είναι ο ρόλος ενός συστήματος SIEM;",
+    "choices_en": ["Sign code packages before they are deployed", "Encrypt disks at rest on servers and laptops", "Collect, correlate and alert on security events", "Rotate passwords for service accounts"],
+    "choices_el": ["Υπογράφει πακέτα κώδικα πριν γίνουν deploy", "Κρυπτογραφεί δίσκους σε servers και laptops", "Συλλέγει, συσχετίζει και ειδοποιεί για συμβάντα ασφαλείας", "Αλλάζει περιοδικά τους κωδικούς των service accounts"],
+    "correctIndex": 2,
     "cybersecurity": true
   },
   {
     "number": 24,
     "question_en": "What is phishing?",
-    "choices_en": [
-      "Social engineering that tricks users into revealing credentials or running malware",
-      "Network scanning for open ports",
-      "Brute-forcing a password",
-      "Exploiting a buffer overflow"
-    ],
-    "correctIndex": 0,
+    "question_el": "Τι είναι το phishing;",
+    "choices_en": ["Exploiting a buffer overflow to run code on a remote web server", "Tricking users into revealing credentials or running malware", "Guessing a password by trying every possible combination", "Scanning a network for open ports and running services"],
+    "choices_el": ["Εκμετάλλευση buffer overflow για εκτέλεση κώδικα σε απομακρυσμένο web server", "Εξαπάτηση χρηστών ώστε να δώσουν κωδικούς ή να τρέξουν malware", "Μαντεψιά κωδικού δοκιμάζοντας κάθε πιθανό συνδυασμό", "Σάρωση ενός δικτύου για ανοιχτές θύρες και υπηρεσίες"],
+    "correctIndex": 1,
     "cybersecurity": true
   },
   {
     "number": 25,
     "question_en": "Which attack floods a target with traffic from many compromised hosts to deny service?",
+    "question_el": "Ποια επίθεση πλημμυρίζει έναν στόχο με κίνηση από πολλούς παραβιασμένους hosts ώστε να μην μπορεί να εξυπηρετήσει;",
     "choices_en": ["SQLi", "DDoS", "Phishing", "Privilege escalation"],
+    "choices_el": ["SQLi", "DDoS", "Phishing", "Privilege escalation"],
     "correctIndex": 1,
     "cybersecurity": true
   },
   {
     "number": 26,
     "question_en": "Which tool intercepts and modifies HTTP(S) traffic between a browser and a web app, popular for web testing?",
+    "question_el": "Ποιο εργαλείο υποκλέπτει και τροποποιεί την κίνηση HTTP(S) μεταξύ browser και web εφαρμογής, δημοφιλές στο web testing;",
     "choices_en": ["Wireshark", "Burp Suite", "Nmap", "tcpdump"],
+    "choices_el": ["Wireshark", "Burp Suite", "Nmap", "tcpdump"],
     "correctIndex": 1,
     "cybersecurity": true
   },
   {
     "number": 27,
     "question_en": "JWT tokens are vulnerable when the server accepts which algorithm in the header?",
-    "choices_en": ["HS256", "RS256", "none", "ES256"],
-    "correctIndex": 2,
+    "question_el": "Τα JWT tokens είναι ευάλωτα όταν ο server δέχεται ποιον αλγόριθμο στην κεφαλίδα;",
+    "choices_en": ["HS256", "RS256", "ES256", "none"],
+    "choices_el": ["HS256", "RS256", "ES256", "none"],
+    "correctIndex": 3,
     "cybersecurity": true,
     "code": "{\n  \"alg\": \"none\",\n  \"typ\": \"JWT\"\n}"
   },
   {
     "number": 28,
     "question_en": "What is the purpose of a CSP (Content Security Policy)?",
-    "choices_en": [
-      "Encrypt cookies",
-      "Restrict which sources of scripts/styles/etc. a page may load to mitigate XSS",
-      "Enforce HTTPS",
-      "Block all third-party fonts"
-    ],
-    "correctIndex": 1,
+    "question_el": "Ποιος είναι ο σκοπός του CSP (Content Security Policy);",
+    "choices_en": ["Limit where a page may load scripts and other resources from", "Encrypt session cookies so JavaScript cannot read them", "Force browsers to use HTTPS for every request to the site", "Block all third-party fonts and images on the page"],
+    "choices_el": ["Περιορίζει από πού μπορεί η σελίδα να φορτώνει scripts και άλλους πόρους", "Κρυπτογραφεί τα session cookies ώστε να μην τα διαβάζει η JavaScript", "Αναγκάζει τους browsers να χρησιμοποιούν HTTPS σε κάθε αίτημα", "Μπλοκάρει όλες τις γραμματοσειρές και εικόνες τρίτων στη σελίδα"],
+    "correctIndex": 0,
     "cybersecurity": true
   },
   {
     "number": 29,
     "question_en": "Which authentication protocol issues short-lived tickets and is the backbone of Windows domain auth?",
-    "choices_en": ["NTLM", "Kerberos", "OAuth2", "SAML"],
-    "correctIndex": 1,
+    "question_el": "Ποιο πρωτόκολλο αυθεντικοποίησης εκδίδει βραχύβια tickets και αποτελεί τη βάση της αυθεντικοποίησης σε Windows domain;",
+    "choices_en": ["NTLM", "OAuth2", "Kerberos", "SAML"],
+    "choices_el": ["NTLM", "OAuth2", "Kerberos", "SAML"],
+    "correctIndex": 2,
     "cybersecurity": true
   },
   {
     "number": 30,
     "question_en": "Which Linux command shows currently established and listening sockets along with the owning processes?",
+    "question_el": "Ποια εντολή Linux εμφανίζει τα ενεργά και τα listening sockets μαζί με τις διεργασίες που τα κατέχουν;",
     "choices_en": ["lsof -i", "netcat -l", "tcpdump -i any", "ip route"],
+    "choices_el": ["lsof -i", "netcat -l", "tcpdump -i any", "ip route"],
     "correctIndex": 0,
     "cybersecurity": true,
     "code": "sudo lsof -i -P -n"
