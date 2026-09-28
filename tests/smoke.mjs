@@ -138,7 +138,7 @@ try {
 
   console.log("folders + breadcrumb:");
   const folders = await evalJs(`[...document.querySelectorAll('.welcome-folder')].map(f => f.dataset.group + ':' + f.querySelectorAll('.welcome-set').length).join(',')`);
-  check("SQL and C# sets sit in two folders", folders === "sql:7,cs:8", `got ${folders}`);
+  check("SQL, C# and My MCQ folders", folders === "sql:7,cs:8,my:0", `got ${folders}`);
   const folderOpen = await evalJs(`
     (() => { const f = document.querySelector('.welcome-folder[data-group="sql"]');
       const closed = f.querySelector('.welcome-folder-body').hidden;
@@ -152,8 +152,7 @@ try {
 
   console.log("quiz flow:");
   await evalJs(`
-    [...document.querySelectorAll('.welcome-set')].find(c=>/SQL — Basics/.test(c.textContent))
-      .querySelector('.welcome-set-load').click(); true
+    document.querySelector('.welcome-set[data-file="q_sql01.json"] .welcome-set-load').click(); true
   `);
   // The app's near-duplicate detector may drop a question or two, so expect
   // "most of the set" rather than exactly 15.
@@ -421,8 +420,10 @@ try {
   console.log("breadcrumb navigation:");
   await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=4#sql02` });
   await waitFor(`document.querySelectorAll('#quiz .card').length > 0 && !document.querySelector('.welcome-title')`);
+  // Loading renders every loaded set first, then isolates to the linked one.
+  await waitFor(`/JOINs/.test(document.getElementById('breadcrumb').textContent)`).catch(() => {});
   const crumbSet = await evalJs(`[...document.querySelectorAll('#breadcrumb li')].map(li => li.textContent.trim()).join(' > ')`);
-  check("breadcrumb names folder and set", crumbSet === "🏠 Home > SQL > JOINs & Subqueries", `got "${crumbSet}"`);
+  check("breadcrumb names folder and set", crumbSet === "Home > SQL > JOINs & Subqueries", `got "${crumbSet}"`);
   await evalJs(`document.querySelectorAll('#breadcrumb button')[1].click(); true`);
   await waitFor(`!!document.querySelector('.welcome-folder.open[data-group="sql"]')`);
   check("folder crumb returns to that open folder", true);
@@ -434,6 +435,46 @@ try {
   await evalJs(`history.back(); true`);
   await waitFor(`document.body.classList.contains('assessment-on') && location.hash === '#iq'`);
   check("Back after Home returns to the test", true);
+  await evalJs(`localStorage.clear(); true`);
+
+  console.log("my mcq folder:");
+  await evalJs(`localStorage.setItem('imported-question-sources-v1', JSON.stringify([{ id: 'import-9-q-mine-json', fileName: 'q_mine.json', label: 'mine', tagKey: 'mine', importedAt: '2020-01-01',
+    questions: [{ number: 1, question_en: 'My own question?', choices_en: ['a', 'b'], correctIndex: 0, mine: true, __sourceFile: 'q_mine.json' }] }])); true`);
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=6#my` });
+  await waitFor(`!!document.querySelector('.welcome-folder.open[data-group="my"] .welcome-set-custom')`);
+  check("imported set appears in the open My MCQ folder", true);
+  await evalJs(`document.querySelector('.welcome-set-custom .welcome-set-load').click(); true`);
+  await waitFor(`/My own question/.test((document.querySelector('#quiz .q-title') || {}).textContent || '')`);
+  const crumbMine = await evalJs(`[...document.querySelectorAll('#breadcrumb li')].map(li => li.textContent.trim()).join(' > ')`);
+  check("breadcrumb shows Home › My MCQ › set", crumbMine === "Home > My MCQ > mine", `got "${crumbMine}"`);
+  await evalJs(`localStorage.clear(); true`);
+
+  console.log("topbar:");
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=7#sql01` });
+  await waitFor(`document.querySelectorAll('#quiz .card').length > 0`);
+  const tb = await evalJs(`
+    (async () => {
+      const w = () => new Promise(r => setTimeout(r, 60));
+      const more = document.getElementById('controlsMoreBtn'), panel = document.getElementById('controlsMore');
+      const r = { closed: panel.hidden };
+      more.click(); await w(); r.opens = !panel.hidden;
+      document.getElementById('toggleExam').click(); await w();
+      r.closesOnPick = panel.hidden;
+      r.dot = more.classList.contains('has-dot');
+      r.chip = /Exam/i.test(document.getElementById('scoreBox').textContent);
+      const score = document.getElementById('scoreBox').getBoundingClientRect(), bar = document.getElementById('controlsPanel').getBoundingClientRect();
+      r.noOverlap = score.right <= bar.left;
+      document.getElementById('controlsToggle').click(); await w();
+      r.clean = getComputedStyle(document.getElementById('controlsPanel')).display === 'none'
+        && getComputedStyle(document.getElementById('resetControlsPosition')).display === 'none';
+      document.getElementById('controlsToggle').click(); await w();
+      return r;
+    })()
+  `);
+  check("⋯ menu opens and closes after a pick", tb.closed && tb.opens && tb.closesOnPick, JSON.stringify(tb));
+  check("active mode shows a dot on ⋯ and a chip by the score", tb.dot && tb.chip, JSON.stringify(tb));
+  check("controls never overlap the score", tb.noOverlap, JSON.stringify(tb));
+  check("collapse arrow leaves a clean topbar", tb.clean, JSON.stringify(tb));
   await evalJs(`localStorage.clear(); true`);
 
   console.log("robustness:");

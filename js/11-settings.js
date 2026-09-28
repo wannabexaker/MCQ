@@ -70,7 +70,10 @@ docsModal?.addEventListener("click", (e) => {
 function toggleControlsCollapsed() {
   controlsShell?.classList.toggle("collapsed");
   const collapsed = controlsShell?.classList.contains("collapsed");
-  controlsToggle.textContent = collapsed ? "▶" : "◀";
+  // Collapsed = a completely clean topbar: only the arrow remains.
+  document.body.classList.toggle("controls-collapsed", !!collapsed);
+  if (collapsed) setControlsMoreOpen(false);
+  setIconContent(controlsToggle, collapsed ? "chevronRight" : "chevronLeft");
   controlsToggle.title = collapsed ? "Expand controls" : "Collapse controls";
   controlsToggle.setAttribute(
     "aria-label",
@@ -711,3 +714,47 @@ mobileMenu?.querySelectorAll("button").forEach((btn) => {
 });
 
 setMobileMenuOpen(false);
+
+
+/* ── ⋯ menu: the less frequent controls ─────────────────────────── */
+const controlsMoreBtn = document.getElementById("controlsMoreBtn");
+const controlsMore = document.getElementById("controlsMore");
+
+function setControlsMoreOpen(open) {
+  if (!controlsMore || !controlsMoreBtn) return;
+  controlsMore.hidden = !open;
+  document.body.classList.toggle("more-open", open);
+  controlsMoreBtn.classList.toggle("open", open);
+  controlsMoreBtn.setAttribute("aria-expanded", open ? "true" : "false");
+}
+
+controlsMoreBtn?.addEventListener("click", (e) => {
+  e.stopPropagation();
+  setControlsMoreOpen(controlsMore.hidden);
+});
+// Picking an item closes the menu (the item's own handler still runs).
+controlsMore?.addEventListener("click", (e) => {
+  if (e.target.closest("button")) setControlsMoreOpen(false);
+});
+document.addEventListener("click", (e) => {
+  if (!controlsMore || controlsMore.hidden) return;
+  if (controlsMore.contains(e.target) || controlsMoreBtn?.contains(e.target)) return;
+  setControlsMoreOpen(false);
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") setControlsMoreOpen(false);
+});
+
+// A dot on ⋯ whenever something inside it is switched on.
+function syncControlsMoreDot() {
+  const on = !!controlsMore?.querySelector("button.active");
+  controlsMoreBtn?.classList.toggle("has-dot", on);
+}
+if (controlsMore) {
+  new MutationObserver(syncControlsMoreDot).observe(controlsMore, {
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+  syncControlsMoreDot();
+}

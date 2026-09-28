@@ -515,6 +515,7 @@ function collectBundleFileList() {
   // Core app files
   files.push(
     "index.html",
+    "js/00-icons.js",
     "js/01-core.js",
     "js/02-proctor.js",
     "js/03-data.js",
