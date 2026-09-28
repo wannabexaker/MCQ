@@ -199,20 +199,27 @@ try {
   `);
   check("quiz-only controls hidden in assessment mode", controlsHidden === true);
 
-  // Full analytical run: first choice on every item, Next/Submit through all 25.
+  // Full analytical run: answer items 2..25 first, then go back to item 1.
+  // Once all are answered, Submit must be available without reaching the end.
   await evalJs(`document.querySelector('.assess-test-primary[data-test="analytical"]').click(); true`);
   await waitFor(`!!document.querySelector('.assess-runner')`);
-  await evalJs(`
+  const earlySubmit = await evalJs(`
     (async () => {
-      for (let i = 0; i < 25; i++) {
-        document.querySelector('.assess-choice')?.click();
-        await new Promise(r => setTimeout(r, 30));
-        document.getElementById('assessNavNext').click();
-        await new Promise(r => setTimeout(r, 30));
+      const wait = () => new Promise(r => setTimeout(r, 30));
+      for (let i = 1; i < 25; i++) {
+        document.querySelectorAll('.assess-dot')[i].click(); await wait();
+        document.querySelector('.assess-choice')?.click(); await wait();
       }
-      return true;
+      document.querySelectorAll('.assess-dot')[0].click(); await wait();
+      const before = !!document.getElementById('assessNavSubmit');
+      document.querySelector('.assess-choice')?.click(); await wait();
+      const after = !!document.getElementById('assessNavSubmit');
+      document.getElementById('assessNavSubmit')?.click();
+      return { before, after };
     })()
   `);
+  check("no early Submit while a question is unanswered", earlySubmit.before === false);
+  check("Submit appears on any question once all are answered", earlySubmit.after === true);
   await waitFor(`!!document.querySelector('.assess-results')`);
   const bandName = await evalJs(`(document.querySelector('.assess-hero-main')?.textContent || '').trim()`);
   check("analytical results show a band name", bandName.length > 0, `got "${bandName}"`);
@@ -396,6 +403,36 @@ try {
     })()
   `);
   check("Set share copies a clean #sql02 link", sShare === await evalJs(`location.origin + location.pathname + '#sql02'`), `got "${sShare}"`);
+
+  console.log("robustness:");
+  await evalJs(`localStorage.clear(); localStorage.setItem('quiz-progress', '{broken'); true`);
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=2` });
+  await waitFor(`!!document.querySelector('.welcome-title')`);
+  check("corrupt saved progress does not blank the app", true);
+  check("corrupt progress is backed up", await evalJs(`localStorage.getItem('quiz-progress-corrupt-backup')`) === "{broken");
+  await evalJs(`localStorage.clear(); true`);
+
+  // A previously loaded bundled set is a stored copy; boot must refresh it from
+  // the shipped file and drop saved answers only for questions that changed.
+  const stale = await evalJs(`
+    (async () => {
+      const qs = await (await fetch('q_sql02.json', { cache: 'no-store' })).json();
+      const stored = qs.map((q) => ({ ...q, __sourceFile: 'q_sql02.json' }));
+      stored[0] = { ...stored[0], question_en: 'STALE COPY', choices_en: ['w', 'x', 'y', 'z'], correctIndex: 0 };
+      localStorage.setItem('imported-question-sources-v1', JSON.stringify([{ id: 'import-1-q-sql02-json', fileName: 'q_sql02.json', label: 'sql02', tagKey: 'sql02', importedAt: '2020-01-01', questions: stored }]));
+      localStorage.setItem('quiz-progress', JSON.stringify({ total: 2, correct: 2, answered: {
+        'import-1-q-sql02-json:1:0': { selected: 0, correct: 0, isCorrect: true },
+        'import-1-q-sql02-json:2:1': { selected: qs[1].correctIndex, correct: qs[1].correctIndex, isCorrect: true } } }));
+      return qs[0].question_en;
+    })()
+  `);
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=3` });
+  await waitFor(`document.querySelectorAll('#quiz .card').length > 0`);
+  const refreshed = await evalJs(`JSON.parse(localStorage.getItem('imported-question-sources-v1'))[0].questions[0].question_en`);
+  check("stale bundled copy is refreshed at boot", refreshed === stale, `got "${refreshed}"`);
+  const kept = await evalJs(`Object.keys(JSON.parse(localStorage.getItem('quiz-progress')).answered).join(',')`);
+  check("only answers of changed questions are dropped", kept === "import-1-q-sql02-json:2:1", `got "${kept}"`);
+  await evalJs(`localStorage.clear(); true`);
 
   console.log("hygiene:");
   const benign = /favicon|catfact|Failed to load resource/i;

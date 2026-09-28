@@ -183,6 +183,13 @@ OUTPUT REQUIREMENTS — read carefully:
 - Questions must be self-contained (no "according to the text above" — phrase them as standalone).
 - Avoid trivial yes/no questions. Prefer questions that test understanding.
 
+QUALITY RULES — the answer must not be guessable from the options' form:
+- Length: the correct option must NOT be the longest one in most questions. Keep all options about the same length; if the correct one needs detail, give some wrong options similar detail. The correct option may be the longest in at most 3 out of 10 questions.
+- Position: spread correct answers evenly across A/B/C/D (roughly equal counts, no visible pattern).
+- Wrong options must be plausible to someone who has not studied the topic, and clearly wrong to someone who has. Avoid joke options and avoid "all/none of the above".
+- Exactly one option must be correct; no two options may mean the same thing.
+- If you add Greek fields, apply the same rules to choices_el (same order as choices_en), and keep technical terms (TCP, SELECT, class…) in English.
+
 EXAMPLE of valid output (this is what your reply must look like — just the JSON, nothing else):
 [
   {
@@ -194,9 +201,9 @@ EXAMPLE of valid output (this is what your reply must look like — just the JSO
   },
   {
     "number": 2,
-    "question_en": "Who wrote the play 'Hamlet'?",
-    "choices_en": ["William Shakespeare", "Charles Dickens", "Mark Twain", "Jane Austen"],
-    "correctIndex": 0,
+    "question_en": "Which planet has the shortest orbit around the Sun?",
+    "choices_en": ["Venus", "Earth", "Mars", "Mercury"],
+    "correctIndex": 3,
     "astronomy": true
   }
 ]
@@ -525,6 +532,66 @@ async function pickAndImportQuestionsJson() {
   await handleImportFile(file);
 }
 
+// Shape a q_*.json array into the form kept in imported-question-sources-v1.
+function toStoredQuestions(fileName, tagKey, data) {
+  return data
+    .filter((q) => !(q && typeof q === "object" && q.__template === true))
+    .map((q) => {
+      const withAutoSourceTag = { ...q };
+      if (tagKey && !hasAnyBooleanCategoryTag(withAutoSourceTag)) {
+        withAutoSourceTag[tagKey] = true;
+      }
+      return { ...withAutoSourceTag, __sourceFile: fileName };
+    });
+}
+
+// Loading a bundled set stores a copy of it, so later fixes to the shipped
+// q_*.json never reached returning users. At boot, refresh those copies from
+// the server (the old copy is kept when offline or if the file is invalid).
+// Saved answers for questions whose choices changed are dropped, because the
+// stored answer index would now point at a different option.
+async function refreshBundledImports() {
+  try {
+    const bundled = new Set(BUNDLED_SETS.map((s) => s.file));
+    const list = getImportedSources();
+    let changed = false;
+    await Promise.all(
+      list.map(async (src) => {
+        if (!src || !bundled.has(src.fileName) || !Array.isArray(src.questions)) return;
+        try {
+          const res = await fetch(src.fileName, { cache: "no-store" });
+          if (!res.ok) return;
+          const data = await res.json();
+          if (!validateQuestionsStructure(src.fileName, data).valid) return;
+          const fresh = toStoredQuestions(src.fileName, src.tagKey, data);
+          if (JSON.stringify(fresh) === JSON.stringify(src.questions)) return;
+          const oldByNumber = new Map(src.questions.map((q) => [q?.number, q]));
+          fresh.forEach((q) => {
+            const old = oldByNumber.get(q.number);
+            const same =
+              old &&
+              old.correctIndex === q.correctIndex &&
+              JSON.stringify(old.choices_en) === JSON.stringify(q.choices_en);
+            if (same) return;
+            const prefix = `${src.id}:${q.number}:`;
+            Object.keys(progress.answered || {}).forEach((qid) => {
+              if (qid.startsWith(prefix)) delete progress.answered[qid];
+            });
+          });
+          src.questions = fresh;
+          changed = true;
+        } catch {}
+      })
+    );
+    if (changed) {
+      saveImportedSourcesToStorage(list);
+      saveProgress(); // totals are recomputed by sanitizeProgressForCurrentData()
+    }
+  } catch (e) {
+    console.warn("Bundled set refresh skipped:", e);
+  }
+}
+
 async function importQuestionsData(fileName, data) {
   const validation = validateQuestionsStructure(fileName, data);
   if (!validation.valid) {
@@ -537,35 +604,13 @@ async function importQuestionsData(fileName, data) {
   const label = sourceLabelFromFile(fileName);
   const tagKey = sourceTagKeyFromFile(fileName);
   const sourceId = `import-${Date.now()}-${fileName.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}`;
-  const importedQuestions = data
-    .filter((q) => !(q && typeof q === "object" && q.__template === true))
-    .map((q, idx) => {
-      const withAutoSourceTag = { ...q };
-      if (tagKey && !hasAnyBooleanCategoryTag(withAutoSourceTag)) {
-        withAutoSourceTag[tagKey] = true;
-      }
-      return {
-        ...withAutoSourceTag,
-        __sourceId: sourceId,
-        __sourceLabel: label,
-        __sourceFile: fileName,
-        __qid:
-          typeof withAutoSourceTag.id === "string" && withAutoSourceTag.id.trim()
-            ? `${sourceId}:${withAutoSourceTag.id.trim()}`
-            : `${sourceId}:${Number.isInteger(withAutoSourceTag.number) ? withAutoSourceTag.number : idx + 1}:${idx}`,
-      };
-    });
-
   const stored = {
     id: sourceId,
     fileName,
     label,
     tagKey,
     importedAt: new Date().toISOString(),
-    questions: importedQuestions.map((q) => {
-      const { __sourceId, __sourceLabel, __qid, ...rest } = q;
-      return rest;
-    }),
+    questions: toStoredQuestions(fileName, tagKey, data),
   };
   if (upsertImportedSource(stored)) {
     await reloadSourcesAndFilters();

@@ -555,7 +555,7 @@ function collectBundleFileList() {
   });
 
   // Static images used by UI
-  files.push("images/favicon.png", "images/game_over.jpg", "images/sidebanner.jpg");
+  files.push("images/favicon.png", "images/icon-512.png", "images/game_over.jpg", "images/sidebanner.jpg");
 
   // Images referenced by questions
   (CURRENT_DATA || []).forEach((q) => {

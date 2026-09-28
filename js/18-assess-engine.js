@@ -88,7 +88,7 @@ const ASSESS_I18N = {
   },
   el: {
     hubTitle: "Αξιολογήσεις",
-    hubIntro: "Τέσσερα τεστ αυτοαξιολόγησης με πλούσια, επεξηγημένα αποτελέσματα — εκτίμηση IQ, προφίλ αναλυτικής σκέψης και αρχέτυπο προσωπικότητας Σκοτεινής Τριάδας. Σε αντίθεση με τα σετ του κουίζ, δεν παίρνεις απλώς ένα σκορ: κάθε αποτέλεσμα εξηγεί τι σημαίνει.",
+    hubIntro: "Τέσσερα τεστ αυτοαξιολόγησης με πλούσια, επεξηγημένα αποτελέσματα — εκτίμηση IQ, προφίλ αναλυτικής σκέψης, αρχέτυπο προσωπικότητας Σκοτεινής Τριάδας και προφίλ φάσματος σεξουαλικότητας. Σε αντίθεση με τα σετ του κουίζ, δεν παίρνεις απλώς ένα σκορ: κάθε αποτέλεσμα εξηγεί τι σημαίνει.",
     hubPrivacy: "Όλα τρέχουν σε αυτή τη συσκευή — τίποτα δεν αποστέλλεται.",
     backToQuiz: "← Πίσω στο κουίζ",
     iqName: "Τεστ IQ",
@@ -622,6 +622,17 @@ function renderAssessRunner(host) {
     <button type="button" id="assessNavBack" ${idx === 0 ? "disabled" : ""}>${escapeHTML(assessT("back"))}</button>
     <button type="button" id="assessNavSkip">${escapeHTML(assessT("skip"))}</button>
     <button type="button" id="assessNavNext" class="assess-nav-primary">${escapeHTML(isLast ? assessT("submit") : assessT("next"))}</button>`;
+  // Once every item has an answer, allow finishing from any question instead
+  // of having to walk back to the last one.
+  if (!isLast && answered === items.length) {
+    const finish = document.createElement("button");
+    finish.type = "button";
+    finish.id = "assessNavSubmit";
+    finish.className = "assess-nav-primary assess-nav-submit";
+    finish.textContent = assessT("submit");
+    finish.addEventListener("click", () => submitAssessment());
+    nav.appendChild(finish);
+  }
   wrap.appendChild(nav);
 
   const footer = document.createElement("div");

@@ -10,18 +10,19 @@ Multiple-choice quiz engine with 21 bundled bilingual question banks, user-suppl
 
 ## Overview
 
-Opens on a landing page with pickable question sets, validates every bank against a fixed schema, and renders an interactive quiz with score tracking, exam mode, shuffle, timer, and a practice mode that surfaces only previously wrong questions. **21 sets ship with the repo** — Networking, Cybersecurity, IT General, a demo, 7 SQL sets (basics through CTEs/window functions), 8 C# sets (types through async/await), and 2 hidden Discrete Math sets reachable via the landing search. Every question carries English and Greek text; a topbar **EL/EN** toggle switches the whole quiz between languages. Users can add their own banks via a file picker or generate them with the built-in AI prompt that turns any text into ready-to-import JSON. Progress, imported sets, and stats persist in `localStorage`. The same web assets serve as a static webpage, an installable PWA, and a native Android APK with no server requirement.
+Opens on a landing page with pickable question sets, validates every bank against a fixed schema, and renders an interactive quiz with score tracking, exam mode, shuffle, timer, and a practice mode that surfaces only previously wrong questions. **21 sets ship with the repo** — Networking, Cybersecurity, IT General, a demo, 7 SQL sets (basics through CTEs/window functions), 8 C# sets (types through async/await), and 2 hidden Philosophy of Social Science sets (Rosenberg) reachable via the landing search. Every question carries English and Greek text; a topbar **EL/EN** toggle switches the whole quiz between languages. Users can add their own banks via a file picker or generate them with the built-in AI prompt that turns any text into ready-to-import JSON. Progress, imported sets, and stats persist in `localStorage`. The same web assets serve as a static webpage, an installable PWA, and a native Android APK with no server requirement.
 
 ## Features
 
 ### Content
-- **21 bundled question sets** (~660 questions), all bilingual EN/ΕΛ:
+- **21 bundled question sets** (417 questions), all bilingual EN/ΕΛ:
   - Networking, Cybersecurity, IT General (30 Q each), Demo (12 Q)
   - **SQL01–07**: basics, JOINs & subqueries, GROUP BY/aggregates, string & date functions, transactions & ACID, indexes & performance, CTEs & window functions (15 Q each)
   - **CS01–08 (C#)**: types & control flow, OOP, null handling, collections, LINQ & lambdas, strings & StringBuilder, ADO.NET, exceptions & async/await (15 Q each)
-  - Rosen Discrete Math ×2 — hidden; surface via the landing search
+  - Rosenberg, Philosophy of Social Science ×2 (Ch 1-4: 40 Q, Ch 6-14: 50 Q) — hidden; surface via the landing search (e.g. `rosen`)
 - **EL/EN question language toggle** (topbar + mobile menu, persisted) — UI stays English, question and choice text switches
 - Per-question optional `image`, `image_answers`, and `code` fields rendered in the card
+- **Answers are not guessable from the options' form**: in every bank the correct option is rarely the longest one and correct answers are spread evenly across A/B/C/D (enforced in CI, see Quality)
 
 ### Assessments (special section)
 - **Four self-tests** behind the 🎯 topbar button and a landing-page card — a parallel track to the quiz engine with a sequential one-question-at-a-time flow, progress bar, skip & return (clickable dot strip), autosave/resume, and rich explained results:
@@ -38,7 +39,7 @@ Opens on a landing page with pickable question sets, validates every bank agains
 
 ### Quiz engine
 - Landing page with tag search; each set is a card with Load / **Share** / Download actions
-- **Clean, shareable deep links (hash routing)** — every test has its own tidy `#hash` URL, no `?query`: assessments are `#iq` / `#analytical` / `#dark-triad` (`#assessments` = the hub), question sets are `#sql01` / `#cs02` / `#networking` (etc.). Opening a link drops a visitor straight into that test (assessment links start it; set links show only that set, isolated); the address bar always tracks the active test so it is ready to copy; each hub/landing card has a 🔗 Share button (Web Share where available, clipboard + toast otherwise); and the browser **Back** button walks the natural stack (test → hub/picker → quiz) instead of leaving the site
+- **Clean, shareable deep links (hash routing)** — every test has its own tidy `#hash` URL, no `?query`: assessments are `#iq` / `#analytical` / `#dark-triad` / `#spectrum` (`#assessments` = the hub), question sets are `#sql01` / `#cs02` / `#networking` (etc.). Opening a link drops a visitor straight into that test (assessment links start it; set links show only that set, isolated); the address bar always tracks the active test so it is ready to copy; each hub/landing card has a 🔗 Share button (Web Share where available, clipboard + toast otherwise); and the browser **Back** button walks the natural stack (test → hub/picker → quiz) instead of leaving the site
 - Schema validation on import with per-question error reporting
 - Duplicate detection by normalized text and Jaccard similarity across all loaded sets
 - Exam mode and God mode — reveal actions are blocked *and* visually disabled
@@ -60,22 +61,23 @@ Opens on a landing page with pickable question sets, validates every bank agains
 
 ### Platform
 - Three themes (`dark`, `light`, `gay`), CSS-variable based — the third one is an easter egg with a fleeing "No" button (Esc ×3 always returns to dark)
-- **Guarded storage**: all `localStorage` access goes through a wrapper with an in-memory fallback, so private browsing modes and quota errors never crash the app
-- Service worker (cache `mcq-v16`): network-first app shell and question files, cache-first images; installable PWA
+- **Guarded storage**: all `localStorage` access goes through a wrapper with an in-memory fallback, so private browsing modes and quota errors never crash the app; a corrupt saved-progress value is set aside (`quiz-progress-corrupt-backup`) instead of blanking the page
+- Service worker (cache `mcq-v17`): network-first app shell and question files, cache-first images; installable PWA
 - Open Graph + Twitter card meta for link previews
 - Optimized assets: ~140 KB of images on page load (512px icon loads only on PWA install)
-- Docker image (nginx) for production hosting; one-command local server scripts for Windows
+- Docker image (nginx, ships the service worker + manifest so the PWA works there too) for production hosting; one-command local server scripts for Windows
 - Capacitor 6 Android wrapper that bundles assets into the APK; no network needed at runtime
 
 ### Quality
 - **CI on every push/PR** (GitHub Actions): syntax check, question-bank validation, assessment-data validation, headless E2E smoke test
-- `tests/validate-questions.mjs` — structural validation of all `q_*.json` (schema, `correctIndex` range, EL/EN choice parity, sequential numbering, single category tag)
+- `tests/validate-questions.mjs` — validation of all `q_*.json`: schema, `correctIndex` range, required Greek (`question_el`/`choices_el`) with EN/EL parity, sequential numbering, single category tag, and guessability limits per bank (correct option strictly longest in ≤30% of questions, in EN and in EL; never 2× longer than every wrong option; each answer position holds 10–40% of correct answers)
+- `.claude/skills/mcq-questions/SKILL.md` — the authoring rules behind those checks, loaded by Claude Code when writing or editing questions; the in-app AI prompt carries the same rules
 - `tests/validate-assessments.mjs` — assessment data + scoring validation (item counts per domain/trait, SVG safety, bilingual completeness, reverse-key structure, band coverage, archetype table, scoring sanity, share-codec round-trips)
-- `tests/smoke.mjs` — self-contained E2E: serves the app GitHub-Pages-style (no directory listing) and drives headless Chrome over CDP with real input events; covers landing, search, set loading, scoring, keyboard access, exam mode, language toggle, the assessments section (hub, full run, resume, exit, shared links), the clean-hash deep-links (assessments #iq/#analytical/#dark-triad + sets #sql01…, Back/Forward, Share), and console-error hygiene
+- `tests/smoke.mjs` — self-contained E2E: serves the app GitHub-Pages-style (no directory listing) and drives headless Chrome over CDP with real input events; covers landing, search, set loading, scoring, keyboard access, exam mode, language toggle, the assessments section (hub, full run, resume, exit, shared links), the clean-hash deep-links (assessments #iq/#analytical/#dark-triad/#spectrum + sets #sql01…, Back/Forward, Share), recovery from corrupt saved progress, refresh of stale stored copies of bundled sets, and console-error hygiene
 
 ## Architecture
 
-Single-page web app. No framework, no build step. App code lives in `js/` as **20 ordered classic scripts split by concern** (11 quiz files, 8 assessment files `js/12–19`, and the clean-hash share-links router `js/20`) — they share one top-level scope, so load order matters and is fixed in `index.html`. The assessments section is a parallel track: a single guard at the top of `applySourceFilter()` re-routes rendering while assessment mode is active, and the quiz state is never touched. State lives in browser `localStorage` behind a guarded wrapper. Boot shows the landing page; picking a card imports that set, after which validation, dedup, and rendering into `<main id="quiz">` run. The exact same web assets are wrapped by Capacitor into an Android WebView for the APK target.
+Single-page web app. No framework, no build step. App code lives in `js/` as **21 ordered classic scripts split by concern** (11 quiz files, assessment files `js/12–19` and `js/21`, and the clean-hash share-links router `js/20`) — they share one top-level scope, so load order matters and is fixed in `index.html`. The assessments section is a parallel track: a single guard at the top of `applySourceFilter()` re-routes rendering while assessment mode is active, and the quiz state is never touched. State lives in browser `localStorage` behind a guarded wrapper. Boot shows the landing page; picking a card imports that set, after which validation, dedup, and rendering into `<main id="quiz">` run. The exact same web assets are wrapped by Capacitor into an Android WebView for the APK target.
 
 ### Components
 
@@ -87,7 +89,7 @@ Single-page web app. No framework, no build step. App code lives in `js/` as **2
 | `js/03-data.js` | Stats, history, imported sources, validation, dedup, question loading |
 | `js/04-source-filter.js` | Sources/categories filter panel + search |
 | `js/05-tools.js` | escapeHTML, templates, downloads, zip writer, docker-bundle export |
-| `js/06-import-ui.js` | Text prompt, JSON editor, import modal + library grid |
+| `js/06-import-ui.js` | AI prompt, JSON editor, import modal + library grid, boot refresh of stored bundled sets |
 | `js/07-quiz.js` | `BUNDLED_SETS`, quiz rendering, scoring, answer selection |
 | `js/08-boot-theme.js` | Boot sequence, themes, language toggle, easter egg |
 | `js/09-modes-timer.js` | Exam/God mode state, confirm modal, timer |
@@ -105,12 +107,14 @@ Single-page web app. No framework, no build step. App code lives in `js/` as **2
 | `js/20-share-links.js` | Clean-hash share links for assessments **and** sets: `#iq`/`#analytical`/`#dark-triad`, `#sql01`… ; Share buttons, URL sync, Back/Forward history (additive; wraps nav functions, no body edits) |
 | `style.css` | Theming via CSS variables, layout, modals, welcome grid, focus styles |
 | `sw.js` | Service worker — network-first shell + questions, cache-first images |
+| `.claude/skills/mcq-questions/` | Question-authoring rules for Claude Code (bilingual, unguessable options) |
 | `manifest.json` | PWA manifest (192px + 512px icons, theme, standalone display) |
 | `sources_index.json` | **Kept empty on purpose** — populating it auto-loads every set and skips the landing page; bundled sets are registered in `BUNDLED_SETS` (`js/07-quiz.js`) instead |
 | `questions_template.json` | Documented template for new question files |
 | `q_*.json` (21 files) | Question banks — see Content above |
 | `tests/` | Question + assessment validators, headless E2E smoke suite |
 | `.github/workflows/ci.yml` | CI: syntax check + all three test suites |
+| `.github/workflows/build-apk.yml`, `release-apk.yml` | Debug APK artifact on push to `main`; APK attached to a GitHub Release on `v*` tags |
 | `scripts/copy-www.js` | Copies web assets (incl. `js/`) into `www/` for Capacitor sync |
 | `capacitor.config.json` | Capacitor app id, web dir, Android options |
 | `nginx.conf` | Caching + SW-safe headers for Docker deploy |
@@ -154,7 +158,7 @@ docker compose up --build
 Android APK — download pre-built:
 
 - Tagged releases: [Releases page](https://github.com/wannabexaker/MCQ/releases) (one `.apk` per release)
-- Latest from `main`: [Actions → Build Android APK](https://github.com/wannabexaker/MCQ/actions/workflows/build-apk.yml) → most recent run → `mcq-trainer-debug-apk` artifact (requires GitHub login, 30-day retention)
+- Latest from `main`: [Actions → Build Android APK](https://github.com/wannabexaker/MCQ/actions/workflows/build-apk.yml) → most recent run → `mcq-trainer-debug-apk` artifact (requires GitHub login, 7-day retention)
 
 Android APK — build locally:
 
@@ -179,14 +183,14 @@ Build commands:
 npm run copy:www          # copy web files into www/
 npm run sync              # copy:www + cap sync android
 npm run open:android      # sync + open in Android Studio
-npm run build:apk         # sync + assembleDebug → app-debug.apk
-npm run build:apk:release # sync + assembleRelease (requires signing config)
+npm run build:apk         # sync + assembleDebug → app-debug.apk (Windows: calls gradlew.bat)
+npm run build:apk:release # sync + assembleRelease (requires signing config; Windows)
 ```
 
 ## Testing
 
 ```bash
-node tests/validate-questions.mjs     # structural validation of all q_*.json
+node tests/validate-questions.mjs     # schema, Greek, and guessability checks for all q_*.json
 node tests/validate-assessments.mjs   # assessment data / scoring / share-codec validation (js/12–15)
 node tests/smoke.mjs                  # headless E2E (needs Chrome; CHROME_PATH overrides location)
 ```
@@ -220,20 +224,20 @@ Required:
 Optional:
 
 - `id` — stable string identifier; survives edits and reorders
-- `question_el`, `choices_el` — Greek translations (same order/length as EN; shown by the EL toggle)
+- `question_el`, `choices_el` — Greek translations (same order/length as EN; shown by the EL toggle). Optional for imports, **required for bundled banks**
 - `code` — code snippet shown as a code block under the question
 - `image`, `image_answers` — relative paths to images shown under the question and the answers
 
-File name must match `q_*.json`. Root must be a JSON array. See `questions_template.json` for the full annotated example. To ship a new set as a landing-page card, add an entry to `BUNDLED_SETS` in `js/07-quiz.js` — do **not** add it to `sources_index.json` (see Components).
+File name must match `q_*.json`. Root must be a JSON array. See `questions_template.json` for the full annotated example. To ship a new set as a landing-page card, add an entry to `BUNDLED_SETS` in `js/07-quiz.js` — do **not** add it to `sources_index.json` (see Components). Bundled banks must also pass the guessability rules in `.claude/skills/mcq-questions/SKILL.md` (`node tests/validate-questions.mjs` reports each violation).
 
 ## Project Structure
 
 ```
 mcq/
 ├── index.html               — DOM, modals, PWA/social meta, ordered script tags
-├── js/                      — app code, 19 ordered files (01–11 quiz, 12–19 assessments)
+├── js/                      — app code, 21 ordered files (01–11 quiz, 12–19 + 21 assessments, 20 share links)
 ├── style.css                — theming, layout, focus styles
-├── sw.js                    — service worker (cache mcq-v16)
+├── sw.js                    — service worker (cache mcq-v17)
 ├── manifest.json            — PWA manifest
 ├── sources_index.json       — intentionally empty (see Components)
 ├── questions_template.json  — annotated question template
@@ -243,15 +247,17 @@ mcq/
 ├── q_demo.json              — 12 demo questions
 ├── q_sql01..07.json         — 7 SQL sets, 15 questions each
 ├── q_cs01..08.json          — 8 C# sets, 15 questions each
-├── q_RosenCh*.json          — 2 hidden Discrete Math sets
+├── q_RosenCh*.json          — 2 hidden Philosophy of Social Science sets (Rosenberg)
 ├── images/                  — favicon (192px), icon-512, side banner, game-over splash
 ├── tests/
 │   ├── validate-questions.mjs   — schema/parity validation of all banks
 │   ├── validate-assessments.mjs — assessment data/scoring/codec validation
 │   └── smoke.mjs                — headless E2E via Chrome DevTools Protocol
+├── .claude/skills/          — mcq-questions: authoring rules for question banks
 ├── .github/workflows/
 │   ├── ci.yml               — syntax check + validators + smoke on push/PR
-│   └── build-apk.yml        — Android APK build
+│   ├── build-apk.yml        — debug APK artifact on push to main
+│   └── release-apk.yml      — APK attached to a GitHub Release on v* tags
 ├── scripts/
 │   └── copy-www.js          — copies web assets into www/ for Capacitor
 ├── capacitor.config.json    — Capacitor app config
@@ -271,9 +277,10 @@ mcq/
 - The `js/` files are **order-sensitive**: they share one top-level scope, so a file may only reference earlier files' bindings at load time (calls made after load, e.g. inside functions or event handlers, can reference anything). Keep the `index.html` script-tag order in sync when adding files.
 - `nginx.conf` sets `Cache-Control: no-cache` for `sw.js` and `manifest.json` specifically. Without that, browsers can serve a stale service worker for up to 7 days under the default static-asset caching block and refuse to pick up updates.
 - The Android WebView ships at `https://localhost` (per `capacitor.config.json` → `androidScheme: "https"`). The same-origin policy works correctly; `localStorage` is durable across app launches and survives APK updates.
+- Loading a bundled set stores a copy of it in `localStorage`. At every boot the app re-fetches the bundled sets you have loaded and replaces stale copies, so fixes to the shipped files reach returning users; saved answers are dropped only for questions whose choices changed. Offline, the stored copy is used as is.
 - Imported question banks live entirely in the browser/WebView `localStorage`. There is no server-side store. To migrate between devices, use the **Export** action on each imported source and re-import on the target device.
 - The validator rejects files whose name does not match `q_*.json` to avoid accidental imports of unrelated JSON. Files listed in `EXCLUDED_SOURCE_FILES` (legacy / template names) are also skipped.
-- Duplicate questions across multiple loaded sets are hidden from the rendered quiz but not deleted from their source files. The dedup uses Jaccard similarity on tokenised question text plus an exact match on normalized correct-answer text — it may trim a question or two even within a single set (e.g. SQL Basics renders 14 of 15).
+- Duplicate questions across multiple loaded sets are hidden from the rendered quiz but not deleted from their source files. The dedup uses Jaccard similarity on tokenised question text plus an exact match on normalized correct-answer text — it may trim a question or two even within a single set.
 
 ## License
 

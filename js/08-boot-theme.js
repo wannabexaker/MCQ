@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   loadProgress();
+  await refreshBundledImports();
   setDataSource(await loadQuestionData());
   showDataWarnings();
   sanitizeProgressForCurrentData();

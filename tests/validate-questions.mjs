@@ -56,6 +56,50 @@ for (const file of files) {
       err(file, `${at}: expected exactly 1 boolean category tag, found ${tags.length}`);
   });
 
+  // Bundled banks ship in both languages (the EL toggle relies on it).
+  data.forEach((q, i) => {
+    const at = `q[${i}] (number=${q?.number})`;
+    if (typeof q?.question_el !== "string" || !q.question_el.trim())
+      err(file, `${at}: missing question_el (Greek translation)`);
+    if (!Array.isArray(q?.choices_el) || q.choices_el.some((c) => typeof c !== "string" || !c.trim()))
+      err(file, `${at}: missing or empty choices_el (Greek translation)`);
+  });
+
+  // Answer-guessability checks: nobody should score well by always picking
+  // the longest option or always picking the same letter.
+  const valid = data.filter(
+    (q) => Array.isArray(q?.choices_en) && Number.isInteger(q?.correctIndex) &&
+      q.correctIndex >= 0 && q.correctIndex < q.choices_en.length
+  );
+  if (valid.length >= 10) {
+    for (const key of ["choices_en", "choices_el"]) {
+      let longest = 0;
+      valid.forEach((q) => {
+        const choices = q[key];
+        if (!Array.isArray(choices) || choices.length !== q.choices_en.length) return;
+        const len = choices.map((c) => String(c).length);
+        const correct = len[q.correctIndex];
+        const maxWrong = Math.max(...len.filter((_, k) => k !== q.correctIndex));
+        if (correct > maxWrong) longest++;
+        if (correct >= 12 && correct >= 2 * maxWrong)
+          err(file, `number=${q.number}: ${key} correct answer is 2x longer than every wrong one (lengthen a distractor)`);
+      });
+      const cap = Math.floor(valid.length * 0.3);
+      if (longest > cap)
+        err(file, `${key}: correct answer is the longest option in ${longest}/${valid.length} questions (max ${cap}); lengthen distractors or shorten correct answers`);
+    }
+    const counts = {};
+    valid.forEach((q) => { counts[q.correctIndex] = (counts[q.correctIndex] || 0) + 1; });
+    const slots = Math.min(...valid.map((q) => q.choices_en.length));
+    const hi = Math.floor(valid.length * 0.4);
+    const lo = Math.floor(valid.length * 0.1);
+    for (let k = 0; k < slots; k++) {
+      const c = counts[k] || 0;
+      if (c > hi || c < lo)
+        err(file, `correct answer is option ${"ABCDEFGH"[k]} in ${c}/${valid.length} questions (allowed ${lo}-${hi}); spread answers across positions`);
+    }
+  }
+
   // sequential numbering (when the number field is used)
   const nums = data.map((q) => q?.number).filter(Number.isInteger);
   if (nums.length === data.length) {

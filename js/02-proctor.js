@@ -197,8 +197,8 @@ function wipeAllMcqStorage() {
   // starts with our prefixes in case future versions added more.
   MCQ_STORAGE_KEYS.forEach((k) => { try { appStorage.removeItem(k); } catch {} });
   try {
-    for (let i = appStorage.length - 1; i >= 0; i--) {
-      const k = appStorage.key(i);
+    // appStorage exposes keys() (not length/key(i) like raw localStorage).
+    for (const k of appStorage.keys()) {
       if (!k) continue;
       if (
         k.startsWith("quiz-") ||

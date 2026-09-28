@@ -26,7 +26,22 @@ let godlikeMode = false;
 
 function loadProgress() {
   const saved = appStorage.getItem("quiz-progress");
-  if (saved) progress = JSON.parse(saved);
+  if (!saved) return;
+  try {
+    const parsed = JSON.parse(saved);
+    if (parsed && typeof parsed === "object" && parsed.answered && typeof parsed.answered === "object") {
+      progress = {
+        answered: parsed.answered,
+        correct: Number(parsed.correct) || 0,
+        total: Number(parsed.total) || 0,
+      };
+    }
+  } catch {
+    // Corrupt value: keep a copy for inspection and start clean instead of
+    // aborting boot (which would leave the page blank).
+    appStorage.setItem("quiz-progress-corrupt-backup", saved);
+    appStorage.removeItem("quiz-progress");
+  }
 }
 function saveProgress() {
   appStorage.setItem("quiz-progress", JSON.stringify(progress));
@@ -69,7 +84,7 @@ const ASSESS_RESULTS_STORAGE_KEY = "assessments-results-v1";
 const ACTIVITY_LOG_MAX = 5000;
 
 /* ═══════════════════════════════════════════════════════════════
-   ACTIVITY LOG — tamper-evident record of every monitored event.
+   ACTIVITY LOG — local record of every monitored event.
    Used for proctoring: an instructor can review what the student
    did and when (answers, reveals, mode toggles, off-screen blurs).
    Ring buffer in localStorage, capped at ACTIVITY_LOG_MAX entries.

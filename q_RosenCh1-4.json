@@ -1,482 +1,362 @@
 [
-{
-"number": 1,
-"question_en": "Γιατί ο Rosenberg υποστηρίζει ότι οι κοινωνικοί επιστήμονες δεν μπορούν να αποφύγουν τη φιλοσοφία;",
-"choices_en": [
-"Επειδή όλες οι κοινωνικές επιστήμες πρέπει να γίνουν ηθική",
-"Επειδή οι ερευνητικές επιλογές ήδη προϋποθέτουν απαντήσεις σε φιλοσοφικά ερωτήματα",
-"Επειδή οι κοινωνικές επιστήμες δεν έχουν εμπειρικές μεθόδους",
-"Επειδή η φιλοσοφία αντικαθιστά τη στατιστική ανάλυση"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 2,
-"question_en": "Ποιο ζεύγος αποδίδει καλύτερα τα δύο βασικά είδη ερωτημάτων που εξετάζει η φιλοσοφία κατά τον Rosenberg;",
-"choices_en": [
-"Ερωτήματα στα οποία η επιστήμη δεν μπορεί να απαντήσει και ερωτήματα για το γιατί δεν μπορεί να απαντήσει",
-"Ερωτήματα μαθηματικών και ερωτήματα γραμματικής",
-"Ερωτήματα προσωπικής γνώμης και ερωτήματα πολιτισμικού γούστου",
-"Ερωτήματα πολιτικής και ερωτήματα μέτρησης"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 3,
-"question_en": "Ποιο είναι το κεντρικό πρόβλημα της φιλοσοφίας των κοινωνικών επιστημών που εισάγεται στο Κεφάλαιο 1;",
-"choices_en": [
-"Αν οι κοινωνικές επιστήμες πρέπει να καταργηθούν",
-"Αν όλες οι κοινωνικές επιστήμες μπορούν να αναχθούν στην οικονομική επιστήμη",
-"Αν οι κοινωνικές επιστήμες πρέπει να επιδιώκουν την ίδια προβλεπτική και ελεγκτική γνώση με τις φυσικές επιστήμες",
-"Αν η φιλοσοφία πρέπει να αποφεύγει όλα τα επιστημονικά ερωτήματα"
-],
-"correctIndex": 2,
-"RosenCh1-4": true
-},
-{
-"number": 4,
-"question_en": "Τι διακρίνει τα κανονιστικά ερωτήματα από τα περιγραφικά επιστημονικά ερωτήματα;",
-"choices_en": [
-"Τα κανονιστικά αφορούν το τι πρέπει να ισχύει, ενώ τα περιγραφικά το τι ισχύει",
-"Τα κανονιστικά χρησιμοποιούν αριθμούς, ενώ τα περιγραφικά αξίες",
-"Τα κανονιστικά είναι πάντα ψευδή, ενώ τα περιγραφικά πάντα αληθή",
-"Τα κανονιστικά είναι βιολογικά, ενώ τα περιγραφικά κοινωνικά"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 5,
-"question_en": "Γιατί οι φιλοσοφικές επιλογές είναι ιδιαίτερα εμφανείς στις κοινωνικές επιστήμες;",
-"choices_en": [
-"Επειδή οι κοινωνικές επιστήμες έχουν πλήρη συμφωνία για τη μέθοδο",
-"Επειδή οι κοινωνικές επιστήμες δεν έχουν διαφωνίες για τις αξίες",
-"Επειδή οι κοινωνικές επιστήμες είναι καθαρά μαθηματικές",
-"Επειδή υπάρχει λιγότερη συμφωνία για τα βασικά ερωτήματα, τις μεθόδους και τα κριτήρια προόδου"
-],
-"correctIndex": 3,
-"RosenCh1-4": true
-},
-{
-"number": 6,
-"question_en": "Ποιος ισχυρισμός εκφράζει καλύτερα τον νατουραλισμό στη φιλοσοφία των κοινωνικών επιστημών;",
-"choices_en": [
-"Η κοινωνική επιστήμη πρέπει να προτυπώνεται στις φυσικές επιστήμες, αναζητώντας νόμους, εξήγηση, πρόβλεψη και έλεγχο",
-"Η κοινωνική επιστήμη πρέπει μόνο να μεταφράζει πολιτισμικά νοήματα",
-"Η κοινωνική επιστήμη πρέπει να απορρίπτει πλήρως την αιτιακή εξήγηση",
-"Η κοινωνική επιστήμη πρέπει να αντικατασταθεί από τη λογοτεχνία"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 7,
-"question_en": "Ποιος ισχυρισμός εκφράζει καλύτερα τον ερμηνευτισμό σε αντίθεση με τον νατουραλισμό;",
-"choices_en": [
-"Η ανθρώπινη δράση πρέπει να εξηγείται μόνο μέσω γενετικής",
-"Η κοινωνική έρευνα πρέπει να εστιάζει στο νόημα, την κατανόηση και την ερμηνεία αντί για φυσικοεπιστημονική πρόβλεψη",
-"Όλη η ανθρώπινη συμπεριφορά είναι μετρήσιμη όπως η πίεση αερίου",
-"Η κοινωνική επιστήμη πρέπει να εγκαταλείψει τη γλώσσα και τον πολιτισμό"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 8,
-"question_en": "Γιατί η πρόβλεψη είναι σημαντική για τη νατουραλιστική άποψη της κοινωνικής επιστήμης;",
-"choices_en": [
-"Επειδή η πρόβλεψη θεωρείται ένδειξη πραγματικής αιτιακής κατανόησης",
-"Επειδή η πρόβλεψη αντικαθιστά την εξήγηση",
-"Επειδή η πρόβλεψη αποδεικνύει την ηθική ορθότητα",
-"Επειδή η πρόβλεψη εξαλείφει την ανάγκη θεωρίας"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 9,
-"question_en": "Ποια φιλοσοφική προϋπόθεση βρίσκεται πίσω από τον ισχυρισμό ότι οι φυσικές επιστήμες έχουν προοδεύσει περισσότερο από τις κοινωνικές;",
-"choices_en": [
-"Ότι οι κοινωνικοί επιστήμονες δεν χρησιμοποιούν ποτέ αποδείξεις",
-"Ότι η πρόοδος στις φυσικές επιστήμες είναι κατανοητή και μετρήσιμη",
-"Ότι όλες οι κοινωνικές επιστήμες είναι ίδιες",
-"Ότι οι ηθικές αξίες είναι φυσικά αντικείμενα"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 10,
-"question_en": "Σύμφωνα με τη συμβιβαστική άποψη, γιατί οι κοινωνικές επιστήμες μπορεί να έχουν ασθενέστερη προβλεπτική επιτυχία;",
-"choices_en": [
-"Επειδή οι κοινωνικοί επιστήμονες δεν ενδιαφέρονται για αποδείξεις",
-"Επειδή οι ανθρώπινες διαδικασίες είναι σύνθετες και τα ελεγχόμενα πειράματα σε ανθρώπους είναι περιορισμένα",
-"Επειδή η γλώσσα δεν έχει ρόλο στην κοινωνική επιστήμη",
-"Επειδή οι φυσικές επιστήμες δεν έχουν μεθόδους"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 11,
-"question_en": "Τι τονίζει η ανάλυση του Hume για την αιτιότητα;",
-"choices_en": [
-"Η αιτιότητα είναι άμεσα ορατή ως αναγκαία δύναμη",
-"Η αιτιότητα γνωρίζεται μέσω σταθερής συνάφειας, γενίκευσης και πρόβλεψης",
-"Η αιτιότητα είναι ταυτόσημη με την ηθική ευθύνη",
-"Η αιτιότητα εφαρμόζεται μόνο στην ανθρώπινη δράση"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 12,
-"question_en": "Γιατί η χιουμιανή θεώρηση είναι σημαντική για τη μέθοδο των κοινωνικών επιστημών;",
-"choices_en": [
-"Υποστηρίζει ότι η αιτιακή γνώση απαιτεί γενικεύσεις με προβλεπτικές συνέπειες",
-"Αποδεικνύει ότι η ανθρώπινη δράση δεν μπορεί να μελετηθεί",
-"Καθιστά την ερμηνεία περιττή",
-"Αρνείται κάθε εμπειρική έρευνα"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 13,
-"question_en": "Τι προσπάθησαν να κάνουν οι λογικοί θετικιστές με τον νοηματικό λόγο;",
-"choices_en": [
-"Να τον περιορίσουν σε προτάσεις ελέγξιμες από την επιστήμη ή αναλύσιμες από τη λογική",
-"Να τον επεκτείνουν ώστε να περιλαμβάνει κάθε μεταφυσικό ισχυρισμό",
-"Να τον αντικαταστήσουν με θρησκευτική γλώσσα",
-"Να τον θεωρήσουν ταυτόσημο με την ποίηση"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 14,
-"question_en": "Στο παραγωγικό-νομολογικό μοντέλο, τι εξηγεί ένα γεγονός;",
-"choices_en": [
-"Μια μεταφορά και μια προσωπική κρίση",
-"Ένας στατιστικός μέσος όρος χωρίς συνθήκες",
-"Ένας νόμος μαζί με αρχικές συνθήκες από τις οποίες μπορεί να παραχθεί το γεγονός",
-"Μια ηθική αξιολόγηση του γεγονότος"
-],
-"correctIndex": 2,
-"RosenCh1-4": true
-},
-{
-"number": 15,
-"question_en": "Γιατί το παραγωγικό-νομολογικό μοντέλο συνδέεται και με την πρόβλεψη;",
-"choices_en": [
-"Ο ίδιος νόμος και οι ίδιες αρχικές συνθήκες που εξηγούν ένα γεγονός θα μπορούσαν να το είχαν προβλέψει",
-"Η πρόβλεψη δεν απαιτεί νόμους",
-"Η εξήγηση είναι πάντα αναδρομική και ποτέ προβλεπτική",
-"Μόνο η ανθρώπινη δράση μπορεί να προβλεφθεί"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 16,
-"question_en": "Ποια είναι η βασική διάκριση ανάμεσα στη δράση και την απλή συμπεριφορά;",
-"choices_en": [
-"Η δράση είναι κάτι που κάνει ένας δρων υπό κάποιον έλεγχο, ενώ η απλή συμπεριφορά είναι κάτι που συμβαίνει στο σώμα",
-"Η δράση είναι πάντα δημόσια, ενώ η συμπεριφορά πάντα ιδιωτική",
-"Η δράση είναι βιολογική, ενώ η συμπεριφορά πολιτισμική",
-"Η δράση είναι ασυνείδητη, ενώ η συμπεριφορά σκόπιμη"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 17,
-"question_en": "Γιατί ένα κλείσιμο ματιού με νόημα είναι πιο σχετικό για την κοινωνική επιστήμη από ένα απλό ανοιγοκλείσιμο;",
-"choices_en": [
-"Επειδή το κλείσιμο ματιού είναι πιο γρήγορο",
-"Επειδή είναι σκόπιμη δράση με κοινωνικό νόημα",
-"Επειδή το απλό ανοιγοκλείσιμο δεν μπορεί να παρατηρηθεί",
-"Επειδή το απλό ανοιγοκλείσιμο είναι πάντα ανήθικο"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 18,
-"question_en": "Τι είναι η λαϊκή ψυχολογία στη συζήτηση του Rosenberg;",
-"choices_en": [
-"Ένας τυπικός κλάδος της νευροεπιστήμης",
-"Ένα στατιστικό μοντέλο που χρησιμοποιείται μόνο από οικονομολόγους",
-"Η καθημερινή θεωρία που εξηγεί τη δράση μέσω πεποιθήσεων και επιθυμιών",
-"Μια απόρριψη κάθε εξήγησης"
-],
-"correctIndex": 2,
-"RosenCh1-4": true
-},
-{
-"number": 19,
-"question_en": "Τι υποστηρίζει περίπου η πρόταση [L] του Rosenberg;",
-"choices_en": [
-"Αν ένας δρων θέλει ένα αποτέλεσμα και πιστεύει ότι μια πράξη θα το επιτύχει, τότε κάνει αυτή την πράξη",
-"Αν ένας δρων έχει μια εγκεφαλική κατάσταση, η κοινωνία εξαφανίζεται",
-"Αν ένα άτομο μιλά, τότε δεν έχει επιθυμίες",
-"Αν υπάρχει ένας νόμος, η ερμηνεία είναι αδύνατη"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 20,
-"question_en": "Γιατί η [L] είναι δύσκολο να θεωρηθεί αυστηρός επιστημονικός νόμος;",
-"choices_en": [
-"Επειδή δεν έχει καμία σχέση με τη δράση",
-"Επειδή είναι υπερβολικά απλή, χρειάζεται πολλές προϋποθέσεις και προστατεύεται από ρήτρες ceteris paribus",
-"Επειδή εφαρμόζεται μόνο στη φυσική",
-"Επειδή προβλέπει φυσικές καταστροφές"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 21,
-"question_en": "Τι σημαίνει μια ρήτρα ceteris paribus σε αυτό το πλαίσιο;",
-"choices_en": [
-"Η δράση συμβαίνει μόνο σε αρχαίες κοινωνίες",
-"Ο νόμος ισχύει μόνο όταν όλα τα άλλα σχετικά πράγματα παραμένουν ίδια",
-"Η θεωρία είναι καθαρά μαθηματική",
-"Η εξήγηση δεν έχει εξαιρέσεις"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 22,
-"question_en": "Γιατί το παράδειγμα της ομπρέλας δημιουργεί πρόβλημα για τις εξηγήσεις μέσω πεποιθήσεων και επιθυμιών;",
-"choices_en": [
-"Επειδή οι ομπρέλες δεν μπορούν να παρατηρηθούν",
-"Επειδή η ίδια πράξη μπορεί να εξηγηθεί από πολλούς διαφορετικούς πιθανούς συνδυασμούς πεποιθήσεων και επιθυμιών",
-"Επειδή ο καιρός δεν είναι κοινωνικό φαινόμενο",
-"Επειδή ο Smith δεν έχει σώμα"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 23,
-"question_en": "Γιατί το να ρωτήσουμε κάποιον για τις πεποιθήσεις του δεν είναι απλή λύση στο πρόβλημα αναγνώρισης των πεποιθήσεων;",
-"choices_en": [
-"Επειδή η ίδια η ομιλία είναι δράση που πρέπει να ερμηνευθεί μέσω πεποιθήσεων και επιθυμιών",
-"Επειδή οι άνθρωποι δεν απαντούν ποτέ σε ερωτήσεις",
-"Επειδή η γλώσσα δεν σχετίζεται με τη σκέψη",
-"Επειδή όλες οι λεκτικές αναφορές είναι αυτόματα ψευδείς"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 24,
-"question_en": "Ποιο είναι το βασικό ζήτημα στο αν οι λόγοι μπορούν να είναι αιτίες;",
-"choices_en": [
-"Αν οι λόγοι συνδέονται λογικά με τις πράξεις ή συνδέονται ενδεχομενικά όπως οι αιτίες",
-"Αν οι αιτίες είναι πάντα ηθικές κρίσεις",
-"Αν οι πράξεις συμβαίνουν χωρίς σώματα",
-"Αν η κοινωνική επιστήμη πρέπει να μη χρησιμοποιεί έννοιες"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 25,
-"question_en": "Τι υποστηρίζει το επιχείρημα της λογικής σύνδεσης για πεποιθήσεις, επιθυμίες και πράξεις;",
-"choices_en": [
-"Ότι συνδέονται με λογικές σχέσεις και όχι με αιτιακούς νόμους",
-"Ότι δεν σχετίζονται με την ερμηνεία",
-"Ότι ανάγονται εύκολα στη χημεία",
-"Ότι δεν εμφανίζονται ποτέ στην κοινωνική επιστήμη"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 26,
-"question_en": "Γιατί το παράδειγμα του εργένη έχει σημασία στο Κεφάλαιο 4;",
-"choices_en": [
-"Δείχνει ότι οι ορισμοί μπορούν να εξηγήσουν αιτιακά γεγονότα",
-"Δείχνει ότι η λογική επαναπεριγραφή δεν είναι το ίδιο με την αιτιακή εξήγηση",
-"Δείχνει ότι ο γάμος είναι φυσικός νόμος",
-"Δείχνει ότι η γλώσσα δεν έχει ρόλο στη φιλοσοφία"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 27,
-"question_en": "Γιατί το απλό επιχείρημα της λογικής σύνδεσης θεωρείται μη έγκυρο από τον Rosenberg;",
-"choices_en": [
-"Επειδή οι αιτιακοί ισχυρισμοί μπορούν να παραμένουν αιτιακοί ακόμη και όταν τα γεγονότα περιγράφονται με λογικά συνδεδεμένους τρόπους",
-"Επειδή κανένας αιτιακός ισχυρισμός δεν μπορεί ποτέ να είναι αληθής",
-"Επειδή όλοι οι ορισμοί είναι εμπειρικοί νόμοι",
-"Επειδή η δράση δεν περιλαμβάνει ποτέ γλώσσα"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 28,
-"question_en": "Τι σημαίνει προθετικότητα στο πλαίσιο πεποίθησης και επιθυμίας;",
-"choices_en": [
-"Το φυσικό μέγεθος μιας νοητικής κατάστασης",
-"Η ικανότητα των νοητικών καταστάσεων να είναι για κάτι ή να αναπαριστούν κάτι",
-"Η ταχύτητα με την οποία συμβαίνουν οι πράξεις",
-"Η απουσία νοήματος στη σκέψη"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 29,
-"question_en": "Ποιο πρόβλημα δημιουργεί η προθετικότητα για μια καθαρά φυσική θεωρία του νου;",
-"choices_en": [
-"Δεν είναι σαφές πώς η φυσική ύλη μπορεί να αναπαριστά προτάσεις ή νοήματα",
-"Αποδεικνύει ότι οι εγκέφαλοι δεν υπάρχουν",
-"Καθιστά τη γλώσσα περιττή",
-"Εξαλείφει την ανάγκη για ψυχολογία"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 30,
-"question_en": "Γιατί ο Rosenberg συζητά την πιθανότητα ένα μέρος του εγκεφάλου να διαβάζει ένα άλλο μέρος του εγκεφάλου;",
-"choices_en": [
-"Για να δείξει ότι η αναπαράσταση κινδυνεύει με άπειρη αναδρομή αν κάθε αναπαράσταση απαιτεί έναν ακόμη ερμηνευτή",
-"Για να αποδείξει ότι οι νευρώνες είναι λέξεις",
-"Για να αρνηθεί ότι οι άνθρωποι χρησιμοποιούν γλώσσα",
-"Για να δείξει ότι όλες οι εγκεφαλικές καταστάσεις είναι ήδη δημόσιες"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 31,
-"question_en": "Τι δίνει ταυτότητα σε μια πεποίθηση ή επιθυμία στη συζήτηση του Rosenberg για την προθετικότητα;",
-"choices_en": [
-"Η πρόταση ή το περιεχόμενο που περιλαμβάνει",
-"Το βάρος του εγκεφάλου",
-"Η κοινωνική τάξη του δρώντος",
-"Ο αριθμός των νευρώνων που εμπλέκονται"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 32,
-"question_en": "Γιατί είναι δύσκολη η ακριβής εξήγηση της δράσης σύμφωνα με τη συζήτηση της προθετικότητας;",
-"choices_en": [
-"Επειδή πρέπει να αναγνωριστεί η ακριβής περιγραφή υπό την οποία ο δρων κατανοεί την πράξη",
-"Επειδή οι πράξεις δεν έχουν νοήματα",
-"Επειδή όλες οι πεποιθήσεις είναι ορατές",
-"Επειδή η γλώσσα είναι άσχετη με τη δράση"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 33,
-"question_en": "Τι περιλαμβάνει η εντασιακότητα;",
-"choices_en": [
-"Τη διατήρηση της αλήθειας κάτω από οποιαδήποτε αντικατάσταση ισοδύναμων περιγραφών",
-"Περιγραφές των οποίων η αλήθεια μπορεί να αλλάξει όταν αντικαθίστανται συνδηλωτικοί όροι",
-"Τη φυσική έκταση ενός αντικειμένου στον χώρο",
-"Τη στατιστική συχνότητα της συμπεριφοράς"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 34,
-"question_en": "Τι περιλαμβάνει η εκτασιακότητα;",
-"choices_en": [
-"Την αδυναμία επιστημονικής περιγραφής",
-"Την εξάρτηση της αλήθειας από τη γλώσσα που προτιμά ο δρων",
-"Τη σταθερότητα της αλήθειας υπό αντικατάσταση ισοδύναμων περιγραφών",
-"Την απόρριψη κάθε αιτιακής εξήγησης"
-],
-"correctIndex": 2,
-"RosenCh1-4": true
-},
-{
-"number": 35,
-"question_en": "Γιατί η εντασιακότητα δυσκολεύει την αιτιακή αντιμετώπιση της δράσης;",
-"choices_en": [
-"Επειδή οι πεποιθήσεις, οι επιθυμίες και οι πράξεις δεν μπορούν να περιγραφούν ανεξάρτητα με καθαρά εκτασιακούς όρους",
-"Επειδή οι αιτίες είναι πάντα ορατές",
-"Επειδή η κοινωνική επιστήμη έχει πάρα πολλές εξισώσεις",
-"Επειδή η ανθρώπινη δράση δεν περιλαμβάνει ποτέ σκέψη"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 36,
-"question_en": "Γιατί η [L] έχει ασθενές εμπειρικό περιεχόμενο;",
-"choices_en": [
-"Επειδή οι αποτυχημένες προβλέψεις συνήθως μας οδηγούν να αναθεωρούμε τις αποδιδόμενες πεποιθήσεις και επιθυμίες, όχι να εγκαταλείπουμε την [L]",
-"Επειδή ελέγχεται μόνο σε εργαστήρια",
-"Επειδή αφορά άτομα αντί για πράξεις",
-"Επειδή δεν χρησιμοποιεί ποτέ καθημερινές εξηγήσεις"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 37,
-"question_en": "Ποιον ρόλο παίζουν οι βοηθητικές υποθέσεις στον έλεγχο επιστημονικών ισχυρισμών;",
-"choices_en": [
-"Κάνουν τον έλεγχο να εξαρτάται από υπόβαθρες παραδοχές, όπως οι συνθήκες μέτρησης",
-"Εξαλείφουν την ανάγκη για αρχικές συνθήκες",
-"Εγγυώνται ότι κάθε θεωρία είναι ψευδής",
-"Εφαρμόζονται μόνο στην ηθική"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 38,
-"question_en": "Γιατί ο Rosenberg συγκρίνει τις πεποιθήσεις με τις ενδείξεις ενός θερμομέτρου;",
-"choices_en": [
-"Για να δείξει ότι οι πεποιθήσεις είναι πάντα θερμικές καταστάσεις",
-"Για να δείξει ότι οι νατουραλιστές χρειάζονται έναν ανεξάρτητο μετρήσιμο δείκτη των πεποιθήσεων, ανάλογο με το ύψος του υδραργύρου που δείχνει θερμότητα",
-"Για να υποστηρίξει ότι η φυσική δεν μπορεί να μετρήσει τίποτα",
-"Για να αποδείξει ότι οι πεποιθήσεις δεν έχουν αιτίες"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-},
-{
-"number": 39,
-"question_en": "Τι θα σήμαινε μια επιτυχής ταύτιση πεποιθήσεων με εγκεφαλικές καταστάσεις;",
-"choices_en": [
-"Μια λύση στο πρόβλημα νου-σώματος για την πεποίθηση και την επιθυμία",
-"Μια απόρριψη της νευροεπιστήμης",
-"Μια απόδειξη ότι η γλώσσα δεν έχει νόημα",
-"Μια άρνηση της αιτιακής έρευνας"
-],
-"correctIndex": 0,
-"RosenCh1-4": true
-},
-{
-"number": 40,
-"question_en": "Ποιο είναι το απαισιόδοξο συμπέρασμα για τον νατουραλισμό στο τέλος του Κεφαλαίου 4;",
-"choices_en": [
-"Η λαϊκή ψυχολογία μπορεί εύκολα να αναχθεί στη φυσική",
-"Ίσως να μην υπάρχει εκτασιακή και ανεξάρτητη περιγραφή των προθετικών αιτίων αρκετή ώστε η [L] να γίνει κανονικός αιτιακός νόμος",
-"Η κοινωνική επιστήμη έχει ήδη λύσει το πρόβλημα νου-σώματος",
-"Η ερμηνεία δεν έχει θέση στην εξήγηση της δράσης"
-],
-"correctIndex": 1,
-"RosenCh1-4": true
-}
+  {
+    "number": 1,
+    "question_en": "Why does Rosenberg argue that social scientists cannot avoid philosophy?",
+    "question_el": "Γιατί ο Rosenberg υποστηρίζει ότι οι κοινωνικοί επιστήμονες δεν μπορούν να αποφύγουν τη φιλοσοφία;",
+    "choices_en": ["Because research choices already presuppose answers to philosophical questions", "Because every social science must ultimately turn into a branch of moral philosophy", "Because the social sciences have no empirical methods of their own", "Because philosophy is meant to replace statistical analysis"],
+    "choices_el": ["Επειδή οι ερευνητικές επιλογές ήδη προϋποθέτουν απαντήσεις σε φιλοσοφικά ερωτήματα", "Επειδή κάθε κοινωνική επιστήμη πρέπει τελικά να γίνει κλάδος της ηθικής φιλοσοφίας", "Επειδή οι κοινωνικές επιστήμες δεν έχουν δικές τους εμπειρικές μεθόδους", "Επειδή η φιλοσοφία προορίζεται να αντικαταστήσει τη στατιστική ανάλυση"],
+    "correctIndex": 0,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 2,
+    "question_en": "Which pair best describes the two main kinds of questions philosophy deals with, according to Rosenberg?",
+    "question_el": "Ποιο ζεύγος αποδίδει καλύτερα τα δύο βασικά είδη ερωτημάτων που εξετάζει η φιλοσοφία κατά τον Rosenberg;",
+    "choices_en": ["Questions of personal opinion and of cultural taste", "Questions of mathematics and questions of grammar", "Questions science cannot answer, and why it cannot answer them", "Questions of public policy and questions about how to measure things"],
+    "choices_el": ["Ερωτήματα προσωπικής γνώμης και πολιτισμικού γούστου", "Ερωτήματα μαθηματικών και ερωτήματα γραμματικής", "Ερωτήματα που η επιστήμη δεν μπορεί να απαντήσει και γιατί δεν μπορεί", "Ερωτήματα δημόσιας πολιτικής και ερωτήματα για το πώς μετράμε τα πράγματα"],
+    "correctIndex": 2,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 3,
+    "question_en": "What is the central problem of the philosophy of social science introduced in Chapter 1?",
+    "question_el": "Ποιο είναι το κεντρικό πρόβλημα της φιλοσοφίας των κοινωνικών επιστημών που εισάγεται στο Κεφάλαιο 1;",
+    "choices_en": ["Whether social science should seek the predictive power of natural science", "Whether all of the social sciences can be reduced to economics in the end", "Whether the social sciences should simply be abolished", "Whether philosophy should stay away from all scientific questions"],
+    "choices_el": ["Αν η κοινωνική επιστήμη πρέπει να επιδιώκει την προβλεπτική ισχύ των φυσικών επιστημών", "Αν όλες οι κοινωνικές επιστήμες μπορούν τελικά να αναχθούν στην οικονομική επιστήμη", "Αν οι κοινωνικές επιστήμες πρέπει απλώς να καταργηθούν", "Αν η φιλοσοφία πρέπει να μένει μακριά από κάθε επιστημονικό ερώτημα"],
+    "correctIndex": 0,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 4,
+    "question_en": "What distinguishes normative questions from descriptive scientific questions?",
+    "question_el": "Τι διακρίνει τα κανονιστικά ερωτήματα από τα περιγραφικά επιστημονικά ερωτήματα;",
+    "choices_en": ["Normative ones are biological; descriptive ones are social", "Normative ones use numbers; descriptive ones use values", "Normative ones are always false, while descriptive ones are always true", "Normative ones ask what ought to be; descriptive ones ask what is"],
+    "choices_el": ["Τα κανονιστικά είναι βιολογικά, τα περιγραφικά κοινωνικά", "Τα κανονιστικά χρησιμοποιούν αριθμούς, τα περιγραφικά αξίες", "Τα κανονιστικά είναι πάντα ψευδή, ενώ τα περιγραφικά είναι πάντα αληθή", "Τα κανονιστικά αφορούν το τι πρέπει να ισχύει, τα περιγραφικά το τι ισχύει"],
+    "correctIndex": 3,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 5,
+    "question_en": "Why are philosophical choices especially visible in the social sciences?",
+    "question_el": "Γιατί οι φιλοσοφικές επιλογές είναι ιδιαίτερα εμφανείς στις κοινωνικές επιστήμες;",
+    "choices_en": ["Because there is less agreement on basic questions and methods", "Because the social sciences have no real disputes about values at all", "Because the social sciences are purely mathematical fields", "Because social scientists fully agree on a single method"],
+    "choices_el": ["Επειδή υπάρχει λιγότερη συμφωνία για τα βασικά ερωτήματα και τις μεθόδους", "Επειδή στις κοινωνικές επιστήμες δεν υπάρχουν καθόλου πραγματικές διαφωνίες για αξίες", "Επειδή οι κοινωνικές επιστήμες είναι καθαρά μαθηματικά πεδία", "Επειδή οι κοινωνικοί επιστήμονες συμφωνούν πλήρως σε μία μέθοδο"],
+    "correctIndex": 0,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 6,
+    "question_en": "Which claim best expresses naturalism in the philosophy of social science?",
+    "question_el": "Ποιος ισχυρισμός εκφράζει καλύτερα τον νατουραλισμό στη φιλοσοφία των κοινωνικών επιστημών;",
+    "choices_en": ["Social science should model itself on natural science: laws, prediction, control", "Social science should only translate the meanings of cultures", "Social science should completely reject causal explanation in favour of description", "Social science should be replaced by literature and the arts"],
+    "choices_el": ["Η κοινωνική επιστήμη πρέπει να ακολουθεί τις φυσικές επιστήμες: νόμοι, πρόβλεψη, έλεγχος", "Η κοινωνική επιστήμη πρέπει μόνο να μεταφράζει πολιτισμικά νοήματα", "Η κοινωνική επιστήμη πρέπει να απορρίψει πλήρως την αιτιακή εξήγηση υπέρ της περιγραφής", "Η κοινωνική επιστήμη πρέπει να αντικατασταθεί από τη λογοτεχνία και τις τέχνες"],
+    "correctIndex": 0,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 7,
+    "question_en": "Which claim best expresses interpretivism, as opposed to naturalism?",
+    "question_el": "Ποιος ισχυρισμός εκφράζει καλύτερα τον ερμηνευτισμό σε αντίθεση με τον νατουραλισμό;",
+    "choices_en": ["Human action should be explained through genetics alone", "Social research should aim at meaning and understanding, not prediction", "All human behaviour is measurable in exactly the same way as gas pressure", "Social science should abandon both language and culture"],
+    "choices_el": ["Η ανθρώπινη δράση πρέπει να εξηγείται μόνο μέσω της γενετικής", "Η κοινωνική έρευνα πρέπει να στοχεύει στο νόημα και την κατανόηση, όχι στην πρόβλεψη", "Όλη η ανθρώπινη συμπεριφορά μετριέται ακριβώς όπως η πίεση ή η θερμοκρασία ενός αερίου", "Η κοινωνική επιστήμη πρέπει να εγκαταλείψει τη γλώσσα και τον πολιτισμό"],
+    "correctIndex": 1,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 8,
+    "question_en": "Why is prediction important for the naturalist view of social science?",
+    "question_el": "Γιατί η πρόβλεψη είναι σημαντική για τη νατουραλιστική άποψη της κοινωνικής επιστήμης;",
+    "choices_en": ["It proves that a theory is morally correct", "It makes explanation unnecessary once it succeeds", "It is taken as a sign of real causal understanding", "It removes the need for any theory at all"],
+    "choices_el": ["Αποδεικνύει ότι μια θεωρία είναι ηθικά ορθή", "Κάνει την εξήγηση περιττή μόλις οι προβλέψεις της επιτύχουν", "Θεωρείται ένδειξη πραγματικής αιτιακής κατανόησης", "Εξαλείφει εντελώς την ανάγκη για θεωρία"],
+    "correctIndex": 2,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 9,
+    "question_en": "Which philosophical assumption lies behind the claim that natural sciences have progressed more than social sciences?",
+    "question_el": "Ποια φιλοσοφική προϋπόθεση βρίσκεται πίσω από τον ισχυρισμό ότι οι φυσικές επιστήμες έχουν προοδεύσει περισσότερο από τις κοινωνικές;",
+    "choices_en": ["That progress in natural science is understood and measurable", "That social scientists never rely on any kind of empirical evidence", "That all the social sciences are essentially the same", "That moral values are physical objects in the world"],
+    "choices_el": ["Ότι η πρόοδος στις φυσικές επιστήμες είναι κατανοητή και μετρήσιμη", "Ότι οι κοινωνικοί επιστήμονες δεν στηρίζονται ποτέ σε εμπειρικά στοιχεία", "Ότι όλες οι κοινωνικές επιστήμες είναι ουσιαστικά ίδιες", "Ότι οι ηθικές αξίες είναι φυσικά αντικείμενα του κόσμου"],
+    "correctIndex": 0,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 10,
+    "question_en": "According to the compromise view, why might social sciences have weaker predictive success?",
+    "question_el": "Σύμφωνα με τη συμβιβαστική άποψη, γιατί οι κοινωνικές επιστήμες μπορεί να έχουν ασθενέστερη προβλεπτική επιτυχία;",
+    "choices_en": ["Because social scientists are not interested in evidence", "Because the natural sciences lack reliable methods", "Because language plays no role in social science at all", "Because human processes are complex and experiments limited"],
+    "choices_el": ["Επειδή οι κοινωνικοί επιστήμονες δεν ενδιαφέρονται καθόλου για αποδείξεις και στοιχεία", "Επειδή οι φυσικές επιστήμες δεν έχουν αξιόπιστες μεθόδους μέτρησης", "Επειδή η γλώσσα δεν παίζει κανέναν ρόλο στην κοινωνική επιστήμη", "Επειδή οι ανθρώπινες διαδικασίες είναι σύνθετες και τα πειράματα περιορισμένα"],
+    "correctIndex": 3,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 11,
+    "question_en": "What does Hume's analysis of causation emphasise?",
+    "question_el": "Τι τονίζει η ανάλυση του Hume για την αιτιότητα;",
+    "choices_en": ["Causation is directly observed as a necessary force between events", "Causation is known through constant conjunction and prediction", "Causation is identical to moral responsibility", "Causation applies only to intentional human action"],
+    "choices_el": ["Η αιτιότητα γίνεται άμεσα αντιληπτή ως αναγκαία δύναμη ανάμεσα σε γεγονότα", "Η αιτιότητα γνωρίζεται μέσω σταθερής συνάφειας και πρόβλεψης", "Η αιτιότητα ταυτίζεται με την ηθική ευθύνη", "Η αιτιότητα αφορά μόνο την εσκεμμένη ανθρώπινη δράση"],
+    "correctIndex": 1,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 12,
+    "question_en": "Why is the Humean view important for the method of the social sciences?",
+    "question_el": "Γιατί η χιουμιανή θεώρηση είναι σημαντική για τη μέθοδο των κοινωνικών επιστημών;",
+    "choices_en": ["It holds that causal knowledge needs predictive generalisations", "It proves that human action cannot be studied at all", "It makes interpreting the meaning of actions entirely unnecessary", "It rejects every form of empirical research"],
+    "choices_el": ["Υποστηρίζει ότι η αιτιακή γνώση απαιτεί προβλεπτικές γενικεύσεις", "Αποδεικνύει ότι η ανθρώπινη δράση δεν μελετάται καθόλου", "Κάνει εντελώς περιττή την ερμηνεία του νοήματος των πράξεων", "Απορρίπτει κάθε μορφή εμπειρικής έρευνας"],
+    "correctIndex": 0,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 13,
+    "question_en": "What did the logical positivists try to do with meaningful discourse?",
+    "question_el": "Τι προσπάθησαν να κάνουν οι λογικοί θετικιστές με τον νοηματικό λόγο;",
+    "choices_en": ["Limit it to claims testable by science or analysable by logic", "Extend it so that it includes every metaphysical claim ever made", "Replace it with the language of religious faith", "Treat it as identical to poetry and fiction"],
+    "choices_el": ["Να τον περιορίσουν σε ελέγξιμες ή λογικά αναλύσιμες προτάσεις", "Να τον επεκτείνουν ώστε να περιλαμβάνει κάθε μεταφυσικό ισχυρισμό που έγινε ποτέ", "Να τον αντικαταστήσουν με τη γλώσσα της θρησκευτικής πίστης", "Να τον θεωρήσουν ταυτόσημο με την ποίηση και τη μυθοπλασία"],
+    "correctIndex": 0,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 14,
+    "question_en": "In the deductive-nomological model, what explains an event?",
+    "question_el": "Στο παραγωγικό-νομολογικό μοντέλο, τι εξηγεί ένα γεγονός;",
+    "choices_en": ["A metaphor combined with a personal judgement", "A law plus initial conditions that entail the event", "A statistical average with no stated conditions", "A moral evaluation of the event and its agents"],
+    "choices_el": ["Μια μεταφορά μαζί με μια προσωπική κρίση", "Ένας νόμος μαζί με αρχικές συνθήκες που συνεπάγονται το γεγονός", "Ένας στατιστικός μέσος όρος χωρίς συνθήκες", "Μια ηθική αξιολόγηση του γεγονότος και των δρώντων που το προκάλεσαν"],
+    "correctIndex": 1,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 15,
+    "question_en": "Why is the deductive-nomological model also linked to prediction?",
+    "question_el": "Γιατί το παραγωγικό-νομολογικό μοντέλο συνδέεται και με την πρόβλεψη;",
+    "choices_en": ["Because only human actions can be predicted by the model", "Because prediction in that model requires no laws at all", "Because explanation is always backward-looking and can never be predictive", "The law and conditions that explain an event could have predicted it"],
+    "choices_el": ["Επειδή μόνο οι ανθρώπινες πράξεις προβλέπονται από το μοντέλο", "Επειδή η πρόβλεψη σε αυτό το μοντέλο δεν απαιτεί νόμους", "Επειδή η εξήγηση κοιτάζει πάντα πίσω και δεν μπορεί ποτέ να είναι προβλεπτική", "Ο νόμος και οι συνθήκες που εξηγούν ένα γεγονός θα μπορούσαν να το είχαν προβλέψει"],
+    "correctIndex": 3,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 16,
+    "question_en": "What is the key distinction between action and mere behaviour?",
+    "question_el": "Ποια είναι η βασική διάκριση ανάμεσα στη δράση και την απλή συμπεριφορά;",
+    "choices_en": ["Action is biological, while behaviour is a purely cultural product", "Action is always public, while behaviour is always private", "Action is done by an agent in control; behaviour merely happens", "Action is unconscious, while behaviour is deliberate"],
+    "choices_el": ["Η δράση είναι βιολογική, ενώ η συμπεριφορά είναι καθαρά πολιτισμικό προϊόν", "Η δράση είναι πάντα δημόσια, ενώ η συμπεριφορά πάντα ιδιωτική", "Τη δράση την κάνει ένας δρων με έλεγχο· η απλή συμπεριφορά απλώς συμβαίνει", "Η δράση είναι ασυνείδητη, ενώ η συμπεριφορά σκόπιμη"],
+    "correctIndex": 2,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 17,
+    "question_en": "Why is a meaningful wink more relevant to social science than a mere blink?",
+    "question_el": "Γιατί ένα κλείσιμο ματιού με νόημα είναι πιο σχετικό για την κοινωνική επιστήμη από ένα απλό ανοιγοκλείσιμο;",
+    "choices_en": ["Because a wink is physically faster than a blink", "Because a mere blink is always considered rude", "Because a mere blink cannot be observed by others", "Because it is intentional action with social meaning"],
+    "choices_el": ["Επειδή το κλείσιμο του ματιού είναι σωματικά πιο γρήγορο", "Επειδή το απλό ανοιγοκλείσιμο θεωρείται πάντα αγένεια", "Επειδή το απλό ανοιγοκλείσιμο δεν γίνεται αντιληπτό από άλλους", "Επειδή είναι σκόπιμη δράση με κοινωνικό νόημα"],
+    "correctIndex": 3,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 18,
+    "question_en": "What is folk psychology in Rosenberg's discussion?",
+    "question_el": "Τι είναι η λαϊκή ψυχολογία στη συζήτηση του Rosenberg;",
+    "choices_en": ["A formal branch of modern neuroscience", "The everyday theory explaining action by beliefs and desires", "A statistical model of choice used only by professional economists", "A rejection of every kind of explanation"],
+    "choices_el": ["Ένας τυπικός κλάδος της σύγχρονης νευροεπιστήμης", "Η καθημερινή θεωρία που εξηγεί τη δράση με πεποιθήσεις και επιθυμίες", "Ένα στατιστικό μοντέλο επιλογής που χρησιμοποιούν μόνο επαγγελματίες οικονομολόγοι", "Η απόρριψη κάθε είδους εξήγησης"],
+    "correctIndex": 1,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 19,
+    "question_en": "What does Rosenberg's principle [L] roughly state?",
+    "question_el": "Τι υποστηρίζει περίπου η πρόταση [L] του Rosenberg;",
+    "choices_en": ["If a person is speaking, then that person has no desires", "If an agent is in a particular brain state, society as a whole disappears", "If an agent wants an outcome and believes an act achieves it, they do it", "If a law exists, then interpretation becomes impossible"],
+    "choices_el": ["Αν ένα άτομο μιλά, τότε αυτό το άτομο δεν έχει επιθυμίες", "Αν ένας δρων βρίσκεται σε συγκεκριμένη εγκεφαλική κατάσταση, η κοινωνία ως σύνολο εξαφανίζεται", "Αν ένας δρων θέλει ένα αποτέλεσμα και πιστεύει ότι μια πράξη το πετυχαίνει, την κάνει", "Αν υπάρχει ένας νόμος, τότε η ερμηνεία γίνεται αδύνατη"],
+    "correctIndex": 2,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 20,
+    "question_en": "Why is [L] hard to treat as a strict scientific law?",
+    "question_el": "Γιατί η [L] είναι δύσκολο να θεωρηθεί αυστηρός επιστημονικός νόμος;",
+    "choices_en": ["Because it has nothing to do with human action", "Because it is vague and hedged by ceteris paribus clauses", "Because it applies only within physics", "Because it is used mainly to predict earthquakes and other natural disasters"],
+    "choices_el": ["Επειδή δεν έχει καμία σχέση με την ανθρώπινη δράση", "Επειδή είναι ασαφής και προστατεύεται από ρήτρες ceteris paribus", "Επειδή εφαρμόζεται μόνο μέσα στη φυσική", "Επειδή χρησιμοποιείται κυρίως για την πρόβλεψη σεισμών και άλλων φυσικών καταστροφών"],
+    "correctIndex": 1,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 21,
+    "question_en": "What does a ceteris paribus clause mean in this context?",
+    "question_el": "Τι σημαίνει μια ρήτρα ceteris paribus σε αυτό το πλαίσιο;",
+    "choices_en": ["Action occurs only in ancient societies", "The law holds only if all else stays equal", "The theory is purely mathematical", "The explanation has no exceptions at all"],
+    "choices_el": ["Η δράση συμβαίνει μόνο σε αρχαίες κοινωνίες", "Ο νόμος ισχύει μόνο αν όλα τα άλλα μένουν ίδια", "Η θεωρία είναι καθαρά μαθηματική", "Η εξήγηση δεν έχει καμία απολύτως εξαίρεση"],
+    "correctIndex": 1,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 22,
+    "question_en": "Why does the umbrella example cause a problem for belief-desire explanations?",
+    "question_el": "Γιατί το παράδειγμα της ομπρέλας δημιουργεί πρόβλημα για τις εξηγήσεις μέσω πεποιθήσεων και επιθυμιών;",
+    "choices_en": ["Because umbrellas cannot be directly observed", "Because Smith's behaviour involves no body at all", "Because the weather is not a social phenomenon", "Because many belief-desire pairs can explain the same act"],
+    "choices_el": ["Επειδή οι ομπρέλες δεν μπορούν να παρατηρηθούν άμεσα", "Επειδή η συμπεριφορά του Smith δεν περιλαμβάνει καθόλου σωματική κίνηση", "Επειδή ο καιρός δεν είναι κοινωνικό φαινόμενο", "Επειδή πολλοί συνδυασμοί πεποιθήσεων-επιθυμιών εξηγούν την ίδια πράξη"],
+    "correctIndex": 3,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 23,
+    "question_en": "Why is simply asking someone about their beliefs not an easy fix for identifying beliefs?",
+    "question_el": "Γιατί το να ρωτήσουμε κάποιον για τις πεποιθήσεις του δεν είναι απλή λύση στο πρόβλημα αναγνώρισης των πεποιθήσεων;",
+    "choices_en": ["Because people never truthfully answer questions about their own minds", "Because speech is itself action needing belief-desire interpretation", "Because language has no real connection to thought", "Because all verbal reports are automatically false"],
+    "choices_el": ["Επειδή οι άνθρωποι δεν απαντούν ποτέ ειλικρινά σε ερωτήσεις για το μυαλό τους", "Επειδή και η ομιλία είναι δράση που χρειάζεται ερμηνεία μέσω πεποιθήσεων", "Επειδή η γλώσσα δεν έχει πραγματική σχέση με τη σκέψη", "Επειδή όλες οι λεκτικές αναφορές είναι αυτόματα ψευδείς"],
+    "correctIndex": 1,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 24,
+    "question_en": "What is the key issue in whether reasons can be causes?",
+    "question_el": "Ποιο είναι το βασικό ζήτημα στο αν οι λόγοι μπορούν να είναι αιτίες;",
+    "choices_en": ["Whether reasons link to actions logically or contingently like causes", "Whether causes are always a kind of moral judgement", "Whether actions can happen without any bodies involved", "Whether social science should stop using abstract concepts altogether"],
+    "choices_el": ["Αν οι λόγοι συνδέονται με τις πράξεις λογικά ή ενδεχομενικά όπως οι αιτίες", "Αν οι αιτίες είναι πάντα ένα είδος ηθικής κρίσης", "Αν οι πράξεις μπορούν να συμβούν χωρίς σώματα", "Αν η κοινωνική επιστήμη πρέπει να σταματήσει εντελώς να χρησιμοποιεί αφηρημένες έννοιες"],
+    "correctIndex": 0,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 25,
+    "question_en": "What does the logical connection argument claim about beliefs, desires and actions?",
+    "question_el": "Τι υποστηρίζει το επιχείρημα της λογικής σύνδεσης για πεποιθήσεις, επιθυμίες και πράξεις;",
+    "choices_en": ["They never appear anywhere in social science", "They have nothing to do with interpretation", "They reduce easily and completely to the laws of chemistry", "They are linked by logical relations, not causal laws"],
+    "choices_el": ["Ότι δεν εμφανίζονται πουθενά μέσα στη σύγχρονη κοινωνική επιστήμη", "Ότι δεν έχουν καμία σχέση με την ερμηνεία", "Ανάγονται εύκολα και πλήρως στους νόμους της χημείας", "Ότι συνδέονται με λογικές σχέσεις και όχι με αιτιακούς νόμους"],
+    "correctIndex": 3,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 26,
+    "question_en": "Why does the bachelor example matter in Chapter 4?",
+    "question_el": "Γιατί το παράδειγμα του εργένη έχει σημασία στο Κεφάλαιο 4;",
+    "choices_en": ["It shows that definitions can explain causal events in the world", "It shows that language plays no role in philosophy", "It shows that marriage is a law of nature", "It shows logical redescription is not causal explanation"],
+    "choices_el": ["Δείχνει ότι οι ορισμοί μπορούν να εξηγούν αιτιακά γεγονότα του κόσμου", "Δείχνει ότι η γλώσσα δεν έχει ρόλο στη φιλοσοφία", "Δείχνει ότι ο γάμος είναι νόμος της φύσης", "Δείχνει ότι η λογική επαναπεριγραφή δεν είναι αιτιακή εξήγηση"],
+    "correctIndex": 3,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 27,
+    "question_en": "Why does Rosenberg consider the simple logical connection argument invalid?",
+    "question_el": "Γιατί το απλό επιχείρημα της λογικής σύνδεσης θεωρείται μη έγκυρο από τον Rosenberg;",
+    "choices_en": ["Because human action never involves any language", "Because no causal claim about human action can ever turn out true", "Because all definitions are really empirical laws", "Causal claims stay causal even under logically linked descriptions"],
+    "choices_el": ["Επειδή η ανθρώπινη δράση δεν περιλαμβάνει ποτέ γλώσσα", "Επειδή κανένας αιτιακός ισχυρισμός για την ανθρώπινη δράση δεν μπορεί να είναι αληθής", "Επειδή όλοι οι ορισμοί είναι στην πραγματικότητα εμπειρικοί νόμοι", "Οι αιτιακοί ισχυρισμοί μένουν αιτιακοί ακόμη και με λογικά συνδεδεμένες περιγραφές"],
+    "correctIndex": 3,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 28,
+    "question_en": "What does intentionality mean in the context of belief and desire?",
+    "question_el": "Τι σημαίνει προθετικότητα στο πλαίσιο πεποίθησης και επιθυμίας;",
+    "choices_en": ["The physical size of a mental state in the brain", "The speed at which actions take place", "The capacity of mental states to be about something", "The complete absence of meaning in thought"],
+    "choices_el": ["Το φυσικό μέγεθος μιας νοητικής κατάστασης στον εγκέφαλο", "Η ταχύτητα με την οποία συμβαίνουν οι πράξεις", "Η ικανότητα των νοητικών καταστάσεων να αφορούν κάτι", "Η πλήρης απουσία νοήματος στη σκέψη"],
+    "correctIndex": 2,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 29,
+    "question_en": "What problem does intentionality pose for a purely physical theory of mind?",
+    "question_el": "Ποιο πρόβλημα δημιουργεί η προθετικότητα για μια καθαρά φυσική θεωρία του νου;",
+    "choices_en": ["It makes human language completely unnecessary for thinking", "It proves that brains do not actually exist", "It is unclear how physical matter can represent meanings", "It removes the need for any psychology"],
+    "choices_el": ["Κάνει την ανθρώπινη γλώσσα εντελώς περιττή για τη σκέψη", "Αποδεικνύει ότι οι εγκέφαλοι στην πραγματικότητα δεν υπάρχουν", "Δεν είναι σαφές πώς η φυσική ύλη μπορεί να αναπαριστά νοήματα", "Εξαλείφει την ανάγκη για οποιαδήποτε ψυχολογία"],
+    "correctIndex": 2,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 30,
+    "question_en": "Why does Rosenberg discuss the idea of one part of the brain 'reading' another part?",
+    "question_el": "Γιατί ο Rosenberg συζητά την πιθανότητα ένα μέρος του εγκεφάλου να «διαβάζει» ένα άλλο μέρος;",
+    "choices_en": ["To show that all brain states are already public and observable", "To prove that individual neurons are actually words", "To deny that human beings use language at all", "To show representation risks an infinite regress of interpreters"],
+    "choices_el": ["Για να δείξει ότι όλες οι εγκεφαλικές καταστάσεις είναι ήδη δημόσιες και παρατηρήσιμες", "Για να αποδείξει ότι οι νευρώνες είναι στην πραγματικότητα λέξεις", "Για να αρνηθεί ότι οι άνθρωποι χρησιμοποιούν καθόλου γλώσσα", "Για να δείξει ότι η αναπαράσταση κινδυνεύει με άπειρη αναδρομή ερμηνευτών"],
+    "correctIndex": 3,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 31,
+    "question_en": "What gives a belief or desire its identity in Rosenberg's discussion of intentionality?",
+    "question_el": "Τι δίνει ταυτότητα σε μια πεποίθηση ή επιθυμία στη συζήτηση του Rosenberg για την προθετικότητα;",
+    "choices_en": ["The total weight of the person's brain", "The proposition or content it contains", "The social class of the agent holding it", "The number of neurons that are involved"],
+    "choices_el": ["Το συνολικό βάρος του εγκεφάλου του ατόμου", "Η πρόταση ή το περιεχόμενο που περιλαμβάνει", "Η κοινωνική τάξη του δρώντος που την έχει", "Ο αριθμός των νευρώνων που εμπλέκονται"],
+    "correctIndex": 1,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 32,
+    "question_en": "Why is precise explanation of action difficult, according to the discussion of intentionality?",
+    "question_el": "Γιατί είναι δύσκολη η ακριβής εξήγηση της δράσης σύμφωνα με τη συζήτηση της προθετικότητας;",
+    "choices_en": ["Because language is irrelevant to how human action is carried out", "Because actions have no meanings whatsoever", "Because all beliefs are plainly visible to observers", "We must find the exact description under which the agent sees the act"],
+    "choices_el": ["Επειδή η γλώσσα είναι άσχετη με τον τρόπο που εκτελείται η ανθρώπινη δράση", "Επειδή οι πράξεις δεν έχουν κανένα απολύτως νόημα", "Επειδή όλες οι πεποιθήσεις είναι ορατές στους παρατηρητές", "Πρέπει να βρεθεί η ακριβής περιγραφή υπό την οποία ο δρων βλέπει την πράξη"],
+    "correctIndex": 3,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 33,
+    "question_en": "What does intensionality involve?",
+    "question_el": "Τι περιλαμβάνει η εντασιακότητα;",
+    "choices_en": ["Truth that is preserved under any substitution of equivalent descriptions", "The physical extension of an object in space", "Descriptions whose truth can change when co-referring terms are swapped", "The statistical frequency of a behaviour"],
+    "choices_el": ["Αλήθεια που διατηρείται με οποιαδήποτε αντικατάσταση ισοδύναμων περιγραφών", "Τη φυσική έκταση ενός αντικειμένου στον χώρο", "Περιγραφές των οποίων η αλήθεια αλλάζει όταν αντικαθίστανται συνδηλωτικοί όροι", "Τη στατιστική συχνότητα μιας συμπεριφοράς"],
+    "correctIndex": 2,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 34,
+    "question_en": "What does extensionality involve?",
+    "question_el": "Τι περιλαμβάνει η εκτασιακότητα;",
+    "choices_en": ["The impossibility of any scientific description", "Truth that depends on whichever wording the agent happens to prefer", "Truth staying fixed under substitution of equivalent terms", "The rejection of every causal explanation"],
+    "choices_el": ["Την αδυναμία κάθε επιστημονικής περιγραφής", "Αλήθεια που εξαρτάται από όποια διατύπωση τυχαίνει να προτιμά ο δρων", "Τη σταθερότητα της αλήθειας όταν αντικαθίστανται ισοδύναμοι όροι", "Την απόρριψη κάθε αιτιακής εξήγησης"],
+    "correctIndex": 2,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 35,
+    "question_en": "Why does intensionality make a causal treatment of action difficult?",
+    "question_el": "Γιατί η εντασιακότητα δυσκολεύει την αιτιακή αντιμετώπιση της δράσης;",
+    "choices_en": ["Beliefs, desires and acts cannot be described in purely extensional terms", "Because causes are always directly visible", "Because social science uses far too many equations to track causes precisely", "Because human action never involves any thought"],
+    "choices_el": ["Πεποιθήσεις, επιθυμίες και πράξεις δεν περιγράφονται με καθαρά εκτασιακούς όρους", "Επειδή οι αιτίες είναι πάντα άμεσα ορατές", "Επειδή η κοινωνική επιστήμη χρησιμοποιεί υπερβολικά πολλές εξισώσεις για να εντοπίσει αιτίες", "Επειδή η ανθρώπινη δράση δεν περιλαμβάνει ποτέ σκέψη"],
+    "correctIndex": 0,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 36,
+    "question_en": "Why does [L] have weak empirical content?",
+    "question_el": "Γιατί η [L] έχει ασθενές εμπειρικό περιεχόμενο;",
+    "choices_en": ["Because it is about persons in general rather than about particular actions", "Because it can only be tested inside laboratories", "Failed predictions lead us to revise the beliefs we ascribed, not [L]", "Because it never makes use of everyday explanations"],
+    "choices_el": ["Επειδή αφορά πρόσωπα γενικά και όχι τις συγκεκριμένες πράξεις που αυτά κάνουν", "Επειδή μπορεί να ελεγχθεί μόνο μέσα σε εργαστήρια", "Οι αποτυχημένες προβλέψεις μάς κάνουν να αναθεωρούμε τις πεποιθήσεις, όχι την [L]", "Επειδή δεν χρησιμοποιεί ποτέ καθημερινές εξηγήσεις"],
+    "correctIndex": 2,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 37,
+    "question_en": "What role do auxiliary hypotheses play in testing scientific claims?",
+    "question_el": "Ποιον ρόλο παίζουν οι βοηθητικές υποθέσεις στον έλεγχο επιστημονικών ισχυρισμών;",
+    "choices_en": ["They remove the need for any initial conditions", "They make testing depend on background assumptions", "They guarantee that every theory is false", "They apply only within the field of ethics"],
+    "choices_el": ["Εξαλείφουν εντελώς την ανάγκη για αρχικές συνθήκες", "Κάνουν τον έλεγχο να εξαρτάται από υπόβαθρες παραδοχές", "Εγγυώνται ότι κάθε θεωρία είναι ψευδής", "Εφαρμόζονται μόνο στο πεδίο της ηθικής"],
+    "correctIndex": 1,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 38,
+    "question_en": "Why does Rosenberg compare beliefs with the readings of a thermometer?",
+    "question_el": "Γιατί ο Rosenberg συγκρίνει τις πεποιθήσεις με τις ενδείξεις ενός θερμομέτρου;",
+    "choices_en": ["To show naturalists need an independent measure of belief", "To show that beliefs are, at bottom, always states of bodily heat", "To argue that physics cannot measure anything", "To prove that beliefs have no causes at all"],
+    "choices_el": ["Για να δείξει ότι οι νατουραλιστές χρειάζονται ανεξάρτητο μέτρο της πεποίθησης", "Για να δείξει ότι οι πεποιθήσεις είναι κατά βάθος πάντα καταστάσεις σωματικής θερμότητας", "Για να υποστηρίξει ότι η φυσική δεν μπορεί να μετρήσει τίποτα", "Για να αποδείξει ότι οι πεποιθήσεις δεν έχουν καθόλου αιτίες"],
+    "correctIndex": 0,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 39,
+    "question_en": "What would a successful identification of beliefs with brain states amount to?",
+    "question_el": "Τι θα σήμαινε μια επιτυχής ταύτιση πεποιθήσεων με εγκεφαλικές καταστάσεις;",
+    "choices_en": ["A complete rejection of neuroscience as a scientific field", "A solution to the mind-body problem for belief and desire", "A proof that language has no meaning", "A denial of all causal research"],
+    "choices_el": ["Πλήρης απόρριψη της νευροεπιστήμης ως επιστημονικού πεδίου", "Λύση στο πρόβλημα νου-σώματος για την πεποίθηση και την επιθυμία", "Απόδειξη ότι η γλώσσα δεν έχει νόημα", "Άρνηση κάθε αιτιακής έρευνας"],
+    "correctIndex": 1,
+    "RosenCh1-4": true
+  },
+  {
+    "number": 40,
+    "question_en": "What is the pessimistic conclusion about naturalism at the end of Chapter 4?",
+    "question_el": "Ποιο είναι το απαισιόδοξο συμπέρασμα για τον νατουραλισμό στο τέλος του Κεφαλαίου 4;",
+    "choices_en": ["Folk psychology can easily be reduced to physics", "Social science has already solved the mind-body problem for good", "There may be no extensional description making [L] a causal law", "Interpretation has no place in explaining action"],
+    "choices_el": ["Η λαϊκή ψυχολογία ανάγεται εύκολα στη φυσική", "Η κοινωνική επιστήμη έχει ήδη λύσει οριστικά το πρόβλημα νου-σώματος", "Ίσως δεν υπάρχει εκτασιακή περιγραφή που να κάνει την [L] αιτιακό νόμο", "Η ερμηνεία δεν έχει θέση στην εξήγηση της δράσης"],
+    "correctIndex": 2,
+    "RosenCh1-4": true
+  }
 ]
