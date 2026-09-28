@@ -84,7 +84,7 @@ const ASSESS_RESULTS_STORAGE_KEY = "assessments-results-v1";
 const ACTIVITY_LOG_MAX = 5000;
 
 /* ═══════════════════════════════════════════════════════════════
-   ACTIVITY LOG — tamper-evident record of every monitored event.
+   ACTIVITY LOG — local record of every monitored event.
    Used for proctoring: an instructor can review what the student
    did and when (answers, reveals, mode toggles, off-screen blurs).
    Ring buffer in localStorage, capped at ACTIVITY_LOG_MAX entries.
