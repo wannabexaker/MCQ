@@ -3461,3 +3461,16 @@ body.more-open .controls-shell { z-index: var(--z-menu); }
   color: var(--accent);
   box-shadow: none;
 }
+
+/* Assessments hide the shuffle buttons, so drop the separator after them */
+body.assessment-on .controls > .ctrl-sep:first-of-type { display: none; }
+
+/* Phones: the timer's default spot is the bottom-right corner, clear of
+   the breadcrumb and the questions (a dragged position still wins). */
+@media (max-width: 750px) {
+  #timer-wrapper {
+    top: auto;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    right: 12px;
+  }
+}
