@@ -405,6 +405,28 @@ try {
   check("corrupt progress is backed up", await evalJs(`localStorage.getItem('quiz-progress-corrupt-backup')`) === "{broken");
   await evalJs(`localStorage.clear(); true`);
 
+  // A previously loaded bundled set is a stored copy; boot must refresh it from
+  // the shipped file and drop saved answers only for questions that changed.
+  const stale = await evalJs(`
+    (async () => {
+      const qs = await (await fetch('q_sql02.json', { cache: 'no-store' })).json();
+      const stored = qs.map((q) => ({ ...q, __sourceFile: 'q_sql02.json' }));
+      stored[0] = { ...stored[0], question_en: 'STALE COPY', choices_en: ['w', 'x', 'y', 'z'], correctIndex: 0 };
+      localStorage.setItem('imported-question-sources-v1', JSON.stringify([{ id: 'import-1-q-sql02-json', fileName: 'q_sql02.json', label: 'sql02', tagKey: 'sql02', importedAt: '2020-01-01', questions: stored }]));
+      localStorage.setItem('quiz-progress', JSON.stringify({ total: 2, correct: 2, answered: {
+        'import-1-q-sql02-json:1:0': { selected: 0, correct: 0, isCorrect: true },
+        'import-1-q-sql02-json:2:1': { selected: qs[1].correctIndex, correct: qs[1].correctIndex, isCorrect: true } } }));
+      return qs[0].question_en;
+    })()
+  `);
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=3` });
+  await waitFor(`document.querySelectorAll('#quiz .card').length > 0`);
+  const refreshed = await evalJs(`JSON.parse(localStorage.getItem('imported-question-sources-v1'))[0].questions[0].question_en`);
+  check("stale bundled copy is refreshed at boot", refreshed === stale, `got "${refreshed}"`);
+  const kept = await evalJs(`Object.keys(JSON.parse(localStorage.getItem('quiz-progress')).answered).join(',')`);
+  check("only answers of changed questions are dropped", kept === "import-1-q-sql02-json:2:1", `got "${kept}"`);
+  await evalJs(`localStorage.clear(); true`);
+
   console.log("hygiene:");
   const benign = /favicon|catfact|Failed to load resource/i;
   const realErrors = consoleErrors.filter((e) => !benign.test(e));
