@@ -4,6 +4,7 @@ FROM nginx:alpine
 COPY index.html /usr/share/nginx/html/index.html
 COPY js/ /usr/share/nginx/html/js/
 COPY style.css /usr/share/nginx/html/style.css
+COPY sw.js manifest.json /usr/share/nginx/html/
 COPY sources_index.json /usr/share/nginx/html/sources_index.json
 COPY questions_template.json /usr/share/nginx/html/questions_template.json
 COPY q_*.json /usr/share/nginx/html/

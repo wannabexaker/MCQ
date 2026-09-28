@@ -328,8 +328,7 @@ function renderQuiz(items) {
           .forEach((el, idx) =>
             el.classList.toggle("correct", idx === correct)
           );
-        ansBox.textContent = `Correct: ${["A", "B", "C", "D", "E", "F", "G"][correct]
-          }`;
+        ansBox.textContent = `Correct: ${"ABCDEFGH"[correct] ?? "?"}`;
         ansBox.classList.add("show");
         btn.textContent = "Hide answer";
         logActivity("reveal", { qid: getQuestionId(q), n: q.number, action: "show" });

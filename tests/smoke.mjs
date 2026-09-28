@@ -397,6 +397,14 @@ try {
   `);
   check("Set share copies a clean #sql02 link", sShare === await evalJs(`location.origin + location.pathname + '#sql02'`), `got "${sShare}"`);
 
+  console.log("robustness:");
+  await evalJs(`localStorage.clear(); localStorage.setItem('quiz-progress', '{broken'); true`);
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=2` });
+  await waitFor(`!!document.querySelector('.welcome-title')`);
+  check("corrupt saved progress does not blank the app", true);
+  check("corrupt progress is backed up", await evalJs(`localStorage.getItem('quiz-progress-corrupt-backup')`) === "{broken");
+  await evalJs(`localStorage.clear(); true`);
+
   console.log("hygiene:");
   const benign = /favicon|catfact|Failed to load resource/i;
   const realErrors = consoleErrors.filter((e) => !benign.test(e));
