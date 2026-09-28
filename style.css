@@ -3303,3 +3303,161 @@ body.assessment-on .footer {
   -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
   mask-image: linear-gradient(to bottom, #000 70%, transparent);
 }
+
+/* =======================================================
+   TOPBAR v3 — title + score left, a small discreet toolbar right.
+   Frequent actions stay visible; the rest live in the ⋯ menu.
+   ======================================================= */
+@media (min-width: 751px) {
+  .topbar { justify-content: flex-start; gap: 14px; flex-wrap: nowrap; }
+  #scoreBox {
+    position: static;
+    transform: none;
+    font-size: 15px;
+    padding: 5px 12px;
+    white-space: nowrap;
+  }
+  .controls-shell { margin-left: auto; flex-shrink: 0; gap: 4px; }
+  .controls {
+    position: relative;
+    top: auto; right: auto;
+    transform: none;
+    max-width: none;
+    overflow: visible;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 11px;
+    background: color-mix(in srgb, var(--card-bg) 60%, transparent);
+    border-color: color-mix(in srgb, var(--border) 70%, transparent);
+    box-shadow: none;
+  }
+  body.dark .controls, body.gay .controls { box-shadow: none; }
+}
+/* Ghost buttons: no box until hovered or switched on */
+.controls button,
+.fixed-settings-btn,
+.controls-toggle {
+  height: 30px;
+  min-width: 30px;
+  padding: 0 6px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: color-mix(in srgb, var(--btn-text) 80%, transparent);
+}
+.controls .ic, .fixed-settings-btn .ic, .controls-toggle .ic { width: 16px; height: 16px; }
+.controls-toggle { min-width: 22px; padding: 0 2px; }
+.controls button:hover,
+.fixed-settings-btn:hover,
+.controls-toggle:hover {
+  background: color-mix(in srgb, var(--btn-bg) 80%, transparent);
+  border-color: transparent;
+  color: var(--btn-text);
+}
+.controls button.active {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border-color: transparent;
+  color: var(--accent);
+}
+.controls .lang button { font-size: 11px; font-weight: 800; }
+.ctrl-sep { height: 16px; margin: 0 2px; opacity: 0.7; }
+
+/* ⋯ button + "something is on" dot */
+.ctrl-more { position: relative; }
+.ctrl-more.open { background: color-mix(in srgb, var(--btn-bg) 80%, transparent) !important; color: var(--btn-text) !important; }
+.ctrl-more.has-dot::after {
+  content: "";
+  position: absolute;
+  top: 5px; right: 5px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 2px var(--card-bg);
+}
+
+/* ⋯ menu */
+.more-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 200px;
+  padding: 6px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  animation: moreIn 0.12s ease-out;
+}
+.more-panel[hidden] { display: none; }
+@keyframes moreIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.more-h {
+  padding: 8px 10px 3px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+.controls .more-panel button {
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  height: 32px;
+  padding: 0 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--btn-text);
+}
+.controls .more-panel button.active { background: transparent; color: var(--accent); }
+.controls .more-panel button.active::after {
+  content: "ON";
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.controls .more-panel button:hover { background: color-mix(in srgb, var(--btn-bg) 85%, transparent); }
+.controls .more-panel button.ctrl-danger:hover { color: #e5484d; }
+.controls.vertical .more-panel { top: 0; right: calc(100% + 8px); }
+
+/* Mode chips next to the score */
+.mode-chip {
+  margin-left: 8px;
+  padding: 1px 7px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  border-radius: 999px;
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+/* Collapsed: a completely clean topbar — only the arrow stays */
+.controls-shell.collapsed .controls { display: none; }
+body.controls-collapsed .fixed-settings-btn { display: none; }
+
+/* Mobile menu section headings */
+.m-h {
+  margin: 8px 2px 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+/* While the ⋯ menu is open the topbar sits above floating widgets (timer). */
+body.more-open .topbar { z-index: var(--z-menu); }
+body.more-open .controls-shell { z-index: var(--z-menu); }
+.controls .more-panel #toggleExam.active,
+.controls .more-panel #toggleGodlike.active {
+  background: transparent;
+  border-color: transparent;
+  color: var(--accent);
+  box-shadow: none;
+}

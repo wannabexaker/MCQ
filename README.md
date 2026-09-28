@@ -62,10 +62,10 @@ Opens on a landing page with pickable question sets, validates every bank agains
 - Docker-bundle export: downloads the whole app + loaded banks as a ready-to-serve zip
 
 ### Platform
-- **Controls**: small semi-transparent buttons with an in-house SVG icon set (`js/00-icons.js`, no emoji, no icon library), grouped left→right: content (Sources, Assessments) · shuffle (questions, answers) · test mode (Exam, God mode, Show all) · widgets/timer · display (language, theme) · Reset last; the mobile menu uses the same groups
+- **Topbar**: title and score on the left, a small discreet toolbar on the right (in-house SVG icons, `js/00-icons.js`). Always visible: the things used all the time — Shuffle questions, Shuffle answers, EL/EN, Show answers. Everything else sits in the **⋯ menu** in three sections: Test (Exam mode, God mode, Timer & widgets, Reset progress), Content (Sources, Assessments), Display (Theme). Active modes show an `ON` tag in the menu, a dot on ⋯ and a chip next to the score (`EXAM`, `GOD`). The arrow collapses the toolbar to a completely clean topbar. The mobile ☰ menu uses the same order and sections
 - Three themes (`dark`, `light`, `gay`), CSS-variable based — the third one is an easter egg with a fleeing "No" button (Esc ×3 always returns to dark)
 - **Guarded storage**: all `localStorage` access goes through a wrapper with an in-memory fallback, so private browsing modes and quota errors never crash the app; a corrupt saved-progress value is set aside (`quiz-progress-corrupt-backup`) instead of blanking the page
-- Service worker (cache `mcq-v19`): network-first app shell and question files, cache-first images; installable PWA
+- Service worker (cache `mcq-v20`): network-first app shell and question files, cache-first images; installable PWA
 - Open Graph + Twitter card meta for link previews
 - Optimized assets: ~140 KB of images on page load (512px icon loads only on PWA install)
 - Docker image (nginx, ships the service worker + manifest so the PWA works there too) for production hosting; one-command local server scripts for Windows
@@ -76,7 +76,7 @@ Opens on a landing page with pickable question sets, validates every bank agains
 - `tests/validate-questions.mjs` — validation of all `q_*.json`: schema, `correctIndex` range, required Greek (`question_el`/`choices_el`) with EN/EL parity, sequential numbering, single category tag, and guessability limits per bank (correct option strictly longest in ≤30% of questions, in EN and in EL; never 2× longer than every wrong option; each answer position holds 10–40% of correct answers)
 - `.claude/skills/mcq-questions/SKILL.md` — the authoring rules behind those checks, loaded by Claude Code when writing or editing questions; the in-app AI prompt carries the same rules
 - `tests/validate-assessments.mjs` — assessment data + scoring validation (item counts per domain/trait, SVG safety, bilingual completeness, reverse-key structure, band coverage, archetype table, scoring sanity, share-codec round-trips)
-- `tests/smoke.mjs` — self-contained E2E: serves the app GitHub-Pages-style (no directory listing) and drives headless Chrome over CDP with real input events; covers landing, search, set loading, scoring, keyboard access, exam mode, language toggle, the assessments section (hub, full run, resume, exit, shared links), the clean-hash deep-links (assessments #iq/#analytical/#dark-triad/#spectrum + sets #sql01…, Back/Forward, Share), the SQL/C#/My MCQ folders and breadcrumb navigation (Home from a test, folder crumb, custom sets, Back), recovery from corrupt saved progress, refresh of stale stored copies of bundled sets, and console-error hygiene
+- `tests/smoke.mjs` — self-contained E2E: serves the app GitHub-Pages-style (no directory listing) and drives headless Chrome over CDP with real input events; covers landing, search, set loading, scoring, keyboard access, exam mode, language toggle, the assessments section (hub, full run, resume, exit, shared links), the clean-hash deep-links (assessments #iq/#analytical/#dark-triad/#spectrum + sets #sql01…, Back/Forward, Share), the SQL/C#/My MCQ folders and breadcrumb navigation (Home from a test, folder crumb, custom sets, Back), the topbar ⋯ menu (open/close, active-mode dot and chip, no overlap with the score, clean collapse), recovery from corrupt saved progress, refresh of stale stored copies of bundled sets, and console-error hygiene
 
 ## Architecture
 
@@ -242,7 +242,7 @@ mcq/
 ├── index.html               — DOM, modals, PWA/social meta, ordered script tags
 ├── js/                      — app code, 23 ordered files (00 icons, 01–11 quiz, 12–19 + 21 assessments, 20 share links, 22 breadcrumb)
 ├── style.css                — theming, layout, focus styles
-├── sw.js                    — service worker (cache mcq-v19)
+├── sw.js                    — service worker (cache mcq-v20)
 ├── manifest.json            — PWA manifest
 ├── sources_index.json       — intentionally empty (see Components)
 ├── questions_template.json  — annotated question template

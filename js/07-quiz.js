@@ -462,8 +462,13 @@ function renderQuiz(items) {
 
 function updateScoreUI() {
   const box = document.getElementById("scoreBox");
+  // Modes that live in the ⋯ menu are shown as small chips next to the score.
+  const chips = [examMode ? "Exam" : "", godlikeMode ? "God" : ""]
+    .filter(Boolean)
+    .map((m) => `<span class="mode-chip">${m}</span>`)
+    .join("");
   box.innerHTML = `Correct: <span id="score-correct">${progress.correct
-    }</span> / <span id="score-total">${progress.total}</span>`;
+    }</span> / <span id="score-total">${progress.total}</span>${chips}`;
 
   const godModeIcon = godlikeMode ? "⚡" : "🧠";
   const godModeTitle = godlikeMode ? "God Mode: ON" : "God Mode: OFF";

@@ -449,6 +449,34 @@ try {
   check("breadcrumb shows Home › My MCQ › set", crumbMine === "Home > My MCQ > mine", `got "${crumbMine}"`);
   await evalJs(`localStorage.clear(); true`);
 
+  console.log("topbar:");
+  await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=7#sql01` });
+  await waitFor(`document.querySelectorAll('#quiz .card').length > 0`);
+  const tb = await evalJs(`
+    (async () => {
+      const w = () => new Promise(r => setTimeout(r, 60));
+      const more = document.getElementById('controlsMoreBtn'), panel = document.getElementById('controlsMore');
+      const r = { closed: panel.hidden };
+      more.click(); await w(); r.opens = !panel.hidden;
+      document.getElementById('toggleExam').click(); await w();
+      r.closesOnPick = panel.hidden;
+      r.dot = more.classList.contains('has-dot');
+      r.chip = /Exam/i.test(document.getElementById('scoreBox').textContent);
+      const score = document.getElementById('scoreBox').getBoundingClientRect(), bar = document.getElementById('controlsPanel').getBoundingClientRect();
+      r.noOverlap = score.right <= bar.left;
+      document.getElementById('controlsToggle').click(); await w();
+      r.clean = getComputedStyle(document.getElementById('controlsPanel')).display === 'none'
+        && getComputedStyle(document.getElementById('resetControlsPosition')).display === 'none';
+      document.getElementById('controlsToggle').click(); await w();
+      return r;
+    })()
+  `);
+  check("⋯ menu opens and closes after a pick", tb.closed && tb.opens && tb.closesOnPick, JSON.stringify(tb));
+  check("active mode shows a dot on ⋯ and a chip by the score", tb.dot && tb.chip, JSON.stringify(tb));
+  check("controls never overlap the score", tb.noOverlap, JSON.stringify(tb));
+  check("collapse arrow leaves a clean topbar", tb.clean, JSON.stringify(tb));
+  await evalJs(`localStorage.clear(); true`);
+
   console.log("robustness:");
   await evalJs(`localStorage.clear(); localStorage.setItem('quiz-progress', '{broken'); true`);
   await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/index.html?fresh=2` });

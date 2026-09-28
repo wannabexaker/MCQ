@@ -1,6 +1,7 @@
 function setButtonIconLabel(btn, icon, label) {
   if (!btn) return;
-  const mobile = btn.id?.startsWith("m-");
+  // Mobile menu and the ⋯ menu show a text label next to the icon.
+  const mobile = btn.id?.startsWith("m-") || !!btn.closest?.(".more-panel");
   const name = typeof ICON_BY_EMOJI !== "undefined" ? ICON_BY_EMOJI[icon] : null;
   if (name) {
     setIconContent(btn, name, mobile ? label : "");

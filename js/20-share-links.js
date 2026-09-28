@@ -170,7 +170,9 @@
     route(location.hash);
   });
 
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", async () => {
+    // Wait for boot (data load + first render) so it cannot undo the route.
+    try { await window.mcqBooted; } catch {}
     let ar = null;
     try { ar = new URLSearchParams(location.search).get("ar"); } catch {}
     if (ar) return;

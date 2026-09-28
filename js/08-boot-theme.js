@@ -1,13 +1,22 @@
+// Resolves once the question data is loaded and first rendered, so the
+// deep-link router (js/20) can act after boot instead of racing it.
+let resolveMcqBooted;
+window.mcqBooted = new Promise((r) => { resolveMcqBooted = r; });
+
 document.addEventListener("DOMContentLoaded", async () => {
-  loadProgress();
-  await refreshBundledImports();
-  setDataSource(await loadQuestionData());
-  showDataWarnings();
-  sanitizeProgressForCurrentData();
-  renderSourceChecklist();
-  renderCategoryChecklist();
-  applySourceFilter();
-  updateScoreUI();
+  try {
+    loadProgress();
+    await refreshBundledImports();
+    setDataSource(await loadQuestionData());
+    showDataWarnings();
+    sanitizeProgressForCurrentData();
+    renderSourceChecklist();
+    renderCategoryChecklist();
+    applySourceFilter();
+    updateScoreUI();
+  } finally {
+    resolveMcqBooted();
+  }
 
   // Proctor: record app launch + every off-screen blur and return-to-screen.
   // Blur is the canonical cheat indicator — the student left the quiz tab.
